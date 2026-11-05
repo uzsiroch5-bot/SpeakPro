@@ -206,6 +206,11 @@ const App = {
     // Navigation Router
     navigate(viewId) {
         SoundEffects.playClick();
+        let isLugat = false;
+        if (viewId === 'lugat') {
+            isLugat = true;
+            viewId = 'darslar';
+        }
         this.currentView = viewId;
 
         // Hide all views
@@ -223,7 +228,7 @@ const App = {
         const navLinks = document.querySelectorAll('.nav-menu-link, .sub-menu-item');
         navLinks.forEach(link => {
             const dest = link.getAttribute('data-view');
-            if (dest === viewId || (viewId.startsWith('game-') && dest === 'games-parent')) {
+            if (dest === (isLugat ? 'lugat' : viewId) || (viewId.startsWith('game-') && dest === 'games-parent')) {
                 link.classList.add('active');
             } else {
                 link.classList.remove('active');
@@ -239,17 +244,25 @@ const App = {
         if (viewId === 'game-6p') MiniGames.reset6pToAbout();
         if (viewId === 'game-2v2') MiniGames.reset2v2ToAbout();
 
-        // When navigating to darslar from nav menu, show step 1 (language selection)
-        if (viewId === 'darslar' && window.LessonsApp) {
-            LessonsApp.goToStep('lang');
+        if (isLugat) {
+            if (window.LessonsApp) {
+                LessonsApp.openVocabulary('en');
+            }
+        } else if (viewId === 'darslar' && window.LessonsApp) {
+            if (LessonsApp.step !== 'dialogs' && LessonsApp.step !== 'idioms' && LessonsApp.step !== 'vocabulary') {
+                LessonsApp.goToStep('lang');
+            }
+        } else if (viewId === 'speaking' && window.SpeakingApp) {
+            SpeakingApp.init();
         }
 
         // Update URL hash for browser history & sharing
-        if (window.location.hash !== '#' + viewId) {
+        const hashTarget = isLugat ? 'lugat' : viewId;
+        if (window.location.hash !== '#' + hashTarget) {
             try {
-                history.pushState(null, '', '#' + viewId);
+                history.pushState(null, '', '#' + hashTarget);
             } catch (e) {
-                window.location.hash = viewId;
+                window.location.hash = hashTarget;
             }
         }
     },

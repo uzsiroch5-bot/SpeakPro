@@ -3895,3 +3895,1039 @@ button, a, input, select, textarea,
 .settings-submit-strip {
     margin-top: 30px;
 }
+
+/* ==============================================================
+   12. DIALOGLAR, IDIOMALAR VA KATTA LUG'AT STILLARI
+   ============================================================== */
+
+/* Hub card styles */
+.feature-hub-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    color: #ffffff;
+}
+
+.hub-card-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.hub-card-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.hub-card-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 18px;
+    flex: 1;
+}
+
+.hub-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-card);
+    margin-bottom: 16px;
+}
+
+/* Filters & Search Toolbar */
+.explorer-toolbar {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.explorer-pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.explorer-pill-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 999px;
+    border: 1px solid var(--border-card);
+    background: var(--bg-main);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.explorer-pill-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.explorer-pill-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.explorer-search-input {
+    width: 100%;
+    padding: 12px 18px;
+    font-size: 15px;
+    border: 1.5px solid var(--border-card);
+    border-radius: var(--radius-md);
+    background: var(--bg-main);
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.explorer-search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* Dialogues Master-Detail Layout */
+.dialogs-layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .dialogs-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dialogs-list-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dialog-select-card {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-card);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dialog-select-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.dialog-select-card.active {
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.04);
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.12);
+}
+
+.dialog-detail-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-md);
+}
+
+.dialog-chat-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 24px;
+}
+
+.dialog-chat-bubble {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.chat-avatar-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+}
+
+.chat-avatar-a {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #ffffff;
+}
+
+.chat-avatar-b {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff;
+}
+
+.chat-bubble-content {
+    flex: 1;
+    background: var(--bg-main);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.chat-bubble-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.chat-speaker-role {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.chat-foreign-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.chat-tr-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    border-top: 1px dashed var(--border-card);
+    padding-top: 6px;
+}
+
+/* Idioms Grid */
+.idioms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.idiom-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.idiom-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.idiom-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.idiom-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+
+.level-badge-pill {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.level-a1 { background: rgba(16, 185, 129, 0.15); color: #059669; }
+.level-a2 { background: rgba(6, 182, 212, 0.15); color: #0891b2; }
+.level-b1 { background: rgba(59, 130, 246, 0.15); color: #2563eb; }
+.level-b2 { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+.level-c1 { background: rgba(168, 85, 247, 0.15); color: #9333ea; }
+
+.idiom-meaning {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.idiom-example-box {
+    background: var(--bg-main);
+    border-left: 3px solid var(--primary);
+    padding: 10px 14px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 13px;
+    margin-top: auto;
+}
+
+.idiom-ex-text {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.idiom-ex-tr {
+    color: var(--text-muted);
+}
+
+/* Vocabulary Grid & Pagination */
+.vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+}
+
+.vocab-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: var(--transition);
+}
+
+.vocab-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.vocab-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vocab-word-main {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.vocab-phonetic {
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--primary);
+    background: rgba(99, 102, 241, 0.08);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+}
+
+.vocab-pos-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg-main);
+    color: var(--text-muted);
+    border: 1px solid var(--border-card);
+    text-transform: uppercase;
+}
+
+.vocab-translation-row {
+    font-size: 15px;
+    font-weight: 700;
+    color: #059669;
+}
+
+.vocab-ru-row {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.vocab-example-row {
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px dashed var(--border-card);
+    padding-top: 8px;
+    line-height: 1.4;
+}
+
+/* Pagination Bar */
+.vocab-pagination-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 36px;
+    padding: 16px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-md);
+}
+
+.page-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-card);
+    background: var(--bg-main);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.page-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #ffffff;
+}
+
+.page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   SPEAKING WITH AI (Interactive Voice & AI Tutor Arena) STYLES
+   ========================================================================== */
+.speaking-layout-wrapper {
+    max-width: 1050px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.speaking-top-bar {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.speaking-controls-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.speaking-lang-pills {
+    display: flex;
+    background: var(--bg-elevated);
+    padding: 4px;
+    border-radius: var(--radius-pill);
+    gap: 4px;
+}
+
+.sp-pill {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.sp-pill.active {
+    background: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.35);
+}
+
+.speaking-level-pills {
+    display: flex;
+    gap: 4px;
+}
+
+.sp-lvl-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 800;
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.sp-lvl-btn.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.speaking-stats-strip {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.speaking-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-elevated);
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+}
+
+/* Coaches row */
+.speaking-coaches-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.coach-mini-card {
+    background: var(--bg-surface);
+    border: 2px solid var(--border-card);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.coach-mini-card:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.coach-mini-card.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.coach-avatar {
+    font-size: 32px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-surface);
+    border-radius: 50%;
+    box-shadow: var(--shadow-sm);
+}
+
+.coach-name-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.coach-badge-sub {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+/* Topic selector row */
+.speaking-topic-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.topic-pill-btn {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-pill);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.topic-pill-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.topic-pill-btn.active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+}
+
+/* Chat Arena */
+.speaking-chat-arena {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    height: 720px;
+}
+
+.chat-arena-header {
+    background: var(--bg-elevated);
+    border-bottom: 1px solid var(--border-card);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.active-coach-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chat-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-toggle-tr {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-pill);
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.btn-toggle-tr.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.ai-status-pill {
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #10b981;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-online {
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+}
+
+.status-recording {
+    background: #ef4444;
+    box-shadow: 0 0 8px #ef4444;
+    animation: pulseRecording 1s infinite alternate;
+}
+
+/* Chat Flow */
+.speaking-chat-flow {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    scroll-behavior: smooth;
+    background: var(--bg-surface);
+}
+
+.speaking-bubble-wrap {
+    display: flex;
+    gap: 14px;
+    max-width: 85%;
+    align-items: flex-start;
+}
+
+.bubble-ai {
+    align-self: flex-start;
+}
+
+.bubble-user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.speaking-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+}
+
+.ai-avatar {
+    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+}
+
+.user-avatar {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.speaking-bubble-content {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    padding: 14px 18px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    line-height: 1.55;
+}
+
+.bubble-user .speaking-bubble-content {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(99, 102, 241, 0.15));
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.bubble-meta-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.bubble-time {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.btn-bubble-audio {
+    border: none;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.bubble-main-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.bubble-translation-text {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border-card);
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.btn-reveal-tr {
+    margin-top: 6px;
+    border: none;
+    background: transparent;
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* AI Smart Feedback Box */
+.ai-smart-feedback-box {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    border-left: 3px solid #10b981;
+    font-size: 12px;
+}
+
+.feedback-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.fb-score-pill {
+    color: #059669;
+    font-weight: 700;
+}
+
+.fb-eval-tag {
+    background: rgba(16, 185, 129, 0.15);
+    color: #059669;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.fb-note-text {
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.fb-suggestion-text {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* Suggestion Chips */
+.speaking-chips-container {
+    padding: 10px 24px;
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border-card);
+}
+
+.chips-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.chips-flex-row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.speaking-chip-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-pill);
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all var(--transition-fast);
+}
+
+.speaking-chip-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+/* Bottom Controls */
+.speaking-bottom-controls {
+    padding: 16px 24px;
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-card);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.speaking-input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.speaking-text-input {
+    flex: 1;
+    padding: 14px 18px;
+    font-size: 14px;
+    border: 2px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    transition: border-color var(--transition-fast);
+}
+
+.speaking-text-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.speaking-send-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 22px;
+    font-weight: 700;
+}
+
+.speaking-mic-action-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.speaking-mic-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 800;
+    border-radius: var(--radius-pill);
+    border: none;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    transition: all var(--transition-normal);
+}
+
+.speaking-mic-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+}
+
+.speaking-mic-btn.recording-pulse {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3);
+    animation: pulseRecording 1.5s infinite;
+}
+
+@keyframes pulseRecording {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 14px rgba(239, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+.speaking-mic-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    max-width: 500px;
+    line-height: 1.4;
+}
+
+/* Typing wave indicator */
+.typing-wave {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+}
+
+.typing-wave span {
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: inline-block;
+    animation: waveBounce 1.2s infinite ease-in-out;
+}
+
+.typing-wave span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-wave span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes waveBounce {
+    0%, 80%, 100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+    40% {
+        transform: translateY(-8px);
+        opacity: 1;
+    }
+}
+

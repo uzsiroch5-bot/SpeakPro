@@ -1182,11 +1182,25 @@ const SpeakProCurriculum = {
 // ==========================================================================
 
 const LessonsApp = {
-    step: 'lang', // 'lang' | 'level' | 'lessons' | 'detail' | 'test'
+    step: 'lang', // 'lang' | 'level' | 'lessons' | 'detail' | 'test' | 'dialogs' | 'idioms' | 'vocabulary'
     selectedLang: 'en',
     selectedLevel: 'A1',
     selectedLessonId: null,
     activeLessonTab: 'video', // 'video' | 'dialog' | 'vocab' | 'quiz'
+
+    // Real-world Dialogues Explorer State
+    selectedDialogId: null,
+    selectedDialogCat: 'all',
+
+    // Idioms Explorer State
+    idiomsFilterLevel: 'all',
+    idiomsSearch: '',
+
+    // 10,000+ Vocabulary Explorer State
+    vocabLevel: 'all',
+    vocabPos: 'all',
+    vocabSearch: '',
+    vocabPage: 1,
 
     // Video watching simulation
     videoWatchInterval: null,
@@ -1854,17 +1868,24 @@ const LessonsApp = {
             root.innerHTML = this.renderStepDetail();
         } else if (this.step === 'test') {
             root.innerHTML = this.renderStepTest();
+        } else if (this.step === 'dialogs') {
+            root.innerHTML = this.renderStepDialogs();
+        } else if (this.step === 'idioms') {
+            root.innerHTML = this.renderStepIdioms();
+        } else if (this.step === 'vocabulary') {
+            root.innerHTML = this.renderStepVocabulary();
         }
     },
 
     // ----------------------------------------------------------------------
-    // STEP 1: Select Language
+    // STEP 1: Select Language & Knowledge Hubs
     // ----------------------------------------------------------------------
     renderStepLanguages() {
         const langs = SpeakProCurriculum.languages;
 
         return `
             <div class="lessons-container">
+                <!-- 1. ASOSIY BOSQICHMA-BOSQICH DARSLAR (1 DAN 10 GACHA) -->
                 <div class="section-header">
                     <span class="section-badge-pill">${this.t('step1_badge')}</span>
                     <h2 class="section-title">${this.t('step1_title')}</h2>
@@ -1895,6 +1916,219 @@ const LessonsApp = {
                             </div>
                         `;
                     }).join('')}
+                </div>
+
+                <!-- 2. JONLI VA AMALIY DIALOGLAR (3 TA KARTA) -->
+                <div class="section-header" style="margin-top: 56px;">
+                    <span class="section-badge-pill" style="background: rgba(16, 185, 129, 0.15); color: #059669; border-color: rgba(16, 185, 129, 0.3);">
+                        💬 Jonli Muloqot & Nutqiy Ko'nikma
+                    </span>
+                    <h2 class="section-title">🗣️ Amaliy Hayotiy Dialoglar To'plami</h2>
+                    <p class="section-subtitle">Aeroport, mehmonxona, restoran, ish suhbati, shifokor va kundalik muloqotda eng ko'p kerak bo'ladigan audio dialoglar!</p>
+                </div>
+
+                <div class="lessons-lang-grid">
+                    <!-- Dialog Karta 1: Ingliz tili -->
+                    <div class="lessons-lang-card" onclick="LessonsApp.openDialogs('en')" style="--accent-gradient: linear-gradient(135deg, #10b981, #059669);">
+                        <div class="lang-card-banner" style="background: linear-gradient(135deg, #10b981, #059669);">
+                            <span class="lang-flag-hero">🇬🇧</span>
+                            <span class="feature-hub-badge">💬 10+ Hayotiy Vaziyat</span>
+                        </div>
+                        <div class="hub-card-body">
+                            <h3 class="hub-card-title">Ingliz Tili Dialoglari</h3>
+                            <p class="lang-card-native">Everyday English Conversations</p>
+                            <p class="hub-card-desc">Aeroportda ro'yxatdan o'tish, ish intervyusi, restoranda taom tanlash, shifokor qabuli va xaridlar bo'yicha jonli suhbatlar.</p>
+                            <div class="hub-card-meta">
+                                <span>🎧 Ovozli Talaffuz (Audio)</span>
+                                <span>🗣️ A & B Rollari</span>
+                            </div>
+                            <button class="btn btn-primary w-full" style="background: linear-gradient(135deg, #10b981, #059669); border: none;">
+                                Dialoglarni Tinglash & O'rganish 💬
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dialog Karta 2: Rus tili -->
+                    <div class="lessons-lang-card" onclick="LessonsApp.openDialogs('ru')" style="--accent-gradient: linear-gradient(135deg, #0ea5e9, #0284c7);">
+                        <div class="lang-card-banner" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
+                            <span class="lang-flag-hero">🇷🇺</span>
+                            <span class="feature-hub-badge">💬 10+ Hayotiy Vaziyat</span>
+                        </div>
+                        <div class="hub-card-body">
+                            <h3 class="hub-card-title">Rus Tili Dialoglari</h3>
+                            <p class="lang-card-native">Практические диалоги на русском</p>
+                            <p class="hub-card-desc">Mehmonxonaga joylashish, shifokor ko'rigi, poyezd vokzalida chipta olish va biznes hamkorlar bilan erkin muzokara dialoglari.</p>
+                            <div class="hub-card-meta">
+                                <span>🎧 Ovozli Talaffuz (Audio)</span>
+                                <span>🗣️ A & B Rollari</span>
+                            </div>
+                            <button class="btn btn-primary w-full" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); border: none;">
+                                Dialoglarni Tinglash & O'rganish 💬
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dialog Karta 3: Nemis tili -->
+                    <div class="lessons-lang-card" onclick="LessonsApp.openDialogs('de')" style="--accent-gradient: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <div class="lang-card-banner" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                            <span class="lang-flag-hero">🇩🇪</span>
+                            <span class="feature-hub-badge">💬 10+ Hayotiy Vaziyat</span>
+                        </div>
+                        <div class="hub-card-body">
+                            <h3 class="hub-card-title">Nemis Tili Dialoglari</h3>
+                            <p class="lang-card-native">Alltagsdialoge auf Deutsch</p>
+                            <p class="hub-card-desc">Frankfurt aeroporti, Vena restorani, Berlin shahri bo'ylab yo'l topish va Germaniyada ishga kirish suhbati (Vorstellungsgespräch).</p>
+                            <div class="hub-card-meta">
+                                <span>🎧 Ovozli Talaffuz (Audio)</span>
+                                <span>🗣️ A & B Rollari</span>
+                            </div>
+                            <button class="btn btn-primary w-full" style="background: linear-gradient(135deg, #f59e0b, #d97706); border: none;">
+                                Dialoglarni Tinglash & O'rganish 💬
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. A1 DAN C1 GACHA IDIOMALAR VA IBORALAR (3 TA KARTA - 100+ TA) -->
+                <div class="section-header" style="margin-top: 56px;">
+                    <span class="section-badge-pill" style="background: rgba(245, 158, 11, 0.15); color: #d97706; border-color: rgba(245, 158, 11, 0.3);">
+                        🧠 A1 — C1 Boy So'zlashuv San'ati
+                    </span>
+                    <h2 class="section-title">⚡ Mashhur Idiomalar & Qanotli Iboralar (100+ ta)</h2>
+                    <p class="section-subtitle">A1 dan C1 gacha eng kerakli, boy ma'noli iboralar, maqollar va jonli misollar orqali nutqingizni boyiting!</p>
+                </div>
+
+                <div class="lessons-lang-grid">
+                    <!-- Idioma Karta 1: Ingliz tili -->
+                    <div class="lessons-lang-card" onclick="LessonsApp.openIdioms('en')" style="--accent-gradient: linear-gradient(135deg, #f59e0b, #b45309);">
+                        <div class="lang-card-banner" style="background: linear-gradient(135deg, #f59e0b, #b45309);">
+                            <span class="lang-flag-hero">🇬🇧</span>
+                            <span class="feature-hub-badge">🧠 105+ Saralangan Idioma</span>
+                        </div>
+                        <div class="hub-card-body">
+                            <h3 class="hub-card-title">Ingliz Tili Idiomalari</h3>
+                            <p class="lang-card-native">Essential English Idioms & Phrases</p>
+                            <p class="hub-card-desc">Piece of cake, Break a leg, Bite the bullet, Elephant in the room kabi A1 dan C1 gacha eng kerakli 105+ ta iboralar to'plami.</p>
+                            <div class="hub-card-meta">
+                                <span>⚡ A1 dan C1 gacha darajalar</span>
+                                <span>🎯 Jonli Misollar & Audio</span>
+                            </div>
+                            <button class="btn btn-primary w-full" style="background: linear-gradient(135deg, #f59e0b, #b45309); border: none;">
+                                Idiomalarni O'rganish 🧠
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Idioma Karta 2: Rus tili -->
+                    <div class="lessons-lang-card" onclick="LessonsApp.openIdioms('ru')" style="--accent-gradient: linear-gradient(135deg, #ec4899, #be185d);">
+                        <div class="lang-card-banner" style="background: linear-gradient(135deg, #ec4899, #be185d);">
+                            <span class="lang-flag-hero">🇷🇺</span>
+                            <span class="feature-hub-badge">🧠 105+ Mashhur Ibora</span>
+                        </div>
+                        <div class="hub-card-body">
+                            <h3 class="hub-card-title">Rus Tili Frazeologizmlari</h3>
+                            <p class="lang-card-native">Русские фразеологизмы и крылатые фразы</p>
+                            <p class="hub-card-desc">Как свои пять пальцев, Вешать лапшу на уши, Бить баклуши, Сесть в калошу kabi 105+ ta ifodali frazeologizm va qanotli so'zlar.</p>
+                            <div class="hub-card-meta">
+                                <span>⚡ A1 dan C1 gacha darajalar</span>
+                                <span>🎯 Jonli Misollar & Audio</span>
+                            </div>
+                            <button class="btn btn-primary w-full" style="background: linear-gradient(135deg, #ec4899, #be185d); border: none;">
+                                Idiomalarni O'rganish 🧠
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Idioma Karta 3: Nemis tili -->
+                    <div class="lessons-lang-card" onclick="LessonsApp.openIdioms('de')" style="--accent-gradient: linear-gradient(135deg, #8b5cf6, #6d28d9);">
+                        <div class="lang-card-banner" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">
+                            <span class="lang-flag-hero">🇩🇪</span>
+                            <span class="feature-hub-badge">🧠 105+ Jonli Ibora</span>
+                        </div>
+                        <div class="hub-card-body">
+                            <h3 class="hub-card-title">Nemis Tili Redewendungen</h3>
+                            <p class="lang-card-native">Deutsche Redewendungen & Sprichwörter</p>
+                            <p class="hub-card-desc">Ich verstehe nur Bahnhof, Die Daumen drücken, Zwei Fliegen mit einer Klappe, Tacheles reden kabi 105+ ta nemischa ibora.</p>
+                            <div class="hub-card-meta">
+                                <span>⚡ A1 dan C1 gacha darajalar</span>
+                                <span>🎯 Jonli Misollar & Audio</span>
+                            </div>
+                            <button class="btn btn-primary w-full" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); border: none;">
+                                Idiomalarni O'rganish 🧠
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. A1 DAN C1 GACHA TO'LIQ KATTA LUG'AT ENSIKLOPEDIYASI (3 TA KARTA - 10,000+ SO'Z) -->
+                <div class="section-header" style="margin-top: 56px;">
+                    <span class="section-badge-pill" style="background: rgba(99, 102, 241, 0.15); color: #4f46e5; border-color: rgba(99, 102, 241, 0.3);">
+                        📚 Katta Akademik Lug'at Bazasi
+                    </span>
+                    <h2 class="section-title">📖 A1 — C1 Katta Lug'atlar Ensiklopediyasi (10,000+ so'z)</h2>
+                    <p class="section-subtitle">Transkripsiya, talaffuz, so'z turkumlari, ma'nolari va jonli misollar bilan boyitilgan 10,000+ so'zlik ulkan lug'at maydoni!</p>
+                </div>
+
+                <div class="lessons-lang-grid">
+                    <!-- Lug'at Karta 1: Ingliz tili -->
+                    <div class="lessons-lang-card" onclick="LessonsApp.openVocabulary('en')" style="--accent-gradient: linear-gradient(135deg, #6366f1, #3730a3);">
+                        <div class="lang-card-banner" style="background: linear-gradient(135deg, #6366f1, #3730a3);">
+                            <span class="lang-flag-hero">🇬🇧</span>
+                            <span class="feature-hub-badge">📚 10,000+ So'zlar Bazasi</span>
+                        </div>
+                        <div class="hub-card-body">
+                            <h3 class="hub-card-title">Inglizcha Katta Lug'at</h3>
+                            <p class="lang-card-native">Comprehensive English Dictionary (A1-C1)</p>
+                            <p class="hub-card-desc">Barcha darajalar bo'yicha saralangan 10,000+ so'z. Fonetik transkripsiya, o'zbekcha va ruscha tarjimalar, audio talaffuz va namunaviy gaplar.</p>
+                            <div class="hub-card-meta">
+                                <span>📚 10,000+ So'z (A1-C1)</span>
+                                <span>🔍 Qidiruv & Tezkor Filtr</span>
+                            </div>
+                            <button class="btn btn-primary w-full" style="background: linear-gradient(135deg, #6366f1, #3730a3); border: none;" onclick="event.stopPropagation(); LessonsApp.openVocabulary('en')">
+                                Katta Lug'atni Ochish 📚
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lug'at Karta 2: Rus tili -->
+                    <div class="lessons-lang-card" onclick="LessonsApp.openVocabulary('ru')" style="--accent-gradient: linear-gradient(135deg, #06b6d4, #0e7490);">
+                        <div class="lang-card-banner" style="background: linear-gradient(135deg, #06b6d4, #0e7490);">
+                            <span class="lang-flag-hero">🇷🇺</span>
+                            <span class="feature-hub-badge">📚 10,000+ So'zlar Bazasi</span>
+                        </div>
+                        <div class="hub-card-body">
+                            <h3 class="hub-card-title">Ruscha Katta Lug'at</h3>
+                            <p class="lang-card-native">Большой академический словарь (A1-C1)</p>
+                            <p class="hub-card-desc">A1 dan C1 gacha to'liq qamrovli 10,000+ ruscha so'zlar zaxirasi. Urg'ular, transkripsiya, aniq o'zbekcha tarjima va amaliy misollar.</p>
+                            <div class="hub-card-meta">
+                                <span>📚 10,000+ So'z (A1-C1)</span>
+                                <span>🔍 Qidiruv & Tezkor Filtr</span>
+                            </div>
+                            <button class="btn btn-primary w-full" style="background: linear-gradient(135deg, #06b6d4, #0e7490); border: none;" onclick="event.stopPropagation(); LessonsApp.openVocabulary('ru')">
+                                Katta Lug'atni Ochish 📚
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lug'at Karta 3: Nemis tili -->
+                    <div class="lessons-lang-card" onclick="LessonsApp.openVocabulary('de')" style="--accent-gradient: linear-gradient(135deg, #10b981, #047857);">
+                        <div class="lang-card-banner" style="background: linear-gradient(135deg, #10b981, #047857);">
+                            <span class="lang-flag-hero">🇩🇪</span>
+                            <span class="feature-hub-badge">📚 10,000+ So'zlar Bazasi</span>
+                        </div>
+                        <div class="hub-card-body">
+                            <h3 class="hub-card-title">Nemischa Katta Lug'at</h3>
+                            <p class="lang-card-native">Großes Deutsches Wörterbuch (A1-C1)</p>
+                            <p class="hub-card-desc">Goethe va TestDaF talablariga mos, A1 dan C1 gacha 10,000+ nemischa so'z. Artikllar (der/die/das), transkripsiya, talaffuz va jumlalar.</p>
+                            <div class="hub-card-meta">
+                                <span>📚 10,000+ So'z (A1-C1)</span>
+                                <span>🔍 Qidiruv & Tezkor Filtr</span>
+                            </div>
+                            <button class="btn btn-primary w-full" style="background: linear-gradient(135deg, #10b981, #047857); border: none;" onclick="event.stopPropagation(); LessonsApp.openVocabulary('de')">
+                                Katta Lug'atni Ochish 📚
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
@@ -2352,6 +2586,546 @@ const LessonsApp = {
                 </div>
             </div>
         `;
+    },
+
+    // ======================================================================
+    // EXPLORER 1: REAL-WORLD DIALOGUES VIEW
+    // ======================================================================
+    openDialogs(langId) {
+        if (window.App && typeof App.navigate === 'function' && App.currentView !== 'darslar') {
+            App.navigate('darslar');
+        }
+        this.step = 'dialogs';
+        this.selectedLang = langId || 'en';
+        const dialogs = (window.SpeakProDialogues && window.SpeakProDialogues[this.selectedLang]) || [];
+        this.selectedDialogId = dialogs.length > 0 ? dialogs[0].id : null;
+        this.selectedDialogCat = 'all';
+        this.render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+
+    selectDialog(dialogId) {
+        this.selectedDialogId = dialogId;
+        this.render();
+    },
+
+    filterDialogCategory(cat) {
+        this.selectedDialogCat = cat;
+        const dialogs = (window.SpeakProDialogues && window.SpeakProDialogues[this.selectedLang]) || [];
+        const filtered = cat === 'all' ? dialogs : dialogs.filter(d => d.category === cat);
+        this.selectedDialogId = filtered.length > 0 ? filtered[0].id : null;
+        this.render();
+    },
+
+    renderStepDialogs() {
+        const langInfo = this.getLangInfo(this.selectedLang);
+        const dialogs = (window.SpeakProDialogues && window.SpeakProDialogues[this.selectedLang]) || [];
+
+        const categories = [
+            { id: 'all', name: 'Barchasi', icon: '🌟' },
+            { id: 'travel', name: 'Sayohat & Aeroport', icon: '✈️' },
+            { id: 'hotel', name: 'Mehmonxona', icon: '🏨' },
+            { id: 'food', name: 'Restoran & Taom', icon: '🍽️' },
+            { id: 'career', name: 'Ish & Karyera', icon: '💼' },
+            { id: 'health', name: 'Tibbiyot', icon: '🏥' },
+            { id: 'shopping', name: 'Xaridlar', icon: '🛍️' }
+        ];
+
+        const filteredDialogs = this.selectedDialogCat === 'all' 
+            ? dialogs 
+            : dialogs.filter(d => d.category === this.selectedDialogCat);
+
+        const activeDialog = dialogs.find(d => d.id === this.selectedDialogId) || filteredDialogs[0] || dialogs[0];
+
+        return `
+            <div class="lessons-container">
+                <!-- Navigation Crumb -->
+                <div class="lessons-nav-bar">
+                    <button class="btn-back-crumb" onclick="LessonsApp.goToStep('lang')">
+                        ${this.t('back_to_langs')}
+                    </button>
+                    <div class="crumb-current">
+                        <span style="font-size: 20px;">${langInfo.flag}</span>
+                        <strong>${langInfo.name} — Jonli Dialoglar</strong>
+                    </div>
+                </div>
+
+                <!-- Explorer Header -->
+                <div class="section-header">
+                    <span class="section-badge-pill" style="background: rgba(16, 185, 129, 0.15); color: #059669; border-color: rgba(16, 185, 129, 0.3);">
+                        💬 Jonli Muloqot & Nutqiy Ko'nikma
+                    </span>
+                    <h2 class="section-title">🗣️ ${langInfo.name} Amaliy Dialoglari</h2>
+                    <p class="section-subtitle">Real hayotiy vaziyatlardagi jonli suhbatlar. Har bir gapni tinglang, talaffuz qiling va tarjimasini o'rganing!</p>
+                </div>
+
+                <!-- Categories Toolbar -->
+                <div class="explorer-toolbar">
+                    <div class="explorer-pills-row">
+                        ${categories.map(cat => `
+                            <button class="explorer-pill-btn ${this.selectedDialogCat === cat.id ? 'active' : ''}" onclick="LessonsApp.filterDialogCategory('${cat.id}')">
+                                ${cat.icon} ${cat.name}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Master-Detail Layout -->
+                <div class="dialogs-layout">
+                    <!-- Left: Dialogues Selection List -->
+                    <div class="dialogs-list-panel">
+                        <h4 style="font-size: 15px; font-weight: 800; color: var(--text-secondary); margin-bottom: 4px;">
+                            Mavzular ro'yxati (${filteredDialogs.length}):
+                        </h4>
+                        ${filteredDialogs.length === 0 ? `
+                            <div style="padding: 24px; text-align: center; color: var(--text-muted); background: var(--bg-surface); border-radius: var(--radius-md);">
+                                Bu toifada dialoglar topilmadi.
+                            </div>
+                        ` : filteredDialogs.map(d => `
+                            <div class="dialog-select-card ${activeDialog && activeDialog.id === d.id ? 'active' : ''}" onclick="LessonsApp.selectDialog('${d.id}')">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-size: 22px;">${d.icon}</span>
+                                    <span class="level-badge-pill level-${d.level.toLowerCase().substring(0,2)}">${d.level}</span>
+                                </div>
+                                <h4 style="font-size: 16px; font-weight: 800; color: var(--text-primary); margin: 2px 0;">${d.title}</h4>
+                                <div style="font-size: 13px; color: var(--primary); font-weight: 700;">${d.titleUz}</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">${d.lines.length} ta gap • ${d.categoryName}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Right: Active Dialogue Chat Viewer -->
+                    <div class="dialog-detail-panel">
+                        ${activeDialog ? `
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border-card); padding-bottom: 16px;">
+                                <div>
+                                    <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px;">
+                                        <span style="font-size: 28px;">${activeDialog.icon}</span>
+                                        <span class="level-badge-pill level-${activeDialog.level.toLowerCase().substring(0,2)}">${activeDialog.level}</span>
+                                        <span style="font-size: 13px; font-weight: 700; color: var(--text-muted);">${activeDialog.categoryName}</span>
+                                    </div>
+                                    <h3 style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">
+                                        ${activeDialog.title} (${activeDialog.titleUz})
+                                    </h3>
+                                    <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">${activeDialog.desc}</p>
+                                </div>
+                            </div>
+
+                            <div class="dialog-chat-flow">
+                                ${activeDialog.lines.map(line => `
+                                    <div class="dialog-chat-bubble">
+                                        <div class="chat-avatar-box ${line.speaker === 'A' ? 'chat-avatar-a' : 'chat-avatar-b'}">
+                                            ${line.speaker === 'A' ? '👨‍💼' : '👩‍💼'}
+                                        </div>
+                                        <div class="chat-bubble-content">
+                                            <div class="chat-bubble-header">
+                                                <span class="chat-speaker-role">${line.role}</span>
+                                                <button class="btn btn-sm btn-secondary" onclick="LessonsApp.speakText('${line.text.replace(/'/g, "\\'")}', '${this.selectedLang}')">
+                                                    🔊 Tinglash
+                                                </button>
+                                            </div>
+                                            <div class="chat-foreign-text">${line.text}</div>
+                                            <div class="chat-tr-text">${line.tr}</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : `
+                            <div style="text-align: center; padding: 48px; color: var(--text-muted);">
+                                Ko'rish uchun chap tomondan dialogni tanlang.
+                            </div>
+                        `}
+                    </div>
+                </div>
+            </div>
+        `;
+    },
+
+    // ======================================================================
+    // EXPLORER 2: IDIOMS & PHRASES VIEW (100+ items)
+    // ======================================================================
+    openIdioms(langId) {
+        if (window.App && typeof App.navigate === 'function' && App.currentView !== 'darslar') {
+            App.navigate('darslar');
+        }
+        this.step = 'idioms';
+        this.selectedLang = langId || 'en';
+        this.idiomsFilterLevel = 'all';
+        this.idiomsSearch = '';
+        this.render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+
+    filterIdiomsLevel(lvl) {
+        this.idiomsFilterLevel = lvl;
+        this.render();
+    },
+
+    filterIdiomsSearch(query) {
+        this.idiomsSearch = query;
+        const container = document.getElementById('idioms-results-container');
+        if (container) {
+            const idiomsList = (window.SpeakProIdioms && window.SpeakProIdioms[this.selectedLang]) || [];
+            const searchLower = (this.idiomsSearch || '').trim().toLowerCase();
+            let filtered = idiomsList;
+            if (this.idiomsFilterLevel !== 'all') {
+                filtered = filtered.filter(item => item.level === this.idiomsFilterLevel);
+            }
+            if (searchLower) {
+                filtered = filtered.filter(item => 
+                    (item.idiom && item.idiom.toLowerCase().includes(searchLower)) ||
+                    (item.meaningUz && item.meaningUz.toLowerCase().includes(searchLower)) ||
+                    (item.meaningRu && item.meaningRu.toLowerCase().includes(searchLower)) ||
+                    (item.example && item.example.toLowerCase().includes(searchLower))
+                );
+            }
+            container.innerHTML = this.renderIdiomsResultsHtml(filtered);
+        } else {
+            this.render();
+        }
+    },
+
+    renderIdiomsResultsHtml(filtered) {
+        return `
+            <!-- Results Counter -->
+            <div style="font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: 18px;">
+                Topilgan idiomalar soni: <strong>${filtered.length} ta</strong>
+            </div>
+
+            <!-- Idioms Cards Grid -->
+            <div class="idioms-grid">
+                ${filtered.length === 0 ? `
+                    <div style="grid-column: 1 / -1; padding: 48px; text-align: center; color: var(--text-muted); background: var(--bg-surface); border-radius: var(--radius-md);">
+                        Qidiruvingiz bo'yicha hech qanday idioma topilmadi.
+                    </div>
+                ` : filtered.map(item => `
+                    <div class="idiom-card">
+                        <div class="idiom-card-header">
+                            <div>
+                                <span class="level-badge-pill level-${(item.level || 'a1').toLowerCase()}">${item.level || 'A1'}</span>
+                                <h4 class="idiom-title" style="margin-top: 6px;">${item.idiom || ''}</h4>
+                            </div>
+                            <button class="btn btn-sm btn-secondary" onclick="LessonsApp.speakText('${(item.idiom || '').replace(/['\\]/g, '')}', '${this.selectedLang}')" title="Talaffuzni tinglash">
+                                🔊
+                            </button>
+                        </div>
+                        <div class="idiom-meaning">
+                            <strong>Ma'nosi:</strong> ${item.meaningUz || ''}
+                        </div>
+                        <div style="font-size: 13px; color: var(--text-muted);">
+                            🇷🇺 ${item.meaningRu || ''}
+                        </div>
+                        <div class="idiom-example-box">
+                            <div class="idiom-ex-text">${item.example || ''}</div>
+                            <div class="idiom-ex-tr">${item.exampleTr || ''}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    },
+
+    renderStepIdioms() {
+        const langInfo = this.getLangInfo(this.selectedLang);
+        const idiomsList = (window.SpeakProIdioms && window.SpeakProIdioms[this.selectedLang]) || [];
+
+        const levels = ['all', 'A1', 'A2', 'B1', 'B2', 'C1'];
+        const searchLower = (this.idiomsSearch || '').trim().toLowerCase();
+
+        let filtered = idiomsList;
+        if (this.idiomsFilterLevel !== 'all') {
+            filtered = filtered.filter(item => item.level === this.idiomsFilterLevel);
+        }
+
+        if (searchLower) {
+            filtered = filtered.filter(item => 
+                (item.idiom && item.idiom.toLowerCase().includes(searchLower)) ||
+                (item.meaningUz && item.meaningUz.toLowerCase().includes(searchLower)) ||
+                (item.meaningRu && item.meaningRu.toLowerCase().includes(searchLower)) ||
+                (item.example && item.example.toLowerCase().includes(searchLower))
+            );
+        }
+
+        return `
+            <div class="lessons-container">
+                <!-- Navigation Crumb -->
+                <div class="lessons-nav-bar">
+                    <button class="btn-back-crumb" onclick="LessonsApp.goToStep('lang')">
+                        ${this.t('back_to_langs')}
+                    </button>
+                    <div class="crumb-current">
+                        <span style="font-size: 20px;">${langInfo.flag}</span>
+                        <strong>${langInfo.name} — Idiomalar (100+ ta)</strong>
+                    </div>
+                </div>
+
+                <!-- Explorer Header -->
+                <div class="section-header">
+                    <span class="section-badge-pill" style="background: rgba(245, 158, 11, 0.15); color: #d97706; border-color: rgba(245, 158, 11, 0.3);">
+                        🧠 A1 — C1 Boy So'zlashuv San'ati
+                    </span>
+                    <h2 class="section-title">⚡ ${langInfo.name} Idiomalari va Iboralari</h2>
+                    <p class="section-subtitle">Nutqingizni tabiiy va boy qilish uchun A1 dan C1 gacha eng kerakli 100+ ta idioma, ko'chma ma'nolar va jonli misollar!</p>
+                </div>
+
+                <!-- Toolbar: Levels & Live Search -->
+                <div class="explorer-toolbar">
+                    <div class="explorer-pills-row">
+                        <strong style="font-size: 14px; margin-right: 6px; color: var(--text-secondary);">Daraja:</strong>
+                        ${levels.map(lvl => `
+                            <button class="explorer-pill-btn ${this.idiomsFilterLevel === lvl ? 'active' : ''}" onclick="LessonsApp.filterIdiomsLevel('${lvl}')">
+                                ${lvl === 'all' ? `Barchasi (${idiomsList.length})` : lvl}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div>
+                        <input type="text" id="idioms-search-input" class="explorer-search-input" value="${this.idiomsSearch}" placeholder="Idiomani qidiring (masalan: piece of cake, omad, ko'z, rain...)" oninput="LessonsApp.filterIdiomsSearch(this.value)">
+                    </div>
+                </div>
+
+                <!-- Dynamic Results Container (updates without resetting input focus) -->
+                <div id="idioms-results-container">
+                    ${this.renderIdiomsResultsHtml(filtered)}
+                </div>
+            </div>
+        `;
+    },
+
+    // ======================================================================
+    // EXPLORER 3: GRAND VOCABULARY VIEW (10,000+ words)
+    // ======================================================================
+    openVocabulary(langId) {
+        if (window.App && typeof App.navigate === 'function' && App.currentView !== 'darslar') {
+            App.navigate('darslar');
+        }
+        this.step = 'vocabulary';
+        this.selectedLang = langId || 'en';
+        this.vocabLevel = 'all';
+        this.vocabPos = 'all';
+        this.vocabSearch = '';
+        this.vocabPage = 1;
+        this.render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+
+    setVocabLevel(lvl) {
+        this.vocabLevel = lvl;
+        this.vocabPage = 1;
+        this.render();
+    },
+
+    setVocabPos(pos) {
+        this.vocabPos = pos;
+        this.vocabPage = 1;
+        this.render();
+    },
+
+    searchVocab(query) {
+        this.vocabSearch = query;
+        this.vocabPage = 1;
+        const container = document.getElementById('vocab-results-container');
+        if (container && window.SpeakProVocabulary) {
+            const queryRes = window.SpeakProVocabulary.query(this.selectedLang, {
+                level: this.vocabLevel,
+                pos: this.vocabPos,
+                search: this.vocabSearch,
+                page: this.vocabPage,
+                limit: 50
+            });
+            container.innerHTML = this.renderVocabResultsHtml(queryRes);
+        } else {
+            this.render();
+        }
+    },
+
+    changeVocabPage(page) {
+        this.vocabPage = page;
+        const container = document.getElementById('vocab-results-container');
+        if (container && window.SpeakProVocabulary) {
+            const queryRes = window.SpeakProVocabulary.query(this.selectedLang, {
+                level: this.vocabLevel,
+                pos: this.vocabPos,
+                search: this.vocabSearch,
+                page: this.vocabPage,
+                limit: 50
+            });
+            container.innerHTML = this.renderVocabResultsHtml(queryRes);
+            const anchor = document.getElementById('vocab-results-anchor');
+            if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            this.render();
+            const anchor = document.getElementById('vocab-results-anchor');
+            if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    },
+
+    renderVocabResultsHtml(queryRes) {
+        const { items, total, page, totalPages } = queryRes;
+
+        return `
+            <!-- Results Statistics -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 14px; font-weight: 700; color: var(--text-secondary);">
+                <div>Topilgan so'zlar: <strong style="color: var(--primary);">${total.toLocaleString()} ta</strong></div>
+                <div>Sahifa: <strong>${page} / ${totalPages}</strong> (har birida 50 tadan)</div>
+            </div>
+
+            <!-- Vocabulary Cards Grid -->
+            <div class="vocab-grid">
+                ${items.length === 0 ? `
+                    <div style="grid-column: 1 / -1; padding: 48px; text-align: center; color: var(--text-muted); background: var(--bg-surface); border-radius: var(--radius-md);">
+                        Qidiruvingiz bo'yicha so'z topilmadi.
+                    </div>
+                ` : items.map(w => `
+                    <div class="vocab-card">
+                        <div class="vocab-top-row">
+                            <span class="vocab-word-main">${w.word || ''}</span>
+                            <div style="display: flex; gap: 6px; align-items: center;">
+                                <span class="vocab-pos-badge">${w.pos || 'noun'}</span>
+                                <span class="level-badge-pill level-${(w.level || 'a1').toLowerCase()}">${w.level || 'A1'}</span>
+                                <button class="btn btn-sm btn-secondary" onclick="LessonsApp.speakText('${(w.word || '').replace(/['\\]/g, '')}', '${this.selectedLang}')" title="Talaffuz">
+                                    🔊
+                                </button>
+                            </div>
+                        </div>
+                        <div class="vocab-phonetic">${w.phonetic || ''}</div>
+                        <div class="vocab-translation-row">🇺🇿 ${w.uz || ''}</div>
+                        <div class="vocab-ru-row">🇷🇺 ${w.ru || ''}</div>
+                        <div class="vocab-example-row">
+                            <strong>${w.example || ''}</strong><br>
+                            <span style="opacity: 0.85;">${w.exampleTr || ''}</span>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+
+            <!-- Pagination Bar -->
+            ${totalPages > 1 ? `
+                <div class="vocab-pagination-bar">
+                    <button class="page-btn" ${page <= 1 ? 'disabled' : ''} onclick="LessonsApp.changeVocabPage(1)" title="Birinchi sahifa">
+                        ⏮ 1
+                    </button>
+                    <button class="page-btn" ${page <= 1 ? 'disabled' : ''} onclick="LessonsApp.changeVocabPage(${page - 1})">
+                        ◀ Oldingi
+                    </button>
+
+                    ${(() => {
+                        let btns = '';
+                        const start = Math.max(1, page - 2);
+                        const end = Math.min(totalPages, page + 2);
+                        for (let p = start; p <= end; p++) {
+                            btns += `<button class="page-btn ${p === page ? 'active' : ''}" onclick="LessonsApp.changeVocabPage(${p})">${p}</button>`;
+                        }
+                        return btns;
+                    })()}
+
+                    <button class="page-btn" ${page >= totalPages ? 'disabled' : ''} onclick="LessonsApp.changeVocabPage(${page + 1})">
+                        Keyingi ▶
+                    </button>
+                    <button class="page-btn" ${page >= totalPages ? 'disabled' : ''} onclick="LessonsApp.changeVocabPage(${totalPages})" title="Oxirgi sahifa">
+                        ${totalPages} ⏭
+                    </button>
+                </div>
+            ` : ''}
+        `;
+    },
+
+    renderStepVocabulary() {
+        const langInfo = this.getLangInfo(this.selectedLang);
+        const queryRes = window.SpeakProVocabulary ? window.SpeakProVocabulary.query(this.selectedLang, {
+            level: this.vocabLevel,
+            pos: this.vocabPos,
+            search: this.vocabSearch,
+            page: this.vocabPage,
+            limit: 50
+        }) : { items: [], total: 0, page: 1, totalPages: 1, levelCounts: { all: 10000, A1: 2000, A2: 2000, B1: 2000, B2: 2000, C1: 2000 } };
+
+        const { levelCounts } = queryRes;
+
+        const levels = [
+            { id: 'all', label: `Barchasi (${levelCounts.all.toLocaleString()}+)` },
+            { id: 'A1', label: `A1: Boshlang'ich (${levelCounts.A1.toLocaleString()})` },
+            { id: 'A2', label: `A2: Elementar (${levelCounts.A2.toLocaleString()})` },
+            { id: 'B1', label: `B1: O'rta (${levelCounts.B1.toLocaleString()})` },
+            { id: 'B2', label: `B2: Yuqori O'rta (${levelCounts.B2.toLocaleString()})` },
+            { id: 'C1', label: `C1: Mukammal (${levelCounts.C1.toLocaleString()})` }
+        ];
+
+        const posList = [
+            { id: 'all', label: 'Barcha so\'zlar' },
+            { id: 'noun', label: 'Ot (Noun)' },
+            { id: 'verb', label: 'Fe\'l (Verb)' },
+            { id: 'adj', label: 'Sifat (Adjective)' },
+            { id: 'adv', label: 'Ravish (Adverb)' }
+        ];
+
+        return `
+            <div class="lessons-container" id="vocab-results-anchor">
+                <!-- Navigation Crumb -->
+                <div class="lessons-nav-bar">
+                    <button class="btn-back-crumb" onclick="LessonsApp.goToStep('lang')">
+                        ${this.t('back_to_langs')}
+                    </button>
+                    <div class="crumb-current">
+                        <span style="font-size: 20px;">${langInfo.flag}</span>
+                        <strong>${langInfo.name} — Katta Lug'at (10,000+ so'z)</strong>
+                    </div>
+                </div>
+
+                <!-- Explorer Header -->
+                <div class="section-header">
+                    <span class="section-badge-pill" style="background: rgba(99, 102, 241, 0.15); color: #4f46e5; border-color: rgba(99, 102, 241, 0.3);">
+                        📚 Katta Akademik Lug'at Bazasi
+                    </span>
+                    <h2 class="section-title">📖 ${langInfo.name} To'liq Lug'atlar Ensiklopediyasi</h2>
+                    <p class="section-subtitle">A1 dan C1 gacha 10,000+ so'z, transkripsiya, talaffuz, so'z turkumlari, o'zbekcha va ruscha ma'nolari hamda namunaviy gaplar!</p>
+                </div>
+
+                <!-- Filters & Live Search Toolbar -->
+                <div class="explorer-toolbar">
+                    <!-- CEFR Level Tabs -->
+                    <div class="explorer-pills-row">
+                        <strong style="font-size: 13px; color: var(--text-secondary); margin-right: 4px;">Daraja:</strong>
+                        ${levels.map(l => `
+                            <button class="explorer-pill-btn ${this.vocabLevel === l.id ? 'active' : ''}" onclick="LessonsApp.setVocabLevel('${l.id}')">
+                                ${l.label}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <!-- Part of Speech Tabs -->
+                    <div class="explorer-pills-row">
+                        <strong style="font-size: 13px; color: var(--text-secondary); margin-right: 4px;">Turkum:</strong>
+                        ${posList.map(p => `
+                            <button class="explorer-pill-btn ${this.vocabPos === p.id ? 'active' : ''}" onclick="LessonsApp.setVocabPos('${p.id}')">
+                                ${p.label}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <!-- Search Input -->
+                    <div>
+                        <input type="text" id="vocab-search-input" class="explorer-search-input" value="${this.vocabSearch}" placeholder="So'z yoki tarjimani qidiring (masalan: apple, erishmoq, город, machen, innovatsiya)..." oninput="LessonsApp.searchVocab(this.value)">
+                    </div>
+                </div>
+
+                <!-- Dynamic Results Container (updates without resetting input focus) -->
+                <div id="vocab-results-container">
+                    ${this.renderVocabResultsHtml(queryRes)}
+                </div>
+            </div>
+        `;
+    },
+
+    // Speech Audio Helper
+    speakText(text, lang) {
+        if (typeof speakForeignWord === 'function') {
+            speakForeignWord(text, lang || this.selectedLang || 'en');
+        } else if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = lang === 'ru' ? 'ru-RU' : (lang === 'de' ? 'de-DE' : 'en-US');
+            window.speechSynthesis.speak(u);
+        }
     }
 };
 
