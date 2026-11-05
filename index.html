@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakPro — Tillarni Oson, Qiziqarli va Raqobat Ruhida O'rganing!</title>
+    <meta name="description" content="SpeakPro — Ingliz tili, Rus tili va Nemis tilini o'rganish uchun interaktiv platforma. 1vs1, 6 kishilik bellashuv va yozish musobaqalari.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- TOP HEADER -->
+    <header class="site-header">
+        <!-- 1. Tepa qator: Chapda SpeakPro logosi va yozuvi, O'ngda Star hisobi va Kirish/Ro'yxatdan o'tish -->
+        <div class="header-top-row">
+            <!-- Tepa chap burchak: SpeakPro logo va yozuvi -->
+            <div class="brand-container" data-view="home">
+                <div class="brand-logo-mark">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        <path d="M12 7l1.2 2.5 2.8.4-2 2 .5 2.8-2.5-1.3-2.5 1.3.5-2.8-2-2 2.8-.4z" fill="#ffffff" stroke="none"></path>
+                    </svg>
+                </div>
+                <div class="brand-text-block">
+                    <div class="brand-title-row">
+                        <span class="brand-title">SpeakPro</span>
+                        <span class="brand-badge-pro">PRO</span>
+                    </div>
+                    <span class="brand-tagline">
+                        <span class="dot"></span> "Planeta" o'quv markazi
+                    </span>
+                </div>
+            </div>
+
+            <!-- Tepa o'ng burchak: Yulduzlar hisobi, Mavzu almashuvi va Kirish / Profil -->
+            <div class="header-actions">
+                <!-- Theme Toggler (Light / Dark) -->
+                <button class="btn-theme-toggle" id="btn-theme-toggle" title="Mavzuni almashtirish (Kunduzgi/Tungi)" aria-label="Mavzu">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+
+                <!-- Star Pill Counter -->
+                <div class="star-counter-pill" data-view="star" title="Yulduzlaringiz hisobi (Do'konda sovg'alarga almashtiring)">
+                    <svg class="star-icon-svg" viewBox="0 0 24 24" fill="url(#goldGradient)" stroke="#d97706" stroke-width="1.5">
+                        <defs>
+                            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fde047" />
+                                <stop offset="50%" stop-color="#f59e0b" />
+                                <stop offset="100%" stop-color="#d97706" />
+                            </linearGradient>
+                        </defs>
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span id="nav-user-stars">350 ⭐</span>
+                </div>
+
+                <!-- Foydalanuvchi tizimga kirgan holat -->
+                <div class="user-profile-badge" id="nav-profile-group" data-view="sozlamalar" title="Profil sozlamalari">
+                    <div class="profile-avatar-circle" id="nav-user-avatar">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="profile-meta-col">
+                        <span class="profile-name" id="nav-user-name">Azizbek</span>
+                        <span class="profile-sub">O'quvchi</span>
+                    </div>
+                </div>
+
+                <!-- Ro'yxatdan o'tish / Kirish tugmalari -->
+                <div class="header-auth-group" id="nav-auth-buttons" style="display: none;">
+                    <button class="btn btn-secondary btn-sm" id="btn-open-login">Kirish</button>
+                    <button class="btn btn-primary btn-sm" id="btn-open-register">Ro'yxatdan o'tish</button>
+                </div>
+
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menyuni ochish">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. Shuning pastida qator menyu -->
+        <nav class="header-nav-row">
+            <div class="nav-container">
+                <ul class="main-nav-list">
+                    <!-- Asosiy -->
+                    <li class="nav-item">
+                        <a class="nav-menu-link active" data-view="home">
+                            <span class="nav-link-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </span>
+                            Asosiy
+                        </a>
+                    </li>
+
+                    <!-- Tillar -->
+                    <li class="nav-item">
+                        <a class="nav-menu-link" data-view="tillar">
+                            <span class="nav-link-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                </svg>
+                            </span>
+                            Tillar
+                        </a>
+                    </li>
+
+                    <!-- Darslar -->
+                    <li class="nav-item">
+                        <a class="nav-menu-link" data-view="darslar">
+                            <span class="nav-link-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                </svg>
+                            </span>
+                            Darslar
+                        </a>
+                    </li>
+
+                    <!-- Reyting -->
+                    <li class="nav-item">
+                        <a class="nav-menu-link" data-view="reyting">
+                            <span class="nav-link-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            </span>
+                            Reyting
+                        </a>
+                    </li>
+
+                    <!-- Star -->
+                    <li class="nav-item">
+                        <a class="nav-menu-link" data-view="star">
+                            <span class="nav-link-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="8" r="7"></circle>
+                                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                                </svg>
+                            </span>
+                            Star
+                        </a>
+                    </li>
+
+                    <!-- Mini games (ochiluvchi menyu) -->
+                    <li class="nav-item has-dropdown" id="nav-games-dropdown">
+                        <a class="nav-menu-link" data-view="games-parent">
+                            <span class="nav-link-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                                    <line x1="6" y1="12" x2="10" y2="12"></line>
+                                    <line x1="8" y1="10" x2="8" y2="14"></line>
+                                    <circle cx="15" cy="11" r="1"></circle>
+                                    <circle cx="17" cy="13" r="1"></circle>
+                                </svg>
+                            </span>
+                            Mini games
+                            <svg class="dropdown-chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </a>
+                        <div class="sub-menu-dropdown">
+                            <!-- 1 vs 1 -->
+                            <a class="sub-menu-item" data-view="game-1v1">
+                                <div class="sub-game-icon-box icon-1v1">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                    </svg>
+                                </div>
+                                <div class="sub-game-text">
+                                    <span class="sub-game-title">1 vs 1 lug'at bellashuv</span>
+                                    <span class="sub-game-desc">Raqib bilan yakkama-yakka duel</span>
+                                </div>
+                                <span class="sub-game-pill pill-hot">JONLI</span>
+                            </a>
+
+                            <!-- 6 kishilik -->
+                            <a class="sub-menu-item" data-view="game-6p">
+                                <div class="sub-game-icon-box icon-6p">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                                <div class="sub-game-text">
+                                    <span class="sub-game-title">Lug'at bellashuv 6 kishilik</span>
+                                    <span class="sub-game-desc">6 nafar o'quvchi xonasi</span>
+                                </div>
+                            </a>
+
+                            <!-- 2 vs 2 -->
+                            <a class="sub-menu-item" data-view="game-2v2">
+                                <div class="sub-game-icon-box icon-2v2">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                        <line x1="6" y1="8" x2="6.01" y2="8"></line>
+                                        <line x1="10" y1="8" x2="10.01" y2="8"></line>
+                                        <line x1="14" y1="8" x2="14.01" y2="8"></line>
+                                        <line x1="18" y1="8" x2="18.01" y2="8"></line>
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <div class="sub-game-text">
+                                    <span class="sub-game-title">Yozish 2 vs 2</span>
+                                    <span class="sub-game-desc">Jamoaviy tezkor yozish poygasi</span>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+
+                    <!-- Sozlamalar -->
+                    <li class="nav-item">
+                        <a class="nav-menu-link" data-view="sozlamalar">
+                            <span class="nav-link-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </span>
+                            Sozlamalar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Mobil menyu paneli (Faqat mobil ekranda burger bosilganda ochiladi) -->
+        <div class="mobile-nav-panel" id="mobile-nav-panel">
+            <a class="nav-menu-link" data-view="home">🏠 Asosiy sahifa</a>
+            <a class="nav-menu-link" data-view="tillar">🌐 Tillar</a>
+            <a class="nav-menu-link" data-view="darslar">📚 Darslar</a>
+            <a class="nav-menu-link" data-view="reyting">🏆 Reyting</a>
+            <a class="nav-menu-link" data-view="star">⭐ Star (Yulduzlar)</a>
+            <div style="padding: 10px 0; border-top: 1px solid var(--border-card); border-bottom: 1px solid var(--border-card); margin: 6px 0;">
+                <div style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: var(--text-muted); padding: 4px 16px;">Mini Games:</div>
+                <a class="sub-menu-item" data-view="game-1v1">⚡ 1 vs 1 lug'at bellashuv</a>
+                <a class="sub-menu-item" data-view="game-6p">👥 Lug'at bellashuv 6 kishilik</a>
+                <a class="sub-menu-item" data-view="game-2v2">⌨️ Yozish 2 vs 2</a>
+            </div>
+            <a class="nav-menu-link" data-view="sozlamalar">⚙️ Sozlamalar</a>
+        </div>
+    </header>
+
+    <!-- ASOSIY MATN VA SAHIFALAR (SINGLE PAGE ROUTER) -->
+    <main class="main-content">
+
+        <!-- ==============================================================
+             1. ASOSIY SAHIFA (HOME) — USER BUYURTMASI BO'YICHA MATNLAR
+             ============================================================== -->
+        <section class="app-view active" id="view-home">
+            <!-- Hero banner card -->
+            <div class="home-hero-card">
+                <div class="hero-planeta-seal">
+                    <svg class="hero-seal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(-30 12 12)"></ellipse>
+                    </svg>
+                    "Planeta" O'quv Markazi Loyihasi • 2026
+                </div>
+
+                <h1 class="hero-main-title">
+                    SpeakPro haqida — <span class="gradient-text">Tillarni oson, qiziqarli va raqobat ruhida o'rganing!</span>
+                </h1>
+
+                <p class="hero-description">
+                    SpeakPro — bu zamonaviy va interaktiv til o'rganish platformasi bo'lib, u til o'rganishni zerikarli yodlash jarayonidan qiziqarli sarguzashtga aylantirish uchun yaratilgan. Bizning asosiy maqsadimiz — har bir o'quvchiga sifatli ta'limni qulay va motivatsion muhitda taqdim etish.
+                </p>
+
+                <div class="hero-actions-row">
+                    <button class="btn btn-primary btn-lg" onclick="App.navigate('tillar')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        Darslarni Tanlash
+                    </button>
+                    <button class="btn btn-secondary btn-lg" onclick="App.navigate('game-1v1')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                        1 vs 1 Bellashuvga Kirish
+                    </button>
+                    <button class="btn btn-outline-primary btn-lg" onclick="App.navigate('star')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                            <rect x="2" y="7" width="20" height="5"></rect>
+                            <line x1="12" y1="22" x2="12" y2="7"></line>
+                        </svg>
+                        Sovg'alar Do'koni
+                    </button>
+                </div>
+
+                <!-- Metrics ribbon -->
+                <div class="hero-metrics-ribbon">
+                    <div class="metric-item">
+                        <div class="metric-icon-box">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="metric-text-box">
+                            <span class="metric-number">28,500+</span>
+                            <span class="metric-label">Faol o'quvchilar</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-icon-box">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </div>
+                        <div class="metric-text-box">
+                            <span class="metric-number">450,000+</span>
+                            <span class="metric-label">Topshirilgan yulduzlar</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-icon-box">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="8" r="7"></circle>
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                            </svg>
+                        </div>
+                        <div class="metric-text-box">
+                            <span class="metric-number">3 Ta Asosiy Til</span>
+                            <span class="metric-label">Ingliz, Rus, Nemis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Qaysi tillarni o'rganish mumkin? -->
+            <div class="section-block">
+                <div class="section-header">
+                    <span class="section-badge-pill">Global Muloqot</span>
+                    <h2 class="section-title">🌐 Qaysi tillarni o'rganish mumkin?</h2>
+                    <p class="section-subtitle">
+                        Platformamizda dunyodagi eng ommabop va talab yuqori bo'lgan 3 ta xorijiy tilni mukammal o'zlashtirishingiz mumkin:
+                    </p>
+                </div>
+
+                <div class="languages-grid">
+                    <!-- Ingliz tili -->
+                    <div class="luxury-lang-card">
+                        <div class="lang-card-header">
+                            <!-- Circular Vector Flag UK -->
+                            <div class="vector-flag-emblem">
+                                <svg viewBox="0 0 60 60" width="64" height="64">
+                                    <clipPath id="ukClip"><circle cx="30" cy="30" r="30"/></clipPath>
+                                    <g clip-path="url(#ukClip)">
+                                        <rect width="60" height="60" fill="#012169"/>
+                                        <path d="M0 0 L60 60 M60 0 L0 60" stroke="#fff" stroke-width="10"/>
+                                        <path d="M0 0 L60 60 M60 0 L0 60" stroke="#C8102E" stroke-width="6"/>
+                                        <path d="M30 0 v60 M0 30 h60" stroke="#fff" stroke-width="16"/>
+                                        <path d="M30 0 v60 M0 30 h60" stroke="#C8102E" stroke-width="10"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            <span class="lang-card-native">English</span>
+                        </div>
+                        <h3 class="lang-card-title">🇬🇧 Ingliz tili</h3>
+                        <p class="lang-card-desc">
+                            Xalqaro biznes, IT sohasi, chet el sayohati va global ilmiy maqolalar uchun asosiy raqamli til. A1 dan C1 gacha mukammal darslar.
+                        </p>
+
+                        <!-- Audio example snippet -->
+                        <div class="audio-sample-strip">
+                            <div>
+                                <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Jonli Talaffuz:</div>
+                                <div class="sample-phrase-text">"Welcome to SpeakPro"</div>
+                            </div>
+                            <button class="sample-listen-btn" onclick="speakForeignWord('Welcome to SpeakPro', 'en-US')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                </svg>
+                                Eshitish
+                            </button>
+                        </div>
+
+                        <div class="lang-highlights-list">
+                            <div class="highlight-row">
+                                <svg class="highlight-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>3,500+ faol lug'at boyligi</span>
+                            </div>
+                            <div class="highlight-row">
+                                <svg class="highlight-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Jonli talaffuz va eshitib tushunish</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary w-full" onclick="App.selectLanguageAndLearn('en')">
+                            Ingliz Tilini Boshlash 🚀
+                        </button>
+                    </div>
+
+                    <!-- Rus tili -->
+                    <div class="luxury-lang-card">
+                        <div class="lang-card-header">
+                            <!-- Circular Vector Flag RU -->
+                            <div class="vector-flag-emblem">
+                                <svg viewBox="0 0 60 60" width="64" height="64">
+                                    <clipPath id="ruClip"><circle cx="30" cy="30" r="30"/></clipPath>
+                                    <g clip-path="url(#ruClip)">
+                                        <rect y="0" width="60" height="20" fill="#ffffff"/>
+                                        <rect y="20" width="60" height="20" fill="#0039A6"/>
+                                        <rect y="40" width="60" height="20" fill="#D52B1E"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            <span class="lang-card-native">Русский</span>
+                        </div>
+                        <h3 class="lang-card-title">🇷🇺 Rus tili</h3>
+                        <p class="lang-card-desc">
+                            MDH mamlakatlari bo'ylab keng qo'llaniladigan va savdo-sotiq hamda ilmiy sohalarda erkin so'zlashishni ta'minlaydigan boy til.
+                        </p>
+
+                        <!-- Audio example snippet -->
+                        <div class="audio-sample-strip">
+                            <div>
+                                <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Jonli Talaffuz:</div>
+                                <div class="sample-phrase-text">"Добро пожаловать"</div>
+                            </div>
+                            <button class="sample-listen-btn" onclick="speakForeignWord('Добро пожаловать в СпикПро', 'ru-RU')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                </svg>
+                                Eshitish
+                            </button>
+                        </div>
+
+                        <div class="lang-highlights-list">
+                            <div class="highlight-row">
+                                <svg class="highlight-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>2,800+ so'z va iboralar</span>
+                            </div>
+                            <div class="highlight-row">
+                                <svg class="highlight-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Kundalik suhbat va amaliy grammatika</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary w-full" onclick="App.selectLanguageAndLearn('ru')">
+                            Rus Tilini Boshlash 🚀
+                        </button>
+                    </div>
+
+                    <!-- Nemis tili -->
+                    <div class="luxury-lang-card">
+                        <div class="lang-card-header">
+                            <!-- Circular Vector Flag DE -->
+                            <div class="vector-flag-emblem">
+                                <svg viewBox="0 0 60 60" width="64" height="64">
+                                    <clipPath id="deClip"><circle cx="30" cy="30" r="30"/></clipPath>
+                                    <g clip-path="url(#deClip)">
+                                        <rect y="0" width="60" height="20" fill="#000000"/>
+                                        <rect y="20" width="60" height="20" fill="#DD0000"/>
+                                        <rect y="40" width="60" height="20" fill="#FFCE00"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            <span class="lang-card-native">Deutsch</span>
+                        </div>
+                        <h3 class="lang-card-title">🇩🇪 Nemis tili</h3>
+                        <p class="lang-card-desc">
+                            Germaniya, Avstriya va Shveytsariyada nufuzli universitetlarda bepul ta'lim olish va yuqori daromadli mutaxassislik sari yo'llanma.
+                        </p>
+
+                        <!-- Audio example snippet -->
+                        <div class="audio-sample-strip">
+                            <div>
+                                <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Jonli Talaffuz:</div>
+                                <div class="sample-phrase-text">"Willkommen bei SpeakPro"</div>
+                            </div>
+                            <button class="sample-listen-btn" onclick="speakForeignWord('Willkommen bei SpeakPro', 'de-DE')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                </svg>
+                                Eshitish
+                            </button>
+                        </div>
+
+                        <div class="lang-highlights-list">
+                            <div class="highlight-row">
+                                <svg class="highlight-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>2,400+ nemischa leksika</span>
+                            </div>
+                            <div class="highlight-row">
+                                <svg class="highlight-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Goethe/Telc imtihonlariga tayyorlov</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary w-full" onclick="App.selectLanguageAndLearn('de')">
+                            Nemis Tilini Boshlash 🚀
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Musobaqa va Yulduzlar tizimi (Star) -->
+            <div class="section-block">
+                <div class="section-header">
+                    <span class="section-badge-pill">Gamifikatsiya & Sovrinlar</span>
+                    <h2 class="section-title">🏆 Musobaqa va Yulduzlar tizimi (Star)</h2>
+                    <p class="section-subtitle">
+                        SpeakPro shunchaki darslik emas, bu haqiqiy bilimlar arenasidir! Bizda o'qish jarayoni yanada qiziqarli bo'lishi uchun maxsus gamifikatsiya tizimi joriy qilingan:
+                    </p>
+                </div>
+
+                <div class="gamification-grid">
+                    <!-- O'zaro musobaqalar -->
+                    <div class="luxury-feature-card">
+                        <div class="card-top-crest crest-duel">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline>
+                                <line x1="13" y1="19" x2="19" y2="13"></line>
+                                <line x1="16" y1="16" x2="20" y2="20"></line>
+                                <line x1="19" y1="21" x2="21" y2="19"></line>
+                                <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"></polyline>
+                                <line x1="5" y1="14" x2="9" y2="18"></line>
+                                <line x1="7" y1="17" x2="4" y2="20"></line>
+                                <line x1="3" y1="19" x2="5" y2="21"></line>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">O'zaro musobaqalar</h3>
+                        <p class="feature-description">
+                            Boshqa o'quvchilar bilan bellashing, o'z bilimingizni sinovdan o'tkazing va reyting jadvalida yuqori o'rinlarni egallang.
+                        </p>
+                        <span class="feature-pill-badge pill-gold">1v1, 6 kishilik, 2v2 rejimlar</span>
+                    </div>
+
+                    <!-- Yulduzlar (Star) yig'ing -->
+                    <div class="luxury-feature-card">
+                        <div class="card-top-crest crest-star">
+                            <svg width="34" height="34" viewBox="0 0 24 24" fill="url(#goldGradient2)" stroke="#d97706" stroke-width="1.5">
+                                <defs>
+                                    <linearGradient id="goldGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#fff" />
+                                        <stop offset="100%" stop-color="#fef08a" />
+                                    </linearGradient>
+                                </defs>
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Yulduzlar (Star) yig'ing</h3>
+                        <p class="feature-description">
+                            Har bir bajarilgan dars, muvaffaqiyatli topshiriq va g'alaba uchun maxsus yulduzlar bilan taqdirlanasiz.
+                        </p>
+                        <span class="feature-pill-badge pill-gold">Har bir g'alaba uchun +5 ⭐ gacha</span>
+                    </div>
+
+                    <!-- Sovg'alar va mukofotlar -->
+                    <div class="luxury-feature-card">
+                        <div class="card-top-crest crest-gift">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                                <rect x="2" y="7" width="20" height="5"></rect>
+                                <line x1="12" y1="22" x2="12" y2="7"></line>
+                                <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                                <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Sovg'alar va mukofotlar</h3>
+                        <p class="feature-description">
+                            To'plagan yulduzlaringizni o'zingiz yoqtirgan qimmatli sovg'alar va esdalik narsalariga almashtiring! O'qigansari mukofot oling!
+                        </p>
+                        <span class="feature-pill-badge pill-gold">Ryukzak, Hoodie, AirPods va Kurslar</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ilova haqida -->
+            <div class="section-block">
+                <div class="about-planeta-card">
+                    <div class="about-app-info">
+                        <h3 class="about-app-title">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                            </svg>
+                            📱 Ilova haqida
+                        </h3>
+                        <div class="about-app-meta-list">
+                            <div class="about-meta-row">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <span>📅 <strong>Yaratilgan yili:</strong> 2026-yil</span>
+                            </div>
+                            <div class="about-meta-row">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                                <span>🏢 <strong>Tashkilotchi / Muallif:</strong> "Planeta" o'quv markazi</span>
+                            </div>
+                        </div>
+                        <div class="copyright-legal-block">
+                            <strong>Mualliflik huquqi:</strong> © 2026 "Planeta" o'quv markazi. Barcha huquqlar himoyalangan. Materiallardan nusxa ko'chirish, ularni tarqatish yoki tijorat maqsadida foydalanish qat'iyan taqiqlanadi.
+                        </div>
+                    </div>
+                    <div class="planeta-hologram-seal">
+                        <svg class="hologram-logo" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="1.8">
+                            <circle cx="12" cy="12" r="8"></circle>
+                            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-25 12 12)"></ellipse>
+                        </svg>
+                        <div class="hologram-name">Planeta</div>
+                        <div class="hologram-year">EST. 2026</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==============================================================
+             2. TILLAR SAHIFASI
+             ============================================================== -->
+        <section class="app-view" id="view-tillar">
+            <div class="section-header">
+                <span class="section-badge-pill">Tillarni O'zlashtirish</span>
+                <h2 class="section-title">🌐 Xorijiy Tillar Bo'limi</h2>
+                <p class="section-subtitle">O'zingizga qulay tilni tanlang va audio talaffuzlar orqali so'z boyligingizni oshiring.</p>
+            </div>
+            <div class="languages-grid" id="languages-cards-container">
+                <!-- JavaScript orqali to'ldiriladi -->
+            </div>
+        </section>
+
+
+        <!-- ==============================================================
+             3. DARSLAR SAHIFASI (Multi-level, Videos, Dialogues, Tests)
+             ============================================================== -->
+        <section class="app-view" id="view-darslar">
+            <div id="lessons-dynamic-root">
+                <!-- LessonsApp orqali dinamik tarzda to'ldiriladi -->
+            </div>
+        </section>
+
+
+        <!-- ==============================================================
+             4. REYTING SAHIFASI
+             ============================================================== -->
+        <section class="app-view" id="view-reyting">
+            <div class="section-header">
+                <span class="section-badge-pill">Peshqadamlar Arenasi</span>
+                <h2 class="section-title">🏆 O'quvchilar Reytingi</h2>
+                <p class="section-subtitle">Eng faol va bilimdon o'quvchilar ligasi. Bellashing va yuqori o'rinni zabt eting!</p>
+            </div>
+
+            <div class="leaderboard-table-container">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px; text-align: center;">O'rin</th>
+                            <th>O'quvchi</th>
+                            <th>Liga</th>
+                            <th>G'alabalar</th>
+                            <th>To'plangan Yulduzlar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-tbody">
+                        <!-- JavaScript orqali to'ldiriladi -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <!-- ==============================================================
+             5. STAR (YULDUZLAR VA SOVG'ALAR TIZIMI)
+             ============================================================== -->
+        <section class="app-view" id="view-star">
+            <div class="star-balance-hero">
+                <div class="star-balance-info">
+                    <h2>⭐ Sizning Yulduzlaringiz</h2>
+                    <p>Darslarni tamomlash, 1vs1 va 6 kishilik bellashuvlarda g'alaba qozonish orqali ko'proq yulduz to'plang!</p>
+                </div>
+                <div class="star-balance-badge" id="star-page-counter">
+                    350 ⭐
+                </div>
+            </div>
+
+            <div class="section-header">
+                <span class="section-badge-pill">Mukofotlar Bozori</span>
+                <h2 class="section-title">🎁 Sovg'alar va Mukofotlar Do'koni</h2>
+                <p class="section-subtitle">To'plagan yulduzlaringizni "Planeta" o'quv markazining esdalik sovg'alari va vaucherlariga almashtiring!</p>
+            </div>
+
+            <div class="star-store-grid" id="star-store-grid">
+                <!-- JavaScript orqali to'ldiriladi -->
+            </div>
+        </section>
+
+
+        <!-- ==============================================================
+             6. MINI GAME 1: 1 VS 1 LUG'AT BELLASHUV
+             ============================================================== -->
+        <section class="app-view" id="view-game-1v1">
+            <div class="game-view-container">
+                <!-- O'yin haqida bo'limi -->
+                <div class="game-about-box" id="game1v1-about-section">
+                    <div class="game-hero-icon-box icon-1v1">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                    </div>
+                    <h2 class="game-about-title">1 vs 1 Lug'at Bellashuvi</h2>
+                    <p class="game-about-desc">
+                        Boshqa o'quvchi bilan yuzma-yuz lug'at bilimini sinovdan o'tkazuvchi tezkor duel. 5 ta raund davomida berilgan so'zning to'g'ri tarjimasini eng tez topgan ishtirokchi g'olib bo'ladi!
+                    </p>
+                    
+                    <div class="game-rules-list">
+                        <div class="game-rule-item">
+                            <div class="rule-number-badge">1</div>
+                            <div><strong>O'yin tuzilishi:</strong> 5 ta raund. Har bir raund uchun 10 soniya vaqt beriladi.</div>
+                        </div>
+                        <div class="game-rule-item">
+                            <div class="rule-number-badge">2</div>
+                            <div><strong>Ballar:</strong> Tezroq va to'g'ri javob bergan ishtirokchi ko'proq ballga ega bo'ladi (maksimal 120 ball).</div>
+                        </div>
+                        <div class="game-rule-item">
+                            <div class="rule-number-badge">3</div>
+                            <div><strong>Yulduzlar mukofoti:</strong> G'alaba qozongan o'quvchi <strong>+5 ⭐</strong> oladi, mag'lubiyat uchun <strong>0 ⭐</strong> (5 - 0).</div>
+                        </div>
+                    </div>
+
+                    <div class="game-setup-row">
+                        <label for="game1v1-lang-select" style="font-weight: 800; font-size: 15px;">Qaysi tilda bellashasiz?</label>
+                        <select id="game1v1-lang-select" class="game-select-input">
+                            <option value="en">🇬🇧 Ingliz tili</option>
+                            <option value="ru">🇷🇺 Rus tili</option>
+                            <option value="de">🇩🇪 Nemis tili</option>
+                        </select>
+                        <button class="btn btn-primary btn-lg" id="btn-start-1v1">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            O'yinni Boshlash!
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Jonli O'yin Arenasi -->
+                <div class="game-arena" id="game1v1-arena-section">
+                    <div class="arena-top-bar">
+                        <div class="round-badge" id="game1v1-round-badge">Raund 1 / 5</div>
+                        <div class="arena-timer-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span id="game1v1-timer-text">10s</span>
+                        </div>
+                    </div>
+
+                    <!-- Duel ishtirokchilari -->
+                    <div class="opponents-duel-header">
+                        <div class="player-duel-card">
+                            <div class="duel-avatar">👨‍🎓</div>
+                            <div class="duel-info">
+                                <span class="duel-name">Siz (O'quvchi)</span>
+                                <span class="duel-score" id="game1v1-user-score">0</span>
+                            </div>
+                        </div>
+                        <div class="vs-badge-circle">VS</div>
+                        <div class="player-duel-card right-side">
+                            <div class="duel-avatar" id="game1v1-opponent-avatar">👩‍🎓</div>
+                            <div class="duel-info">
+                                <span class="duel-name" id="game1v1-opponent-name">Raqib</span>
+                                <span class="duel-score" id="game1v1-opponent-score">0</span>
+                                <span class="opp-status text-green" id="game1v1-opp-status">O'ylamoqda...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Savol qutisi -->
+                    <div class="question-box">
+                        <div class="question-foreign-word" id="game1v1-question-word">Knowledge</div>
+                        <div class="question-phonetic" id="game1v1-phonetic">/ˈnɒl.ɪdʒ/</div>
+                        <button class="btn btn-sm btn-secondary" id="game1v1-listen-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            Talaffuzni tinglash
+                        </button>
+                    </div>
+
+                    <!-- 4 ta variant tugmalari -->
+                    <div class="game-options-grid" id="game1v1-options-container">
+                        <!-- Variantlar JavaScript orqali joylanadi -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==============================================================
+             7. MINI GAME 2: LUG'AT BELLASHUV 6 KISHILIK
+             ============================================================== -->
+        <section class="app-view" id="view-game-6p">
+            <div class="game-view-container">
+                <!-- O'yin haqida bo'limi -->
+                <div class="game-about-box" id="game6p-about-section">
+                    <div class="game-hero-icon-box icon-6p">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h2 class="game-about-title">Lug'at Bellashuv — 6 Kishilik Xona</h2>
+                    <p class="game-about-desc">
+                        6 nafar o'quvchi bir xonaga yig'ilib, bir vaqtning o'zida bir xil savollarga javob beradilar. Tezkorlik va so'z boyligi bo'yicha eng kuchlilar saralanadi!
+                    </p>
+                    
+                    <div class="game-rules-list">
+                        <div class="game-rule-item">
+                            <div class="rule-number-badge">1</div>
+                            <div><strong>Xona sig'imi:</strong> 6 ta ishtirokchi jonli ravishda raqobatlashadi.</div>
+                        </div>
+                        <div class="game-rule-item">
+                            <div class="rule-number-badge">2</div>
+                            <div><strong>Tezkorlik muhim:</strong> Birinchi to'g'ri javob bergan ishtirokchi eng ko'p ball oladi (100 ball, 80 ball, 60 ball...).</div>
+                        </div>
+                        <div class="game-rule-item">
+                            <div class="rule-number-badge">3</div>
+                            <div><strong>Shoxsupa mukofotlari:</strong> 1-o'rin <strong>+3 ⭐</strong>, 2-o'rin <strong>+2 ⭐</strong>, 3-o'rin <strong>+1 ⭐</strong>, qolgan o'rinlarga 0 ⭐.</div>
+                        </div>
+                    </div>
+
+                    <div class="game-setup-row">
+                        <label for="game6p-lang-select" style="font-weight: 800; font-size: 15px;">Bellashuv tili:</label>
+                        <select id="game6p-lang-select" class="game-select-input">
+                            <option value="en">🇬🇧 Ingliz tili</option>
+                            <option value="ru">🇷🇺 Rus tili</option>
+                            <option value="de">🇩🇪 Nemis tili</option>
+                        </select>
+                        <button class="btn btn-primary btn-lg" id="btn-start-6p">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                            6 Kishilik Xonaga Kirish va Boshlash!
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 6 Kishilik O'yin Arenasi -->
+                <div class="game-arena" id="game6p-arena-section">
+                    <div class="arena-top-bar">
+                        <div class="round-badge" id="game6p-round-badge">Raund 1 / 5</div>
+                        <div class="arena-timer-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span id="game6p-timer-text">10s</span>
+                        </div>
+                    </div>
+
+                    <!-- 6 ta ishtirokchining jonli o'rinlari -->
+                    <div class="players-6-grid" id="game6p-players-grid">
+                        <!-- JavaScript orqali joylanadi -->
+                    </div>
+
+                    <!-- Savol -->
+                    <div class="question-box">
+                        <div class="question-foreign-word" id="game6p-question-word">Opportunity</div>
+                        <div class="question-phonetic" id="game6p-phonetic">/ˌɒp.əˈtjuː.nə.ti/</div>
+                        <button class="btn btn-sm btn-secondary" id="game6p-listen-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            Talaffuzni tinglash
+                        </button>
+                    </div>
+
+                    <!-- Variantlar -->
+                    <div class="game-options-grid" id="game6p-options-container">
+                        <!-- Variantlar -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==============================================================
+             8. MINI GAME 3: YOZISH 2 VS 2
+             ============================================================== -->
+        <section class="app-view" id="view-game-2v2">
+            <div class="game-view-container">
+                <!-- O'yin haqida bo'limi -->
+                <div class="game-about-box" id="game2v2-about-section">
+                    <div class="game-hero-icon-box icon-2v2">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                            <line x1="6" y1="8" x2="6.01" y2="8"></line>
+                            <line x1="10" y1="8" x2="10.01" y2="8"></line>
+                            <line x1="14" y1="8" x2="14.01" y2="8"></line>
+                            <line x1="18" y1="8" x2="18.01" y2="8"></line>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h2 class="game-about-title">Yozish 2 vs 2 (Tezkor Yozuv Poygasi)</h2>
+                    <p class="game-about-desc">
+                        Ikki jamoa o'rtasida shiddatli so'z yozish musobaqasi! Ekranda ko'ringan so'zlarni xatosiz va tez klaviaturada terib, o'z jamoangiz bayrog'ini marra chizig'i tomon torting!
+                    </p>
+                    
+                    <div class="game-rules-list">
+                        <div class="game-rule-item">
+                            <div class="rule-number-badge">1</div>
+                            <div><strong>Jamoalar:</strong> "Burgutlar" (Qizil) va "Lochinlar" (Ko'k). Har birida 2 tadan ishtirokchi.</div>
+                        </div>
+                        <div class="game-rule-item">
+                            <div class="rule-number-badge">2</div>
+                            <div><strong>Arqon tortish mexanikasi:</strong> Har bir xatosiz kiritilgan so'z arqonni sizning jamoangiz foydasiga suradi.</div>
+                        </div>
+                        <div class="game-rule-item">
+                            <div class="rule-number-badge">3</div>
+                            <div><strong>Mukofot:</strong> G'olib jamoa a'zolariga <strong>+5 ⭐</strong>, mag'lub jamoaga 0 ⭐!</div>
+                        </div>
+                    </div>
+
+                    <div class="game-setup-row">
+                        <label for="game2v2-lang-select" style="font-weight: 800; font-size: 15px;">Yozish tili:</label>
+                        <select id="game2v2-lang-select" class="game-select-input">
+                            <option value="en">🇬🇧 Ingliz tili</option>
+                            <option value="ru">🇷🇺 Rus tili</option>
+                            <option value="de">🇩🇪 Nemis tili</option>
+                        </select>
+                        <button class="btn btn-primary btn-lg" id="btn-start-2v2">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            2 vs 2 Yozish Poygasini Boshlash!
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2 vs 2 Arenasi -->
+                <div class="game-arena" id="game2v2-arena-section">
+                    <div class="arena-top-bar">
+                        <div class="round-badge">🔴 Burgutlar vs 🔵 Lochinlar</div>
+                        <div class="arena-timer-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span id="game2v2-timer">45s</span>
+                        </div>
+                    </div>
+
+                    <!-- Arqon tortish ko'rsatkichi -->
+                    <div class="tug-of-war-container">
+                        <div class="teams-labels-row">
+                            <span class="team-red-label">🦅 Burgutlar Jamoasi (Siz)</span>
+                            <span class="team-blue-label">Lochinlar Jamoasi 🦅</span>
+                        </div>
+                        <div class="tug-track">
+                            <div class="tug-indicator" id="game2v2-tug-indicator" style="left: 50%;">🎯</div>
+                        </div>
+                        <div class="balance-text" id="game2v2-balance-text">Burgutlar: 50% | Lochinlar: 50%</div>
+                    </div>
+
+                    <!-- Yozilishi kerak bo'lgan so'z -->
+                    <div class="typing-target-box">
+                        <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">Ushbu so'zni klaviaturada tezda tering:</div>
+                        <div class="typing-word" id="game2v2-target-word">Opportunity</div>
+                        <div style="font-size: 13px; margin-top: 10px; font-weight: 800; color: var(--primary);" id="game2v2-words-count">0 ta so'z</div>
+                    </div>
+
+                    <!-- Yozish kiritish qutisi -->
+                    <div>
+                        <input type="text" class="typing-input-bar" id="game2v2-input" placeholder="So'zni shu yerga tering..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==============================================================
+             9. SOZLAMALAR SAHIFASI (Multi-Language, Account, Sound, Themes)
+             ============================================================== -->
+        <section class="app-view" id="view-sozlamalar">
+            <div class="section-header">
+                <span class="section-badge-pill" data-i18n="settings_badge">Shaxsiy Profil va Moslashuv</span>
+                <h2 class="section-title" data-i18n="settings_title">⚙️ Tizim Sozlamalari</h2>
+                <p class="section-subtitle" data-i18n="settings_subtitle">O'quv muhitingizni, ilova tilini va akkauntingizni o'zingizga moslang.</p>
+            </div>
+
+            <div class="settings-dashboard-container">
+                <form id="settings-form">
+                    
+                    <!-- 1. ILOVA TILI (INTERFEYS) -->
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <div>
+                                <h3 class="settings-card-title" data-i18n="section_app_lang">🌐 Ilova Tili (Interfeys)</h3>
+                                <p class="settings-card-sub" data-i18n="section_app_lang_sub">Dasturning barcha menyu va yozuvlari uchun tilni tanlang:</p>
+                            </div>
+                        </div>
+                        <div class="settings-lang-options">
+                            <div class="lang-option-card active" data-app-lang="uz" onclick="App.setAppLanguage('uz')">
+                                <div class="lang-flag-big">🇺🇿</div>
+                                <div class="lang-option-info">
+                                    <h4 data-i18n="lang_uz">O'zbek tili</h4>
+                                    <span>Asosiy til</span>
+                                </div>
+                                <div class="lang-check-circle">✓</div>
+                            </div>
+
+                            <div class="lang-option-card" data-app-lang="ru" onclick="App.setAppLanguage('ru')">
+                                <div class="lang-flag-big">🇷🇺</div>
+                                <div class="lang-option-info">
+                                    <h4 data-i18n="lang_ru">Русский язык</h4>
+                                    <span>Русский интерфейс</span>
+                                </div>
+                                <div class="lang-check-circle">✓</div>
+                            </div>
+
+                            <div class="lang-option-card" data-app-lang="en" onclick="App.setAppLanguage('en')">
+                                <div class="lang-flag-big">🇬🇧</div>
+                                <div class="lang-option-info">
+                                    <h4 data-i18n="lang_en">English</h4>
+                                    <span>English UI</span>
+                                </div>
+                                <div class="lang-check-circle">✓</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. AKKAUNT BOSHQARISH TIZIMI -->
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <div>
+                                <h3 class="settings-card-title" data-i18n="section_account">👤 Akkaunt Boshqarish</h3>
+                                <p class="settings-card-sub" data-i18n="section_account_sub">Profil ma'lumotlaringiz va o'quvchi avatarini tanlang:</p>
+                            </div>
+                        </div>
+
+                        <!-- Avatar tanlash paneli -->
+                        <div class="form-group mb-4">
+                            <label class="form-label-bold" data-i18n="label_avatar">Profil rasmi (Avatar):</label>
+                            <div class="avatar-selection-grid" id="avatar-selection-grid">
+                                <button type="button" class="avatar-pick-btn active" data-avatar="👨‍🎓" onclick="App.setAvatar('👨‍🎓')">👨‍🎓</button>
+                                <button type="button" class="avatar-pick-btn" data-avatar="👩‍🎓" onclick="App.setAvatar('👩‍🎓')">👩‍🎓</button>
+                                <button type="button" class="avatar-pick-btn" data-avatar="🧑‍💻" onclick="App.setAvatar('🧑‍💻')">🧑‍💻</button>
+                                <button type="button" class="avatar-pick-btn" data-avatar="👩‍💼" onclick="App.setAvatar('👩‍💼')">👩‍💼</button>
+                                <button type="button" class="avatar-pick-btn" data-avatar="🦁" onclick="App.setAvatar('🦁')">🦁</button>
+                                <button type="button" class="avatar-pick-btn" data-avatar="🚀" onclick="App.setAvatar('🚀')">🚀</button>
+                                <button type="button" class="avatar-pick-btn" data-avatar="👑" onclick="App.setAvatar('👑')">👑</button>
+                                <button type="button" class="avatar-pick-btn" data-avatar="⭐" onclick="App.setAvatar('⭐')">⭐</button>
+                            </div>
+                        </div>
+
+                        <div class="settings-grid-fields">
+                            <div class="form-group">
+                                <label for="setting-name-input" data-i18n="label_name">Foydalanuvchi ismi</label>
+                                <input type="text" id="setting-name-input" class="form-control" value="Azizbek" placeholder="Ismingizni kiriting">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="setting-email-input" data-i18n="label_email">Elektron pochta (Email)</label>
+                                <input type="email" id="setting-email-input" class="form-control" value="student@speakpro.uz" placeholder="Emailingiz">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="setting-phone-input" data-i18n="label_phone">Telefon raqam</label>
+                                <input type="tel" id="setting-phone-input" class="form-control" value="+998 90 123 45 67" placeholder="+998...">
+                            </div>
+
+                            <div class="form-group">
+                                <label>O'quvchi ID raqami</label>
+                                <input type="text" class="form-control" value="SP-2026-9482" disabled style="opacity: 0.7; cursor: not-allowed;">
+                            </div>
+                        </div>
+
+                        <!-- O'quvchi statistikasi kartalari -->
+                        <div class="user-stats-strip">
+                            <div class="stat-mini-pill">
+                                <span class="stat-mini-label" data-i18n="stat_stars">To'plangan Yulduzlar</span>
+                                <strong class="stat-mini-val" id="settings-user-stars">350 ⭐</strong>
+                            </div>
+                            <div class="stat-mini-pill">
+                                <span class="stat-mini-label">G'alabalar</span>
+                                <strong class="stat-mini-val" id="settings-user-wins">18 ta</strong>
+                            </div>
+                            <div class="stat-mini-pill">
+                                <span class="stat-mini-label" data-i18n="stat_level">Ta'lim darajasi</span>
+                                <strong class="stat-mini-val" id="settings-user-league">Oltin Liga 🏆</strong>
+                            </div>
+                        </div>
+
+                        <div class="account-actions-row">
+                            <button type="button" class="btn btn-secondary" id="btn-logout" data-i18n="btn_logout">
+                                Akkauntdan chiqish 🚪
+                            </button>
+                            <button type="button" class="btn btn-outline-danger" onclick="App.resetUserProgress()" data-i18n="btn_reset">
+                                Progressni tozalash 🔄
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 3. DASTUR MAVZUSI (DARK / LIGHT MODE) -->
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <div>
+                                <h3 class="settings-card-title" data-i18n="section_theme">🌓 Dastur Mavzusi (Rejim)</h3>
+                                <p class="settings-card-sub" data-i18n="section_theme_sub">Ko'zingizga qulay interfeys ko'rinishini tanlang:</p>
+                            </div>
+                        </div>
+
+                        <div class="theme-cards-grid">
+                            <div class="theme-choice-card" id="theme-card-light" onclick="App.applyTheme('light'); App.saveUserState();">
+                                <div class="theme-card-preview light-preview">
+                                    <div class="prev-header"></div>
+                                    <div class="prev-line"></div>
+                                    <div class="prev-box"></div>
+                                </div>
+                                <div class="theme-choice-info">
+                                    <h4 data-i18n="theme_light">☀️ Kunduzgi Rejim (Light Mode)</h4>
+                                    <p data-i18n="theme_light_desc">Yorug', tiniq va zamonaviy oq dizayn</p>
+                                </div>
+                                <div class="theme-check-icon">✓</div>
+                            </div>
+
+                            <div class="theme-choice-card" id="theme-card-dark" onclick="App.applyTheme('dark'); App.saveUserState();">
+                                <div class="theme-card-preview dark-preview">
+                                    <div class="prev-header"></div>
+                                    <div class="prev-line"></div>
+                                    <div class="prev-box"></div>
+                                </div>
+                                <div class="theme-choice-info">
+                                    <h4 data-i18n="theme_dark">🌙 Tungi Rejim (Dark Mode)</h4>
+                                    <p data-i18n="theme_dark_desc">Qorong'i, kontrastli va ko'zga yoqimli neon dizayn</p>
+                                </div>
+                                <div class="theme-check-icon">✓</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. OVOZ VA TALAFFUZ -->
+                    <div class="settings-card">
+                        <div class="settings-card-header">
+                            <div>
+                                <h3 class="settings-card-title" data-i18n="section_sound">🔊 Ovoz va Talaffuz</h3>
+                                <p class="settings-card-sub" data-i18n="section_sound_sub">Tugmalar chertilishi va darslardagi ovozli talaffuz:</p>
+                            </div>
+                        </div>
+
+                        <div class="settings-switch-row">
+                            <div class="switch-info">
+                                <strong data-i18n="sound_effects">Ovoz effektlari (Sound FX)</strong>
+                                <p data-i18n="sound_effects_desc">Tugmalar bosilishi, g'alaba va to'g'ri javob ovozlari</p>
+                            </div>
+                            <label class="custom-toggle-switch">
+                                <input type="checkbox" id="setting-sound-toggle" checked onchange="App.toggleSoundFX(this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-switch-row">
+                            <div class="switch-info">
+                                <strong data-i18n="speech_audio">Nutq va Talaffuz (Web Speech)</strong>
+                                <p data-i18n="speech_audio_desc">Chet tili so'zlarini robot ovozda to'g'ri talaffuz qilish</p>
+                            </div>
+                            <label class="custom-toggle-switch">
+                                <input type="checkbox" id="setting-speech-toggle" checked onchange="App.toggleSpeechAudio(this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                <label data-i18n="volume_label">Ovoz balandligi:</label>
+                                <span id="volume-val-display" style="font-weight: 800; color: var(--primary);">100%</span>
+                            </div>
+                            <input type="range" id="setting-volume-slider" min="0" max="100" value="100" style="width: 100%; accent-color: var(--primary);" oninput="document.getElementById('volume-val-display').innerText = this.value + '%'">
+                        </div>
+                    </div>
+
+                    <!-- SAQLASH TUGMASI -->
+                    <div class="settings-submit-strip">
+                        <button type="submit" class="btn btn-primary btn-lg w-full" data-i18n="btn_save_all">
+                            Barcha Sozlamalarni Saqlash ✅
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER: Planeta o'quv markazi mualliflik huquqi -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="brand-container" style="justify-content: center;" onclick="App.navigate('home')">
+                <div class="brand-logo-mark" style="width: 38px; height: 38px;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <div class="brand-text-block" style="text-align: left;">
+                    <span class="brand-title" style="font-size: 22px;">SpeakPro</span>
+                    <span class="brand-tagline">"Planeta" o'quv markazi</span>
+                </div>
+            </div>
+            <p class="footer-copy">
+                © 2026 "Planeta" o'quv markazi. Barcha huquqlar himoyalangan.<br>
+                Materiallardan nusxa ko'chirish, ularni tarqatish yoki tijorat maqsadida foydalanish qat'iyan taqiqlanadi.
+            </p>
+        </div>
+    </footer>
+
+    <!-- MODALLAR -->
+    <!-- 1. Kirish / Ro'yxatdan O'tish Modali -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="auth-modal-close">✕</button>
+            <div class="modal-tabs">
+                <button class="modal-tab-btn active" id="auth-tab-login">Kirish</button>
+                <button class="modal-tab-btn" id="auth-tab-register">Ro'yxatdan O'tish</button>
+            </div>
+            <form id="auth-form">
+                <div id="auth-register-only-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="auth-input-name">Ism va Familiyangiz</label>
+                        <input type="text" id="auth-input-name" class="form-control" placeholder="Masalan: Sardor Aliyev">
+                    </div>
+                    <div class="form-group">
+                        <label for="auth-input-lang">O'rganmoqchi bo'lgan asosiy tilingiz</label>
+                        <select id="auth-input-lang" class="form-control">
+                            <option value="en">🇬🇧 Ingliz tili</option>
+                            <option value="ru">🇷🇺 Rus tili</option>
+                            <option value="de">🇩🇪 Nemis tili</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="auth-input-email">Telefon raqam yoki Email</label>
+                    <input type="text" id="auth-input-email" class="form-control" placeholder="+998 90 123 45 67 yoki email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="auth-input-pwd">Parol</label>
+                    <input type="password" id="auth-input-pwd" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-full" id="auth-submit-btn" style="margin-top: 10px;">
+                    Tizimga Kirish
+                </button>
+                <button type="button" class="btn btn-secondary w-full" id="btn-demo-login" style="margin-top: 10px;">
+                    ⚡ Mehmon / Demo sifatida kirish
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. Dars tafsilotlari va Flashcard modali -->
+    <div class="modal-overlay" id="lesson-detail-modal">
+        <div class="modal-card" style="max-width: 650px;">
+            <button class="modal-close-btn" onclick="document.getElementById('lesson-detail-modal').classList.remove('active')">✕</button>
+            <h3 id="lesson-modal-title" style="font-size: 22px; font-weight: 900; margin-bottom: 6px;">Dars sarlavhasi</h3>
+            <p id="lesson-modal-desc" style="font-size: 14px; color: var(--text-muted); margin-bottom: 18px;">Tavsif</p>
+            
+            <div class="vocab-flashcards-grid" id="lesson-modal-cards" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0;">
+                <!-- Flashcards -->
+            </div>
+
+            <button class="btn btn-primary w-full" id="btn-complete-lesson" style="margin-top: 16px;">
+                Darsni Tugatish va Yulduzni Olish ⭐
+            </button>
+        </div>
+    </div>
+
+    <!-- 3. O'yin natijasi modali -->
+    <div class="modal-overlay" id="game-result-modal">
+        <div class="modal-card" style="text-align: center;">
+            <div style="font-size: 56px; margin-bottom: 14px;">🏆</div>
+            <h3 id="game-res-title" style="font-size: 26px; font-weight: 900; margin-bottom: 8px;">G'alaba!</h3>
+            <p id="game-res-score" style="font-size: 15px; color: var(--text-secondary); margin-bottom: 18px;">Siz: 450 ball | Raqib: 320 ball</p>
+            
+            <div style="background: var(--gold-subtle); border: 1px solid var(--gold-border); color: #b45309; font-size: 18px; font-weight: 900; padding: 14px; border-radius: var(--radius-md); margin-bottom: 24px;" id="game-res-stars">
+                +25 ⭐ Yulduz mukofoti
+            </div>
+
+            <div style="display: flex; gap: 12px;">
+                <button class="btn btn-secondary w-full" id="game-res-close">Yopish</button>
+                <button class="btn btn-primary w-full" id="game-res-leaderboard" onclick="document.getElementById('game-result-modal').classList.remove('active'); App.navigate('reyting');">
+                    Reytingni ko'rish 🏆
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast bildirishnomalar idishi -->
+    <div id="toast-container"></div>
+    <!-- Confetti animatsiyasi idishi -->
+    <div id="confetti-container"></div>
+
+    <!-- SKRIPTLAR -->
+    <script src="js/audio.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/lessons.js"></script>
+    <script src="js/games.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
