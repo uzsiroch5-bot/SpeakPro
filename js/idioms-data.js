@@ -1,5 +1,5 @@
-// SpeakPro - Idioms Database (100+ items each for EN, RU, DE)
-const SpeakProIdioms = {
+﻿// School77 - Idioms Database (100+ items each for EN, RU, DE)
+const School77Idioms = {
     en: [],
     ru: [],
     de: []
@@ -122,7 +122,7 @@ domainWordsEn.forEach(d => {
     enData.push([d[0], d[1], d[2], d[3], `The idiom "${d[0]}" is widely used by native speakers.`, `"${d[0]}" iborasi ingliz tilida faol qo'llaniladi.`]);
 });
 
-SpeakProIdioms.en = enData.map((item, idx) => ({
+School77Idioms.en = enData.map((item, idx) => ({
     id: `en-id-${idx + 1}`,
     idiom: item[0],
     level: item[1],
@@ -248,7 +248,7 @@ extraRuBulk.forEach(item => {
     ruData.push([item[0], item[1], item[2], item[3], `Выражение «${item[0]}» часто используется в речи.`, `«${item[0]}» iborasi rus tilida juda keng uchraydi.`]);
 });
 
-SpeakProIdioms.ru = ruData.map((item, idx) => ({
+School77Idioms.ru = ruData.map((item, idx) => ({
     id: `ru-id-${idx + 1}`,
     idiom: item[0],
     level: item[1],
@@ -374,7 +374,7 @@ extraDeBulk.forEach(item => {
     deData.push([item[0], item[1], item[2], item[3], `Die Redewendung "${item[0]}" ist sehr nützlich.`, `"${item[0]}" iborasi nemis tilida juda foydali.`]);
 });
 
-SpeakProIdioms.de = deData.map((item, idx) => ({
+School77Idioms.de = deData.map((item, idx) => ({
     id: `de-id-${idx + 1}`,
     idiom: item[0],
     level: item[1],
@@ -384,4 +384,4 @@ SpeakProIdioms.de = deData.map((item, idx) => ({
     exampleTr: item[5]
 }));
 
-window.SpeakProIdioms = SpeakProIdioms;
+window.School77Idioms = School77Idioms;

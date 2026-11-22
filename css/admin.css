@@ -1,0 +1,665 @@
+﻿/* ============================================================
+   ADMIN PANEL — School77 & 77-School O'quv Markazi
+   Luxury Glassmorphic Dashboard Styles
+   ============================================================ */
+
+.admin-wrapper {
+    max-width: 1300px;
+    margin: 20px auto 60px;
+    padding: 0 20px;
+}
+
+/* ---- Admin Top Banner ---- */
+.admin-top-banner {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+    border-radius: 24px;
+    padding: 30px 36px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 16px 48px rgba(30, 27, 75, 0.4);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-top-banner::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(234, 179, 8, 0.25), transparent 70%);
+    border-radius: 50%;
+}
+
+.admin-brand-col {
+    position: relative;
+    z-index: 1;
+}
+
+.admin-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(234, 179, 8, 0.2);
+    border: 1px solid rgba(234, 179, 8, 0.4);
+    color: #fef08a;
+    border-radius: 100px;
+    padding: 4px 14px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+}
+
+.admin-banner-title {
+    font-size: 26px;
+    font-weight: 900;
+    margin: 0 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-banner-desc {
+    font-size: 13px;
+    opacity: 0.85;
+    margin: 0;
+}
+
+.admin-controls-col {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.server-live-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.18);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #6ee7b7;
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.server-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: serverPulse 2s infinite;
+}
+
+.server-live-pill.offline {
+    background: rgba(239, 68, 68, 0.18);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+}
+
+.server-live-pill.offline .server-dot {
+    background: #ef4444;
+    box-shadow: 0 0 8px #ef4444;
+}
+
+@keyframes serverPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* ---- KPI Stats Grid ---- */
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.admin-stat-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.admin-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.admin-stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.stat-icon-students { background: rgba(79, 70, 229, 0.12); color: #4f46e5; }
+.stat-icon-stars    { background: rgba(234, 179, 8, 0.15); color: #d97706; }
+.stat-icon-store    { background: rgba(16, 185, 129, 0.12); color: #059669; }
+.stat-icon-words    { background: rgba(236, 72, 153, 0.12); color: #db2777; }
+
+.admin-stat-info .stat-val {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.admin-stat-info .stat-lbl {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 700;
+}
+
+/* ---- Segmented Navigation Tabs ---- */
+.admin-tabs-nav {
+    display: flex;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: 18px;
+    padding: 6px;
+    gap: 6px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+}
+
+.admin-tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.admin-tab-btn:hover {
+    color: var(--text-primary);
+    background: var(--bg-elevated);
+}
+
+.admin-tab-btn.active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
+}
+
+/* ---- Tab Pane Containers ---- */
+.admin-tab-pane {
+    display: none !important;
+    animation: fadeInAdmin 0.25s ease-out;
+}
+
+.admin-tab-pane.active {
+    display: block !important;
+}
+
+@keyframes fadeInAdmin {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Panel Cards ---- */
+.admin-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 24px;
+}
+
+.admin-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border-card);
+}
+
+.admin-card-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.admin-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ---- Tables ---- */
+.admin-table-wrap {
+    overflow-x: auto;
+    border-radius: 16px;
+    border: 1px solid var(--border-card);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+}
+
+.admin-table th {
+    background: var(--bg-elevated);
+    padding: 14px 16px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border-card);
+}
+
+.admin-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-card);
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tr:hover td {
+    background: rgba(79, 70, 229, 0.03);
+}
+
+/* ---- User Cell ---- */
+.user-meta-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar-small {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--border-card);
+}
+
+.user-meta-cell strong {
+    display: block;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.user-meta-cell span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ---- Badges ---- */
+.badge-tier-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.badge-bronze { background: rgba(180, 83, 9, 0.12); color: #b45309; }
+.badge-silver { background: rgba(100, 116, 139, 0.15); color: #475569; }
+.badge-gold   { background: rgba(234, 179, 8, 0.18); color: #ca8a04; }
+
+.stars-count-pill {
+    background: rgba(234, 179, 8, 0.12);
+    color: #ca8a04;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-weight: 900;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ---- Action Buttons in Table ---- */
+.table-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-table-action {
+    padding: 6px 10px;
+    border-radius: 9px;
+    border: 1px solid var(--border-card);
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: inherit;
+}
+
+.btn-table-action:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+.btn-table-delete:hover {
+    background: #ef4444;
+    color: #fff;
+    border-color: #ef4444;
+}
+
+/* ---- Form Layouts ---- */
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.admin-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.admin-form-group.col-full {
+    grid-column: 1 / -1;
+}
+
+.admin-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.admin-input,
+.admin-select,
+.admin-textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border-card);
+    border-radius: 12px;
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.admin-input:focus,
+.admin-select:focus,
+.admin-textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.admin-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* ---- Store Items Grid in Admin ---- */
+.admin-store-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.admin-store-item-card {
+    background: var(--bg-elevated);
+    border: 1.5px solid var(--border-card);
+    border-radius: 18px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.admin-store-item-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.store-item-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.store-item-icon {
+    font-size: 32px;
+}
+
+.store-item-badge {
+    background: rgba(79, 70, 229, 0.1);
+    color: var(--primary);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.store-item-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+}
+
+.store-item-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0 0 14px;
+    line-height: 1.45;
+}
+
+.store-item-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-card);
+    padding-top: 12px;
+}
+
+.store-item-cost {
+    font-size: 16px;
+    font-weight: 900;
+    color: #d97706;
+}
+
+/* ---- Server Config Box ---- */
+.server-box-wrap {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 18px;
+}
+
+.server-code-block {
+    background: #0f172a;
+    color: #38bdf8;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 12px 0;
+}
+
+/* ---- Modal Dialog ---- */
+.admin-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+}
+
+.admin-modal-overlay.active {
+    display: flex;
+}
+
+.admin-modal-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-card);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 520px;
+    padding: 28px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    animation: popInModal 0.2s ease-out;
+}
+
+@keyframes popInModal {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.admin-modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.admin-modal-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.admin-modal-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.admin-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* ---- Header Admin Button Pill ---- */
+.btn-header-admin {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-pill, 100px);
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+    font-family: inherit;
+}
+
+.btn-header-admin:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(217, 119, 6, 0.45);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
+    .admin-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-top-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 24px;
+    }
+
+    .admin-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-tabs-nav {
+        flex-wrap: nowrap;
+    }
+}
+

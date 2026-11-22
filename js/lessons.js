@@ -1,9 +1,9 @@
-// ==========================================================================
-// SpeakPro — Interaktiv Darslar va O'quv Tizimi (2026 Edition)
-// Muallif: "Planeta" o'quv markazi
+﻿// ==========================================================================
+// School77 — Interaktiv Darslar va O'quv Tizimi (2026 Edition)
+// Muallif: 77-School O'quv Markazi
 // ==========================================================================
 
-const SpeakProCurriculum = {
+const School77Curriculum = {
     languages: {
         en: {
             id: 'en',
@@ -126,7 +126,7 @@ const SpeakProCurriculum = {
                         desc: 'Ingliz tilida rasmiy va norasmiy salomlashish, ism so\'rash va javob berish.',
                         video: {
                             title: 'Greeting and Introductions in English',
-                            channel: 'SpeakPro & "Planeta" Academy',
+                            channel: 'School77 & 77-School Academy',
                             duration: '08:45',
                             topic: 'Alifbo, salomlashish qoidalari va talaffuz sirlari'
                         },
@@ -141,7 +141,7 @@ const SpeakProCurriculum = {
                             { word: 'Hello', tr: 'Salom', phonetic: '/həˈləʊ/', ex: 'Hello! How are you?' },
                             { word: 'Good morning', tr: 'Xayrli tong', phonetic: '/ɡʊd ˈmɔː.nɪŋ/', ex: 'Good morning, teacher!' },
                             { word: 'Nice to meet you', tr: 'Tanishganimdan xursandman', phonetic: '/naɪs tuː miːt juː/', ex: 'Nice to meet you, Mr. Smith.' },
-                            { word: 'Welcome', tr: 'Xush kelibsiz', phonetic: '/ˈwel.kəm/', ex: 'Welcome to SpeakPro!' },
+                            { word: 'Welcome', tr: 'Xush kelibsiz', phonetic: '/ˈwel.kəm/', ex: 'Welcome to School77!' },
                             { word: 'Name', tr: 'Ism', phonetic: '/neɪm/', ex: 'My name is Sara.' },
                             { word: 'Thank you', tr: 'Rahmat', phonetic: '/ˈθæŋk juː/', ex: 'Thank you for your help.' },
                             { word: 'Goodbye', tr: 'Xayr', phonetic: '/ɡʊdˈbaɪ/', ex: 'Goodbye, see you tomorrow!' },
@@ -161,7 +161,7 @@ const SpeakProCurriculum = {
                         desc: '0 dan 100 gacha sonlar, yoshni aytish va telefon raqamini to\'g\'ri talaffuz qilish.',
                         video: {
                             title: 'Numbers and Counting in Daily Life',
-                            channel: 'SpeakPro Video Studio',
+                            channel: 'School77 Video Studio',
                             duration: '07:30',
                             topic: 'Raqamlar, tartib sonlar va telefon raqam aytish'
                         },
@@ -195,7 +195,7 @@ const SpeakProCurriculum = {
                         desc: 'Oila a\'zolarini nomlash: ota-ona, aka-uka, opa-singil va ularni tasvirlash.',
                         video: {
                             title: 'Family Members and Relationships',
-                            channel: 'SpeakPro Video Studio',
+                            channel: 'School77 Video Studio',
                             duration: '09:10',
                             topic: 'Oila a\'zolari, "have got" va egalik olmoshlari'
                         },
@@ -229,7 +229,7 @@ const SpeakProCurriculum = {
                         desc: 'Sevimli taomlar, ichimliklar, kafeda buyurtma berish va hisob so\'rash.',
                         video: {
                             title: 'At the Restaurant: Ordering Food and Drinks',
-                            channel: 'SpeakPro Video Studio',
+                            channel: 'School77 Video Studio',
                             duration: '08:20',
                             topic: 'I would like..., Can I have..., Menu va Hisob'
                         },
@@ -263,7 +263,7 @@ const SpeakProCurriculum = {
                         desc: 'Ranglarni ifodalash, kiyim turlari, o\'lcham so\'rash va narx bilish.',
                         video: {
                             title: 'Colors, Clothes and Shopping Phrases',
-                            channel: 'SpeakPro Video Studio',
+                            channel: 'School77 Video Studio',
                             duration: '07:50',
                             topic: 'How much is it?, Ranglar va Sifatlar'
                         },
@@ -297,7 +297,7 @@ const SpeakProCurriculum = {
                         desc: 'Yashash uyi, oshxona, mehmonxona, mebellar va "There is / There are" qoidasi.',
                         video: {
                             title: 'House, Rooms and Furniture in English',
-                            channel: 'SpeakPro Video Studio',
+                            channel: 'School77 Video Studio',
                             duration: '08:15',
                             topic: 'There is / There are, Xonalar va jihozlar'
                         },
@@ -331,7 +331,7 @@ const SpeakProCurriculum = {
                         desc: 'Kasb nomlari, ish joyi va "What do you do?" savoliga javob berish.',
                         video: {
                             title: 'Professions and Jobs: What Do You Do?',
-                            channel: 'SpeakPro Video Studio',
+                            channel: 'School77 Video Studio',
                             duration: '08:35',
                             topic: 'Kasblar, Present Simple va a/an artikllari'
                         },
@@ -365,7 +365,7 @@ const SpeakProCurriculum = {
                         desc: 'Soat necha bo\'lganini so\'rash, daqiqalar va kun tartibi haqida gapirish.',
                         video: {
                             title: 'Telling Time and Daily Routine',
-                            channel: 'SpeakPro Video Studio',
+                            channel: 'School77 Video Studio',
                             duration: '09:00',
                             topic: 'What time is it?, O\'clock, Half past, Daily routine'
                         },
@@ -399,7 +399,7 @@ const SpeakProCurriculum = {
                         desc: 'Quyoshli, yomg\'irli havo, to\'rt fasl va ob-havoni tasvirlash iboralari.',
                         video: {
                             title: 'Weather and Four Seasons in English',
-                            channel: 'SpeakPro Video Studio',
+                            channel: 'School77 Video Studio',
                             duration: '08:00',
                             topic: 'How is the weather today?, Fasllar va Sifatlar'
                         },
@@ -433,7 +433,7 @@ const SpeakProCurriculum = {
                         desc: 'Yo\'l so\'rash, aeroport, chipta va ilk sayohatda erkin muloqot qilish.',
                         video: {
                             title: 'Travel English: Asking Directions and Airport Check-in',
-                            channel: 'SpeakPro Video Studio',
+                            channel: 'School77 Video Studio',
                             duration: '10:15',
                             topic: 'Where is the...?, Turn left/right, Boarding pass'
                         },
@@ -532,7 +532,7 @@ const SpeakProCurriculum = {
                         num: 1,
                         title: '1-Dars: Знакомство и Приветствие (Tanishuv va Salomlashish)',
                         desc: 'Rus tilida salomlashish, ism so\'rash va odob qoidalari.',
-                        video: { title: 'Приветствие и Знакомство на русском языке', channel: 'SpeakPro Video Studio', duration: '08:15', topic: 'Здравствуйте, Меня зовут, Как дела?' },
+                        video: { title: 'Приветствие и Знакомство на русском языке', channel: 'School77 Video Studio', duration: '08:15', topic: 'Здравствуйте, Меня зовут, Как дела?' },
                         dialog: [
                             { speaker: 'Антон', avatar: '👨‍💼', text: 'Здравствуйте! Меня зовут Антон. А как вас зовут?', tr: 'Assalomu alaykum! Mening ismim Anton. Sizning ismingiz nima?' },
                             { speaker: 'Наргиза', avatar: '👩‍💼', text: 'Здравствуйте, Антон! Очень приятно. Меня зовут Наргиза.', tr: 'Salom, Anton! Tanishganimdan juda xursandman. Mening ismim Nargiza.' },
@@ -561,7 +561,7 @@ const SpeakProCurriculum = {
                         num: 2,
                         title: '2-Dars: Числа и Счет (Sonlar va Sanash)',
                         desc: '0 dan 100 gacha sonlar, telefon raqami va narxlar.',
-                        video: { title: 'Русские числа и счет в жизни', channel: 'SpeakPro Video Studio', duration: '07:20', topic: 'Числа от 1 до 100, Сколько это стоит?' },
+                        video: { title: 'Русские числа и счет в жизни', channel: 'School77 Video Studio', duration: '07:20', topic: 'Числа от 1 до 100, Сколько это стоит?' },
                         dialog: [
                             { speaker: 'Покупатель', avatar: '👨‍💼', text: 'Скажите, пожалуйста, сколько стоит эта книга?', tr: 'Aytib yuboring iltimos, bu kitob qancha turadi?' },
                             { speaker: 'Продавец', avatar: '👩‍💼', text: 'Эта книга стоит пятьдесят рублей.', tr: 'Bu kitob ellik rubl turadi.' },
@@ -589,7 +589,7 @@ const SpeakProCurriculum = {
                         num: 3,
                         title: '3-Dars: Семья и Дом (Oila va Uy)',
                         desc: 'Oila a\'zolari: ota, ona, aka, uka, opa, singil va uy tasviri.',
-                        video: { title: 'Моя семья и родные', channel: 'SpeakPro Video Studio', duration: '08:40', topic: 'Папа, мама, брат, сестра, Мой/Моя' },
+                        video: { title: 'Моя семья и родные', channel: 'School77 Video Studio', duration: '08:40', topic: 'Папа, мама, брат, сестра, Мой/Моя' },
                         dialog: [
                             { speaker: 'Иван', avatar: '🧑‍💻', text: 'У тебя большая семья, Дилшод?', tr: 'Dilshod, oilang kattami?' },
                             { speaker: 'Дилшод', avatar: '👨‍🎓', text: 'Да, у меня есть родители, старший брат и младшая сестра.', tr: 'Ha, ota-onam, katta akam va kichik singlim bor.' },
@@ -618,7 +618,7 @@ const SpeakProCurriculum = {
                         num: 4,
                         title: '4-Dars: В Ресторане и Еда (Restoranda va Taomlar)',
                         desc: 'Taom buyurtma qilish, choy, non, suv va ofitsiant bilan muloqot.',
-                        video: { title: 'Русская кухня и заказ в кафе', channel: 'SpeakPro Video Studio', duration: '08:00', topic: 'Меню, Принесите пожалуйста, Счёт' },
+                        video: { title: 'Русская кухня и заказ в кафе', channel: 'School77 Video Studio', duration: '08:00', topic: 'Меню, Принесите пожалуйста, Счёт' },
                         dialog: [
                             { speaker: 'Официант', avatar: '👨‍🍳', text: 'Добрый день! Что вы будете заказывать?', tr: 'Xayrli kun! Nima buyurtma qilasiz?' },
                             { speaker: 'Гость', avatar: '👨‍💼', text: 'Принесите, пожалуйста, борщ, плов и зелёный чай.', tr: 'Iltimos, borsh, palov va ko\'k choy olib keling.' },
@@ -647,7 +647,7 @@ const SpeakProCurriculum = {
                         num: 5,
                         title: '5-Dars: В Городе и Ориентирование (Shaharda va Yo\'l so\'rash)',
                         desc: 'Ko\'cha, metro, to\'g\'riga yurish, o\'ngga va chapga burilish.',
-                        video: { title: 'Как пройти? Ориентация в городе', channel: 'SpeakPro Video Studio', duration: '09:10', topic: 'Где находится?, Прямо, Направо, Налево' },
+                        video: { title: 'Как пройти? Ориентация в городе', channel: 'School77 Video Studio', duration: '09:10', topic: 'Где находится?, Прямо, Направо, Налево' },
                         dialog: [
                             { speaker: 'Турист', avatar: '👨‍🎓', text: 'Извините, пожалуйста, где находится станция метро?', tr: 'Kechirasiz, metro bekati qayerda joylashgan?' },
                             { speaker: 'Прохожий', avatar: '🧑‍💼', text: 'Идите прямо до перекрёстка, потом поверните направо.', tr: 'Chorrahasigacha to\'g\'riga yuring, so\'ng o\'ngga buriling.' },
@@ -676,7 +676,7 @@ const SpeakProCurriculum = {
                         num: 6,
                         title: '6-Dars: Профессии и Работа (Kasblar va Ish)',
                         desc: 'O\'qituvchi, vrach, muhandis, haydovchi va "Кто вы по профессии?".',
-                        video: { title: 'Профессии на русском языке', channel: 'SpeakPro Video Studio', duration: '08:20', topic: 'Кем вы работаете?, Профессии' },
+                        video: { title: 'Профессии на русском языке', channel: 'School77 Video Studio', duration: '08:20', topic: 'Кем вы работаете?, Профессии' },
                         dialog: [
                             { speaker: 'Олег', avatar: '👨‍💼', text: 'Кем вы работаете, Рустам?', tr: 'Rustam, kim bo\'lib ishlaysiz?' },
                             { speaker: 'Рустам', avatar: '👨‍🏫', text: 'Я преподаватель в университете. Преподаю историю.', tr: 'Men universitetda o\'qituvchiman. Tarixdan dars beraman.' }
@@ -703,7 +703,7 @@ const SpeakProCurriculum = {
                         num: 7,
                         title: '7-Dars: Покупки и Одежда (Xaridlar va Kiyimlar)',
                         desc: 'Ranglar, kiyimlar, kiyib ko\'rish va do\'konda to\'lov qilish.',
-                        video: { title: 'Покупки в магазине одежды', channel: 'SpeakPro Video Studio', duration: '08:00', topic: 'Цвета, Одежда, Можно примерить?' },
+                        video: { title: 'Покупки в магазине одежды', channel: 'School77 Video Studio', duration: '08:00', topic: 'Цвета, Одежда, Можно примерить?' },
                         dialog: [
                             { speaker: 'Покупатель', avatar: '👩‍💼', text: 'Можно примерить эту куртку?', tr: 'Bu kurtkani kiyib ko\'rsam bo\'ladimi?' },
                             { speaker: 'Продавец', avatar: '👩‍💼', text: 'Конечно! Примерочная прямо по коридору.', tr: 'Albatta! Kiyib ko\'rish xonasi yo\'lak bo\'ylab to\'g\'rida.' }
@@ -730,7 +730,7 @@ const SpeakProCurriculum = {
                         num: 8,
                         title: '8-Dars: Время и Распорядок дня (Vaqt va Kun tartibi)',
                         desc: 'Soat necha bo\'ldi, soatlar, kun tartibi va hafta kunlari.',
-                        video: { title: 'Который час? Режим дня', channel: 'SpeakPro Video Studio', duration: '08:15', topic: 'Который час?, Дни недели, Утро/Вечер' },
+                        video: { title: 'Который час? Режим дня', channel: 'School77 Video Studio', duration: '08:15', topic: 'Который час?, Дни недели, Утро/Вечер' },
                         dialog: [
                             { speaker: 'Сергей', avatar: '👨‍🎓', text: 'Который сейчас час?', tr: 'Hozir soat necha bo\'ldi?' },
                             { speaker: 'Анна', avatar: '👩‍🎓', text: 'Сейчас ровно три часа дня.', tr: 'Hozir roppa-rosa kunduzgi soat uch.' }
@@ -757,7 +757,7 @@ const SpeakProCurriculum = {
                         num: 9,
                         title: '9-Dars: Погода и Времена года (Ob-havo va Fasllar)',
                         desc: 'Quyosh, yomg\'ir, qor, iliq va sovuq havo hamda to\'rt fasl.',
-                        video: { title: 'Какая сегодня погода? Времена года', channel: 'SpeakPro Video Studio', duration: '08:30', topic: 'Погода, Зима, Весна, Лето, Осень' },
+                        video: { title: 'Какая сегодня погода? Времена года', channel: 'School77 Video Studio', duration: '08:30', topic: 'Погода, Зима, Весна, Лето, Осень' },
                         dialog: [
                             { speaker: 'Михаил', avatar: '👨‍💼', text: 'Какая сегодня погода на улице?', tr: 'Bugun ko\'chada ob-havo qanday?' },
                             { speaker: 'Лена', avatar: '👩‍💼', text: 'Сегодня очень тепло и солнечно, ни облачка!', tr: 'Bugun juda iliq va quyoshli, birorta ham bulut yo\'q!' }
@@ -784,7 +784,7 @@ const SpeakProCurriculum = {
                         num: 10,
                         title: '10-Dars: В Аэропорту и Путешествия (Aeroportda va Sayohat)',
                         desc: 'Bilet, pasport, samolyot va ilk xorijiy sayohat iboralari.',
-                        video: { title: 'Русский в аэропорту: посадка и контроль', channel: 'SpeakPro Video Studio', duration: '09:20', topic: 'Паспортный контроль, Билет, Багаж' },
+                        video: { title: 'Русский в аэропорту: посадка и контроль', channel: 'School77 Video Studio', duration: '09:20', topic: 'Паспортный контроль, Билет, Багаж' },
                         dialog: [
                             { speaker: 'Пассажир', avatar: '👨‍💼', text: 'Здравствуйте! Где проходит регистрация на рейс в Москву?', tr: 'Salom! Moskvaga reys ro\'yxatdan o\'tish qayerda?' },
                             { speaker: 'Сотрудник', avatar: '👩‍✈️', text: 'Стойка номер пять, пожалуйста. Покажите ваш паспорт.', tr: 'Beshinchi stol, iltimos. Pasportingizni ko\'rsating.' }
@@ -878,7 +878,7 @@ const SpeakProCurriculum = {
                         num: 1,
                         title: '1-Dars: Begrüßung und Vorstellung (Salomlashish va Tanishtirish)',
                         desc: 'Guten Tag, Hallo, ism aytish va Germaniyada odob qoidalari.',
-                        video: { title: 'Begrüßung und Vorstellung auf Deutsch', channel: 'SpeakPro Video Studio', duration: '08:30', topic: 'Hallo, Guten Tag, Wie heißen Sie?, Ich bin' },
+                        video: { title: 'Begrüßung und Vorstellung auf Deutsch', channel: 'School77 Video Studio', duration: '08:30', topic: 'Hallo, Guten Tag, Wie heißen Sie?, Ich bin' },
                         dialog: [
                             { speaker: 'Lukas', avatar: '👨‍💼', text: 'Guten Tag! Mein Name ist Lukas Weber. Wie heißen Sie?', tr: 'Xayrli kun! Mening ismim Lukas Weber. Ismingiz nima?' },
                             { speaker: 'Madina', avatar: '👩‍💼', text: 'Guten Tag, Herr Weber! Ich heiße Madina. Freut mich!', tr: 'Xayrli kun, janob Weber! Mening ismim Madina. Tanishganimdan xursandman!' },
@@ -907,7 +907,7 @@ const SpeakProCurriculum = {
                         num: 2,
                         title: '2-Dars: Zahlen und Alter (Sonlar va Yosh)',
                         desc: '0 dan 100 gacha sonlar, telefon raqami va narxlar.',
-                        video: { title: 'Zahlen auf Deutsch von 1 bis 100', channel: 'SpeakPro Video Studio', duration: '07:45', topic: 'Eins, zwei, drei, Wie alt sind Sie?' },
+                        video: { title: 'Zahlen auf Deutsch von 1 bis 100', channel: 'School77 Video Studio', duration: '07:45', topic: 'Eins, zwei, drei, Wie alt sind Sie?' },
                         dialog: [
                             { speaker: 'Frau Schmidt', avatar: '👩‍🏫', text: 'Wie alt bist du, Timur?', tr: 'Necha yoshdasan, Timur?' },
                             { speaker: 'Timur', avatar: '👨‍🎓', text: 'Ich bin zwanzig Jahre alt.', tr: 'Men yigirma yoshdaman.' },
@@ -936,7 +936,7 @@ const SpeakProCurriculum = {
                         num: 3,
                         title: '3-Dars: Familie und Zuhause (Oila va Uy)',
                         desc: 'Oila a\'zolari: Vater, Mutter, Bruder, Schwester va uy xonalari.',
-                        video: { title: 'Meine Familie und mein Haus', channel: 'SpeakPro Video Studio', duration: '08:20', topic: 'Vater, Mutter, Bruder, Schwester, Mein/Meine' },
+                        video: { title: 'Meine Familie und mein Haus', channel: 'School77 Video Studio', duration: '08:20', topic: 'Vater, Mutter, Bruder, Schwester, Mein/Meine' },
                         dialog: [
                             { speaker: 'Felix', avatar: '👨‍💼', text: 'Hast du eine große Familie, Zafar?', tr: 'Zafar, sening oilang kattami?' },
                             { speaker: 'Zafar', avatar: '👨‍🎓', text: 'Ja, ich habe Eltern, einen Bruder und eine Schwester.', tr: 'Ha, ota-onam, bitta akam va bitta singlim bor.' }
@@ -963,7 +963,7 @@ const SpeakProCurriculum = {
                         num: 4,
                         title: '4-Dars: Im Restaurant und Essen (Restoranda va Taomlar)',
                         desc: 'Essen bestellen, ich möchte..., die Rechnung bitte va taomlar.',
-                        video: { title: 'Im Restaurant bestellen auf Deutsch', channel: 'SpeakPro Video Studio', duration: '08:45', topic: 'Ich möchte bitte..., Die Rechnung, Essen und Trinken' },
+                        video: { title: 'Im Restaurant bestellen auf Deutsch', channel: 'School77 Video Studio', duration: '08:45', topic: 'Ich möchte bitte..., Die Rechnung, Essen und Trinken' },
                         dialog: [
                             { speaker: 'Kellner', avatar: '👨‍🍳', text: 'Guten Tag! Was möchten Sie bestellen?', tr: 'Xayrli kun! Nima buyurtma qilishni xohlaysiz?' },
                             { speaker: 'Gast', avatar: '👨‍💼', text: 'Ich möchte bitte Hähnchen mit Reis und Mineralwasser.', tr: 'Men tovuq go\'shti guruch bilan va gazlangan suv xohlardim.' },
@@ -991,7 +991,7 @@ const SpeakProCurriculum = {
                         num: 5,
                         title: '5-Dars: In der Stadt und Wegbeschreibung (Shaharda va Yo\'nalish)',
                         desc: 'Wo ist...?, Geradeaus, Nach links, Nach rechts va transport.',
-                        video: { title: 'Nach dem Weg fragen auf Deutsch', channel: 'SpeakPro Video Studio', duration: '08:15', topic: 'Entschuldigung, Wo ist...?, Geradeaus, Links/Rechts' },
+                        video: { title: 'Nach dem Weg fragen auf Deutsch', channel: 'School77 Video Studio', duration: '08:15', topic: 'Entschuldigung, Wo ist...?, Geradeaus, Links/Rechts' },
                         dialog: [
                             { speaker: 'Tourist', avatar: '👨‍🎓', text: 'Entschuldigung, wo ist der Bahnhof?', tr: 'Kechirasiz, temir yo\'l vokzali qayerda?' },
                             { speaker: 'Passant', avatar: '👩‍💼', text: 'Gehen Sie geradeaus, dann nach rechts.', tr: 'To\'g\'riga yuring, so\'ng o\'ngga.' }
@@ -1018,7 +1018,7 @@ const SpeakProCurriculum = {
                         num: 6,
                         title: '6-Dars: Berufe und Arbeit (Kasblar va Ish)',
                         desc: 'Lehrer, Arzt, Ingenieur, Programmierer va kasb haqida suhbat.',
-                        video: { title: 'Berufe auf Deutsch: Was bist du von Beruf?', channel: 'SpeakPro Video Studio', duration: '08:00', topic: 'Berufe, Was sind Sie von Beruf?, Arbeiten' },
+                        video: { title: 'Berufe auf Deutsch: Was bist du von Beruf?', channel: 'School77 Video Studio', duration: '08:00', topic: 'Berufe, Was sind Sie von Beruf?, Arbeiten' },
                         dialog: [
                             { speaker: 'Martin', avatar: '👨‍💼', text: 'Was sind Sie von Beruf, Shavkat?', tr: 'Shavkat, kasbingiz nima?' },
                             { speaker: 'Shavkat', avatar: '👨‍💻', text: 'Ich bin Softwareentwickler. Ich arbeite bei einer IT-Firma.', tr: 'Men dasturchiman. IT kompaniyasida ishlayman.' }
@@ -1045,7 +1045,7 @@ const SpeakProCurriculum = {
                         num: 7,
                         title: '7-Dars: Einkaufen und Kleidung (Xaridlar va Kiyimlar)',
                         desc: 'Ranglar, kiyim turlari, do\'konda narx so\'rash va o\'lchamlar.',
-                        video: { title: 'Kleidung kaufen auf Deutsch', channel: 'SpeakPro Video Studio', duration: '08:10', topic: 'Farben, Kleidung, Kann ich das anprobieren?' },
+                        video: { title: 'Kleidung kaufen auf Deutsch', channel: 'School77 Video Studio', duration: '08:10', topic: 'Farben, Kleidung, Kann ich das anprobieren?' },
                         dialog: [
                             { speaker: 'Kunde', avatar: '👩‍💼', text: 'Kann ich diese blaue Jacke anprobieren?', tr: 'Bu ko\'k kurtkani kiyib ko\'rsam bo\'ladimi?' },
                             { speaker: 'Verkäufer', avatar: '👨‍💼', text: 'Natürlich! Die Umkleidekabine ist da drüben.', tr: 'Albatta! Kiyib ko\'rish kabinasi anavi yerda.' }
@@ -1072,7 +1072,7 @@ const SpeakProCurriculum = {
                         num: 8,
                         title: '8-Dars: Zeit und Tagesablauf (Vaqt va Kun Tartibi)',
                         desc: 'Wie spät ist es?, soatlar, kun tartibi va hafta kunlari.',
-                        video: { title: 'Wie spät ist es? Uhrzeit auf Deutsch', channel: 'SpeakPro Video Studio', duration: '08:40', topic: 'Wie spät ist es?, Viertel vor/nach, Tageszeiten' },
+                        video: { title: 'Wie spät ist es? Uhrzeit auf Deutsch', channel: 'School77 Video Studio', duration: '08:40', topic: 'Wie spät ist es?, Viertel vor/nach, Tageszeiten' },
                         dialog: [
                             { speaker: 'Jan', avatar: '👨‍🎓', text: 'Wie spät ist es jetzt, bitte?', tr: 'Hozir soat necha bo\'ldi, iltimos?' },
                             { speaker: 'Julia', avatar: '👩‍🎓', text: 'Es ist genau halb drei (14:30).', tr: 'Hozir roppa-rosa ikkidan o\'ttiz daqiqa o\'tdi.' }
@@ -1099,7 +1099,7 @@ const SpeakProCurriculum = {
                         num: 9,
                         title: '9-Dars: Wetter und Jahreszeiten (Ob-havo va Fasllar)',
                         desc: 'Sonnig, regnerisch, warm, kalt va to\'rt fasl.',
-                        video: { title: 'Das Wetter und die vier Jahreszeiten', channel: 'SpeakPro Video Studio', duration: '08:00', topic: 'Wie ist das Wetter?, Frühling, Sommer, Herbst, Winter' },
+                        video: { title: 'Das Wetter und die vier Jahreszeiten', channel: 'School77 Video Studio', duration: '08:00', topic: 'Wie ist das Wetter?, Frühling, Sommer, Herbst, Winter' },
                         dialog: [
                             { speaker: 'Klaus', avatar: '👨‍💼', text: 'Wie ist das Wetter heute in Berlin?', tr: 'Bugun Berlinda ob-havo qanday?' },
                             { speaker: 'Monika', avatar: '👩‍💼', text: 'Es ist sonnig und angenehm warm, etwa zweiundzwanzig Grad.', tr: 'Quyoshli va yoqimli iliq, yigirma ikki gradus atrofida.' }
@@ -1126,7 +1126,7 @@ const SpeakProCurriculum = {
                         num: 10,
                         title: '10-Dars: Am Flughafen und Reisen (Aeroportda va Sayohat)',
                         desc: 'Der Flug, Das Ticket, Der Reisepass va sayohatdagi ilk qadamlar.',
-                        video: { title: 'Deutsch am Flughafen und Reisevokabeln', channel: 'SpeakPro Video Studio', duration: '09:30', topic: 'Flughafen, Boarding Pass, Gute Reise!' },
+                        video: { title: 'Deutsch am Flughafen und Reisevokabeln', channel: 'School77 Video Studio', duration: '09:30', topic: 'Flughafen, Boarding Pass, Gute Reise!' },
                         dialog: [
                             { speaker: 'Passagier', avatar: '👨‍💼', text: 'Guten Tag! Wo ist der Check-in für den Flug nach Frankfurt?', tr: 'Xayrli kun! Frankfurtga parvoz uchun ro\'yxatdan o\'tish qayerda?' },
                             { speaker: 'Personal', avatar: '👩‍✈️', text: 'Schalter zehn, bitte. Zeigen Sie Ihren Reisepass.', tr: 'O\'ninchi stol, iltimos. Xorijiy pasportingizni ko\'rsating.' },
@@ -1228,7 +1228,7 @@ const LessonsApp = {
 
     loadProgress() {
         try {
-            const saved = localStorage.getItem('speakpro_lessons_progress');
+            const saved = localStorage.getItem('School77_lessons_progress');
             if (saved) {
                 this.progress = { ...this.progress, ...JSON.parse(saved) };
             }
@@ -1239,7 +1239,7 @@ const LessonsApp = {
 
     saveProgress() {
         try {
-            localStorage.setItem('speakpro_lessons_progress', JSON.stringify(this.progress));
+            localStorage.setItem('School77_lessons_progress', JSON.stringify(this.progress));
         } catch (e) {
             console.error('Failed to save lessons progress', e);
         }
@@ -1254,7 +1254,7 @@ const LessonsApp = {
     },
 
     selectLanguage(langId) {
-        if (!SpeakProCurriculum.languages[langId]) langId = 'en';
+        if (!School77Curriculum.languages[langId]) langId = 'en';
         this.selectedLang = langId;
         this.step = 'level';
         this.render();
@@ -1378,7 +1378,7 @@ const LessonsApp = {
     // Vocab & Speech
     // ----------------------------------------------------------------------
     speak(text) {
-        const langObj = SpeakProCurriculum.languages[this.selectedLang];
+        const langObj = School77Curriculum.languages[this.selectedLang];
         speakForeignWord(text, langObj ? langObj.code : 'en-US');
     },
 
@@ -1414,7 +1414,7 @@ const LessonsApp = {
     // Testing & Mock Tests
     // ----------------------------------------------------------------------
     startLevelTest(langId, levelCode) {
-        const langData = SpeakProCurriculum.languages[langId];
+        const langData = School77Curriculum.languages[langId];
         if (!langData || !langData.levelTests || !langData.levelTests[levelCode]) {
             App.showToast('Bu daraja uchun test tez kunda yuklanadi!', 'info');
             return;
@@ -1429,7 +1429,7 @@ const LessonsApp = {
     },
 
     startMockTest(langId, mockId) {
-        const langData = SpeakProCurriculum.languages[langId];
+        const langData = School77Curriculum.languages[langId];
         if (!langData || !langData.mockTests) return;
         const mockObj = langData.mockTests.find(m => m.id === mockId);
         if (!mockObj) return;
@@ -1598,7 +1598,7 @@ const LessonsApp = {
     },
 
     getLangInfo(langId) {
-        const uiLang = (window.SpeakProI18n && SpeakProI18n.currentLang) || 'uz';
+        const uiLang = (window.School77I18n && School77I18n.currentLang) || 'uz';
         const meta = {
             en: {
                 uz: { name: 'Ingliz tili', badge: 'Global Muloqot №1', desc: 'Dunyodagi eng ommabop til. IT sohasi, xalqaro biznes, chet el sayohati va oliy ta\'lim kaliti.' },
@@ -1616,7 +1616,7 @@ const LessonsApp = {
                 en: { name: 'German', badge: 'Germany & Education', desc: 'Europe\'s economic powerhouse. Free university education in Germany, medicine, engineering, and Goethe certificate.' }
             }
         };
-        const langObj = SpeakProCurriculum.languages[langId] || {};
+        const langObj = School77Curriculum.languages[langId] || {};
         const trans = (meta[langId] && meta[langId][uiLang]) || (meta[langId] && meta[langId]['uz']) || {};
         return {
             ...langObj,
@@ -1627,7 +1627,7 @@ const LessonsApp = {
     },
 
     getLevelInfo(langId, levelCode) {
-        const uiLang = (window.SpeakProI18n && SpeakProI18n.currentLang) || 'uz';
+        const uiLang = (window.School77I18n && School77I18n.currentLang) || 'uz';
         const levelNames = {
             A1: {
                 uz: { name: 'Boshlang\'ich (Beginner)', badge: '🌱 1-Bosqich', desc: 'Alifbo, salomlashish, tanishuv va ilk sodda jumlalar.' },
@@ -1655,7 +1655,7 @@ const LessonsApp = {
                 en: { name: 'Advanced (C1)', badge: '🚀 Level 5', desc: 'Professional fluency, international business, and academic discourse.' }
             }
         };
-        const langObj = SpeakProCurriculum.languages[langId] || {};
+        const langObj = School77Curriculum.languages[langId] || {};
         const lvl = (langObj.levels && langObj.levels.find(l => l.code === levelCode)) || { code: levelCode };
         const trans = (levelNames[levelCode] && levelNames[levelCode][uiLang]) || (levelNames[levelCode] && levelNames[levelCode]['uz']) || {};
         return {
@@ -1667,7 +1667,7 @@ const LessonsApp = {
     },
 
     getLessonTitle(lesson) {
-        const uiLang = (window.SpeakProI18n && SpeakProI18n.currentLang) || 'uz';
+        const uiLang = (window.School77I18n && School77I18n.currentLang) || 'uz';
         if (uiLang === 'uz') return lesson.title;
         const titles = {
             1: { en: 'Lesson 1: Greetings & Introductions', ru: 'Урок 1: Знакомство и приветствие' },
@@ -1685,7 +1685,7 @@ const LessonsApp = {
     },
 
     getLessonDesc(lesson) {
-        const uiLang = (window.SpeakProI18n && SpeakProI18n.currentLang) || 'uz';
+        const uiLang = (window.School77I18n && School77I18n.currentLang) || 'uz';
         if (uiLang === 'uz') return lesson.desc;
         const descs = {
             1: { en: 'Formal and informal greetings, meeting people and polite introductions.', ru: 'Приветствия, формы вежливости, знакомство и первые фразы.' },
@@ -1703,7 +1703,7 @@ const LessonsApp = {
     },
 
     t(key) {
-        const lang = (window.SpeakProI18n && SpeakProI18n.currentLang) || 'uz';
+        const lang = (window.School77I18n && School77I18n.currentLang) || 'uz';
         const dict = {
             uz: {
                 step1_badge: "Darsliklar va Kurslar",
@@ -1881,7 +1881,7 @@ const LessonsApp = {
     // STEP 1: Select Language & Knowledge Hubs
     // ----------------------------------------------------------------------
     renderStepLanguages() {
-        const langs = SpeakProCurriculum.languages;
+        const langs = School77Curriculum.languages;
 
         return `
             <div class="lessons-container">
@@ -2138,7 +2138,7 @@ const LessonsApp = {
     // STEP 2: Select Level & Mock Tests
     // ----------------------------------------------------------------------
     renderStepLevels() {
-        const langObj = SpeakProCurriculum.languages[this.selectedLang];
+        const langObj = School77Curriculum.languages[this.selectedLang];
         if (!langObj) return '';
         const langInfo = this.getLangInfo(this.selectedLang);
 
@@ -2228,7 +2228,7 @@ const LessonsApp = {
     // STEP 3: Lessons List (1 to 10)
     // ----------------------------------------------------------------------
     renderStepLessons() {
-        const langObj = SpeakProCurriculum.languages[this.selectedLang];
+        const langObj = School77Curriculum.languages[this.selectedLang];
         const langInfo = this.getLangInfo(this.selectedLang);
         const lessons = (langObj.curriculum && langObj.curriculum[this.selectedLevel]) || [];
         const levelTest = langObj.levelTests && langObj.levelTests[this.selectedLevel];
@@ -2323,7 +2323,7 @@ const LessonsApp = {
     // STEP 4: Lesson Detail (Video, Dialog, Vocab, Quiz)
     // ----------------------------------------------------------------------
     renderStepDetail() {
-        const langObj = SpeakProCurriculum.languages[this.selectedLang];
+        const langObj = School77Curriculum.languages[this.selectedLang];
         const langInfo = this.getLangInfo(this.selectedLang);
         const lessons = (langObj.curriculum && langObj.curriculum[this.selectedLevel]) || [];
         const lesson = lessons.find(l => l.id === this.selectedLessonId);
@@ -2392,7 +2392,7 @@ const LessonsApp = {
             <div class="video-player-container">
                 <div class="fake-video-screen">
                     <div class="video-overlay-info">
-                        <span class="video-tag">SpeakPro Pro Video</span>
+                        <span class="video-tag">School77 Pro Video</span>
                         <h3 class="video-screen-title">${lesson.video.title}</h3>
                         <p class="video-screen-sub">${lesson.video.channel} • ${lesson.video.topic}</p>
                     </div>
@@ -2597,7 +2597,7 @@ const LessonsApp = {
         }
         this.step = 'dialogs';
         this.selectedLang = langId || 'en';
-        const dialogs = (window.SpeakProDialogues && window.SpeakProDialogues[this.selectedLang]) || [];
+        const dialogs = (window.School77Dialogues && window.School77Dialogues[this.selectedLang]) || [];
         this.selectedDialogId = dialogs.length > 0 ? dialogs[0].id : null;
         this.selectedDialogCat = 'all';
         this.render();
@@ -2611,7 +2611,7 @@ const LessonsApp = {
 
     filterDialogCategory(cat) {
         this.selectedDialogCat = cat;
-        const dialogs = (window.SpeakProDialogues && window.SpeakProDialogues[this.selectedLang]) || [];
+        const dialogs = (window.School77Dialogues && window.School77Dialogues[this.selectedLang]) || [];
         const filtered = cat === 'all' ? dialogs : dialogs.filter(d => d.category === cat);
         this.selectedDialogId = filtered.length > 0 ? filtered[0].id : null;
         this.render();
@@ -2619,7 +2619,7 @@ const LessonsApp = {
 
     renderStepDialogs() {
         const langInfo = this.getLangInfo(this.selectedLang);
-        const dialogs = (window.SpeakProDialogues && window.SpeakProDialogues[this.selectedLang]) || [];
+        const dialogs = (window.School77Dialogues && window.School77Dialogues[this.selectedLang]) || [];
 
         const categories = [
             { id: 'all', name: 'Barchasi', icon: '🌟' },
@@ -2765,7 +2765,7 @@ const LessonsApp = {
         this.idiomsSearch = query;
         const container = document.getElementById('idioms-results-container');
         if (container) {
-            const idiomsList = (window.SpeakProIdioms && window.SpeakProIdioms[this.selectedLang]) || [];
+            const idiomsList = (window.School77Idioms && window.School77Idioms[this.selectedLang]) || [];
             const searchLower = (this.idiomsSearch || '').trim().toLowerCase();
             let filtered = idiomsList;
             if (this.idiomsFilterLevel !== 'all') {
@@ -2827,7 +2827,7 @@ const LessonsApp = {
 
     renderStepIdioms() {
         const langInfo = this.getLangInfo(this.selectedLang);
-        const idiomsList = (window.SpeakProIdioms && window.SpeakProIdioms[this.selectedLang]) || [];
+        const idiomsList = (window.School77Idioms && window.School77Idioms[this.selectedLang]) || [];
 
         const levels = ['all', 'A1', 'A2', 'B1', 'B2', 'C1'];
         const searchLower = (this.idiomsSearch || '').trim().toLowerCase();
@@ -2924,8 +2924,8 @@ const LessonsApp = {
         this.vocabSearch = query;
         this.vocabPage = 1;
         const container = document.getElementById('vocab-results-container');
-        if (container && window.SpeakProVocabulary) {
-            const queryRes = window.SpeakProVocabulary.query(this.selectedLang, {
+        if (container && window.School77Vocabulary) {
+            const queryRes = window.School77Vocabulary.query(this.selectedLang, {
                 level: this.vocabLevel,
                 pos: this.vocabPos,
                 search: this.vocabSearch,
@@ -2941,8 +2941,8 @@ const LessonsApp = {
     changeVocabPage(page) {
         this.vocabPage = page;
         const container = document.getElementById('vocab-results-container');
-        if (container && window.SpeakProVocabulary) {
-            const queryRes = window.SpeakProVocabulary.query(this.selectedLang, {
+        if (container && window.School77Vocabulary) {
+            const queryRes = window.School77Vocabulary.query(this.selectedLang, {
                 level: this.vocabLevel,
                 pos: this.vocabPos,
                 search: this.vocabSearch,
@@ -3031,7 +3031,7 @@ const LessonsApp = {
 
     renderStepVocabulary() {
         const langInfo = this.getLangInfo(this.selectedLang);
-        const queryRes = window.SpeakProVocabulary ? window.SpeakProVocabulary.query(this.selectedLang, {
+        const queryRes = window.School77Vocabulary ? window.School77Vocabulary.query(this.selectedLang, {
             level: this.vocabLevel,
             pos: this.vocabPos,
             search: this.vocabSearch,

@@ -1,163 +1,185 @@
-// ==========================================================================
-// SpeakPro — Speaking with AI (Nutq va Audio Suhbat Tizimi)
-// Muallif: "Planeta" o'quv markazi • 2026 Edition
+﻿// ==========================================================================
+// School77 — Speaking with AI (Jonli Virtual AI Ustoz & Ovozli Suhbat)
+// Muallif: 77-School O'quv Markazi • 2026 Edition
 // ==========================================================================
 
 const SpeakingApp = {
-    // Current State
-    lang: 'en', // 'en' | 'ru' | 'de'
-    coachId: 'alex',
-    topicId: 'daily',
-    level: 'B1',
-    isRecording: false,
-    recognition: null,
-    interimTranscript: '',
-    userTurnsCount: 0,
-    sessionStarsEarned: 0,
+    // Current mode: 'select_coach' | 'studio' | 'result'
+    mode: 'select_coach',
+
+    // Selected coach: 'laylo' (female) | 'jasur' (male)
+    selectedCoach: 'laylo',
+
+    // Active target language: null initially, then 'en' | 'ru' | 'de'
+    targetLang: null,
+
+    // Step state in conversation: 'ask_language' | 'in_conversation'
+    step: 'ask_language',
+
+    // Emotional state of the AI coach:
+    // 'neutral' 🙂 | 'listening' 👂 | 'thinking' 🤔 | 'happy' 😃 | 'impressed' 🤩 | 'supportive' 💡
+    emotion: 'neutral',
+
+    // Voice & Speech synthesis settings
+    isSpeakingAudio: false,
     autoSpeakAI: true,
-    showTranslations: false,
+
+    // Speech-to-text recognition
+    recognition: null,
+    isRecording: false,
+
+    // Metrics for the current session (NO STARS - strictly performance score)
+    userTurnsCount: 0,
+    userWordList: [],
+    startTime: null,
+
+    // Current live speech contents (Clean subtitles, NO CHAT bubbles!)
+    currentAISpeech: {
+        text: "Xush, qaysi tilda gaplashamiz? (Ingliz, Rus yoki Nemis tili?) 🌍",
+        tr: "Xush kelibsiz! Qaysi xorijiy tilda suhbatlashishni xohlaysiz? Ovoz orqali ayting yoki quyidagi tugmalardan birini bosing:"
+    },
+
+    // What user said most recently
+    lastUserSpeech: null,
+
+    // Quick suggestions / actions
+    suggestionChips: [],
 
     // Coaches definitions
     coaches: {
-        alex: {
-            id: 'alex',
-            name: 'Alex',
-            role: 'General English Coach',
-            flag: '🇬🇧',
-            avatar: '👨‍💼',
-            lang: 'en',
-            badge: 'Do\'stona Suhbatdosh',
-            desc: 'Kundalik erkin muloqot, do\'stona savol-javob va nutq ravonligini oshirish bo\'yicha mutaxassis.',
-            greeting: 'Hello there! I am Alex, your friendly English speaking coach. I am very excited to chat with you today! How has your day been going so far?',
-            greetingUz: 'Salom! Men Alexman — sizning do\'stona ingliz tili so\'zlashuv repetitoringiz. Bugun siz bilan suhbatlashishdan juda mamnunman! Kuningiz qanday o\'tmoqda?'
+        laylo: {
+            id: 'laylo',
+            name: 'Laylo',
+            gender: 'female',
+            role: "Mayin va Samimiy AI Qiz Coach",
+            tagline: "Shirin va yoqimli qiz ovozi • Sabrli va dalda beruvchi ustoz",
+            desc: "Erkin, qulay va xotirjam muhitda gapirishni xohlovchilar uchun jonli virtual ustoz.",
+            accentColor: '#ec4899',
+            gradient: 'linear-gradient(135deg, #f472b6, #db2777)',
+            sphereBg: 'linear-gradient(145deg, #1e1338, #3b184f)',
+            auraColor: 'rgba(236, 72, 153, 0.45)',
+            pitch: 1.18,
+            rate: 0.94
         },
-        sarah: {
-            id: 'sarah',
-            name: 'Sarah',
-            role: 'IELTS Speaking Examiner',
-            flag: '🇬🇧',
-            avatar: '👩‍🏫',
-            lang: 'en',
-            badge: 'IELTS Band 7.5+',
-            desc: 'IELTS Part 1, Part 2 va Part 3 mezonlari bo\'yicha chuqur savollar, akademik leksika va rasmiy tahlil.',
-            greeting: 'Good day! My name is Sarah, and I will be guiding your IELTS Speaking practice today. Let us start: Could you please tell me about the area or neighborhood where you currently live?',
-            greetingUz: 'Xayrli kun! Mening ismim Sarah, bugun sizning IELTS Speaking amaliyotingizni olib boraman. Keling, boshlaymiz: Hozir istiqomat qilayotgan hududingiz yoki mahallangiz haqida aytib bera olasizmi?'
-        },
-        maxim: {
-            id: 'maxim',
-            name: 'Максим',
-            role: 'Репетитор русского языка',
-            flag: '🇷🇺',
-            avatar: '👨‍🏫',
-            lang: 'ru',
-            badge: 'Деловой & Разговорный',
-            desc: 'Rus tilida erkin va to\'g\'ri gapirish, urg\'ular, kundalik va ishbilarmonlik iboralarini mukammal o\'rgatadi.',
-            greeting: 'Здравствуйте! Рад нашему знакомству. Меня зовут Максим, я помогу вам заговорить на чистом и уверенном русском языке. Расскажите, чем вы любите заниматься в свободное время?',
-            greetingUz: 'Assalomu alaykum! Tanishganimdan xursandman. Ismim Maksim, men sizga toza va ishonchli rus tilida so\'zlashishga yordam beraman. Ayting-chi, bo\'sh vaqtingizda nimalar qilishni yoqtirasiz?'
-        },
-        hans: {
-            id: 'hans',
-            name: 'Hans',
-            role: 'Goethe Zertifikat Trainer',
-            flag: '🇩🇪',
-            avatar: '👨‍💼',
-            lang: 'de',
-            badge: 'Goethe & TestDaF',
-            desc: 'Nemis tilida erkin suhbat, to\'g\'ri artikllar (der/die/das) va Germaniyada yashash uchun zarur nutq ko\'nikmalari.',
-            greeting: 'Guten Tag! Mein Name ist Hans. Ich freue mich sehr, heute mit Ihnen Deutsch zu sprechen. Wie läuft Ihr Deutschlernen bisher und worüber möchten Sie heute sprechen?',
-            greetingUz: 'Xayrli kun! Mening ismim Hans. Bugun siz bilan nemis tilida suhbatlashishdan juda mamnunman. Nemis tilini o\'rganishingiz qanday ketmoqda va bugun nima haqida suhbatlashmoqchisiz?'
+        jasur: {
+            id: 'jasur',
+            name: 'Jasur',
+            gender: 'male',
+            role: "Intellektual va G'ayratli AI O'g'il Coach",
+            tagline: "Bariton va ishonchli o'g'il bola ovozi • Faol va rivojlantiruvchi murabbiy",
+            desc: "Aniq talaffuz, boy so'z boyligi va mantiqiy savollar bilan nutqni yangi cho'qqiga olib chiquvchi suhbatdosh.",
+            accentColor: '#3b82f6',
+            gradient: 'linear-gradient(135deg, #60a5fa, #2563eb)',
+            sphereBg: 'linear-gradient(145deg, #0f1c3f, #1e293b)',
+            auraColor: 'rgba(59, 130, 246, 0.45)',
+            pitch: 0.92,
+            rate: 0.95
         }
     },
 
-    // Topics definitions
-    topics: [
-        { id: 'daily', name: 'Kundalik hayot & Qiziqishlar', icon: '☕', en: 'Daily Life & Hobbies', ru: 'Повседневная жизнь', de: 'Alltag & Hobbys' },
-        { id: 'travel', name: 'Sayohat & Aeroport', icon: '✈️', en: 'Travel & Airport', ru: 'Путешествия и аэропорт', de: 'Reisen & Flughafen' },
-        { id: 'interview', name: 'Ish suhbati & Karyera', icon: '💼', en: 'Job Interview & Career', ru: 'Собеседование и карьера', de: 'Vorstellungsgespräch' },
-        { id: 'cafe', name: 'Restoran & Qahvaxona', icon: '🍽️', en: 'Restaurant & Food', ru: 'Ресторан и кухня', de: 'Restaurant & Café' },
-        { id: 'tech', name: 'IT & Sun\'iy Intellekt', icon: '💻', en: 'Tech & Artificial Intelligence', ru: 'Технологии и ИИ', de: 'Technologie & KI' },
-        { id: 'free', name: 'Erkin Do\'stona Suhbat', icon: '🌟', en: 'Open Free Conversation', ru: 'Свободная беседа', de: 'Freies Gespräch' }
-    ],
+    // Emotion definitions
+    emotionsMap: {
+        neutral: { icon: '🙂', label: 'Samimiy tabassum', aura: 'rgba(99, 102, 241, 0.4)' },
+        listening: { icon: '👂', label: 'Diqqat bilan tinglamoqda...', aura: 'rgba(16, 185, 129, 0.55)' },
+        thinking: { icon: '🤔', label: 'O\'ylanmoqda & tahlil qilmoqda...', aura: 'rgba(139, 92, 246, 0.55)' },
+        happy: { icon: '😃', label: 'Ajoyib javob!', aura: 'rgba(236, 72, 153, 0.55)' },
+        impressed: { icon: '🤩', label: 'Qoyilmaqom fikr!', aura: 'rgba(245, 158, 11, 0.55)' },
+        supportive: { icon: '💡', label: 'Foydali maslahat', aura: 'rgba(59, 130, 246, 0.55)' }
+    },
 
-    // Conversation messages
-    messages: [],
-
-    // Suggestion chips
-    suggestionChips: [],
-
-    // Init
+    // Initialization
     init() {
         this.setupSpeechRecognition();
-        if (this.messages.length === 0) {
-            this.resetConversation();
+        if (this.mode === 'studio') {
+            this.render();
         } else {
+            this.mode = 'select_coach';
             this.render();
         }
     },
 
-    // Reset or Start New Session
-    resetConversation() {
-        const coach = this.coaches[this.coachId] || this.coaches.alex;
-        this.messages = [
-            {
-                id: 'msg-0',
-                sender: 'ai',
-                text: coach.greeting,
-                tr: coach.greetingUz,
-                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                feedback: null
-            }
-        ];
+    // Choose coach and enter speaking studio
+    chooseCoach(coachId) {
+        if (!this.coaches[coachId]) coachId = 'laylo';
+        this.selectedCoach = coachId;
+        this.mode = 'studio';
+        this.step = 'ask_language';
+        this.targetLang = null;
         this.userTurnsCount = 0;
-        this.sessionStarsEarned = 0;
-        this.updateSuggestionChips();
+        this.userWordList = [];
+        this.startTime = Date.now();
+        this.emotion = 'neutral';
+        this.lastUserSpeech = null;
+
+        const coach = this.coaches[coachId];
+
+        // The AI immediately starts by asking in audio + text:
+        // "Xush, qaysi tilda gaplashamiz? (Ingliz, Rus yoki Nemis tili?)"
+        const initialText = "Xush, qaysi tilda gaplashamiz? (Ingliz, Rus yoki Nemis tili?) 🌍";
+        const initialUz = "Xush kelibsiz! Qaysi xorijiy tilda suhbatlashishni xohlaysiz? Ovoz orqali ayting yoki quyidagi tugmalardan birini bosing:";
+
+        this.currentAISpeech = {
+            text: initialText,
+            tr: initialUz
+        };
+
+        this.suggestionChips = [
+            { label: '🇬🇧 Ingliz tili (English)', value: 'Ingliz tilida gaplashamiz' },
+            { label: '🇷🇺 Rus tili (Русский)', value: 'Давайте говорить по-русски' },
+            { label: '🇩🇪 Nemis tili (Deutsch)', value: 'Lass uns Deutsch sprechen' }
+        ];
+
         this.render();
 
+        // Speak opening greeting with coach voice
         if (this.autoSpeakAI) {
             setTimeout(() => {
-                this.speak(coach.greeting);
-            }, 600);
+                this.speakAI(initialText, coach.gender, 'uz-UZ');
+            }, 550);
+        }
+
+        if (window.SoundEffects) SoundEffects.playClick();
+    },
+
+    // Set emotional state with visual reactive trigger
+    setEmotion(emotionKey) {
+        if (!this.emotionsMap[emotionKey]) emotionKey = 'neutral';
+        this.emotion = emotionKey;
+
+        const stage = document.getElementById('ai-face-stage');
+        const badge = document.getElementById('ai-emotion-pill');
+        const emotionInfo = this.emotionsMap[emotionKey];
+
+        if (badge) {
+            badge.innerHTML = `<span class="emotion-icon">${emotionInfo.icon}</span> <span>${emotionInfo.label}</span>`;
+            badge.style.borderColor = emotionInfo.aura;
+        }
+
+        if (stage) {
+            // Update emotion classes
+            stage.className = `ai-talking-face-stage emotion-${emotionKey} ${this.isSpeakingAudio ? 'is-talking' : ''} ${this.isRecording ? 'is-listening' : ''}`;
         }
     },
 
-    // Update Quick Suggestions based on topic & language
-    updateSuggestionChips() {
-        if (this.lang === 'en') {
-            if (this.topicId === 'interview') {
-                this.suggestionChips = [
-                    'I have a strong background in software engineering.',
-                    'My greatest strength is solving complex problems.',
-                    'I am looking for new challenges to grow professionally.'
-                ];
-            } else if (this.topicId === 'travel') {
-                this.suggestionChips = [
-                    'I would like to visit European countries next summer.',
-                    'Traveling broadens our horizons and introduces new cultures.',
-                    'I prefer beach resorts and historical cities.'
-                ];
-            } else {
-                this.suggestionChips = [
-                    'My day has been very productive and exciting!',
-                    'I am currently preparing for language exams.',
-                    'I love reading books and practicing foreign languages.'
-                ];
-            }
-        } else if (this.lang === 'ru') {
-            this.suggestionChips = [
-                'Мой день проходит очень продуктивно и интересно!',
-                'В свободное время я увлекаюсь чтением и изучением языков.',
-                'Я считаю, что практика речи — это главный ключ к успеху.'
-            ];
+    // Update face visual state (talking / listening / thinking)
+    updateFaceVisuals() {
+        const stage = document.getElementById('ai-face-stage');
+        if (!stage) return;
+
+        if (this.isSpeakingAudio) {
+            stage.classList.add('is-talking');
         } else {
-            this.suggestionChips = [
-                'Mein Tag war bisher sehr erfolgreich und produktiv!',
-                'Ich lerne Deutsch, weil ich in Deutschland studieren möchte.',
-                'In meiner Freizeit lese ich gern Bücher und treibe Sport.'
-            ];
+            stage.classList.remove('is-talking');
+        }
+
+        if (this.isRecording) {
+            stage.classList.add('is-listening');
+        } else {
+            stage.classList.remove('is-listening');
         }
     },
 
-    // Setup Web Speech API for real-time speech-to-text
+    // Web Speech API for voice recognition
     setupSpeechRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
@@ -172,6 +194,8 @@ const SpeakingApp = {
 
             rec.onstart = () => {
                 this.isRecording = true;
+                this.setEmotion('listening');
+                this.updateFaceVisuals();
                 this.updateMicUI();
             };
 
@@ -194,6 +218,8 @@ const SpeakingApp = {
             rec.onerror = (event) => {
                 console.warn('Speech recognition error:', event.error);
                 this.isRecording = false;
+                this.setEmotion('neutral');
+                this.updateFaceVisuals();
                 this.updateMicUI();
                 if (event.error === 'not-allowed') {
                     if (window.App) App.showToast('Mikrofon ruxsati berilmadi. Matn orqali ham yozishingiz mumkin!', 'warning');
@@ -202,13 +228,15 @@ const SpeakingApp = {
 
             rec.onend = () => {
                 this.isRecording = false;
+                this.updateFaceVisuals();
                 this.updateMicUI();
                 const input = document.getElementById('speaking-text-input');
                 if (input && input.value.trim().length > 0) {
-                    // Auto-send when speech ends comfortably
                     setTimeout(() => {
                         this.handleSendUserMessage();
-                    }, 400);
+                    }, 350);
+                } else {
+                    this.setEmotion('neutral');
                 }
             };
 
@@ -236,9 +264,11 @@ const SpeakingApp = {
             this.recognition.stop();
         } else {
             // Set recognition language
-            let langCode = 'en-US';
-            if (this.lang === 'ru') langCode = 'ru-RU';
-            else if (this.lang === 'de') langCode = 'de-DE';
+            let langCode = 'uz-UZ';
+            if (this.targetLang === 'en') langCode = 'en-US';
+            else if (this.targetLang === 'ru') langCode = 'ru-RU';
+            else if (this.targetLang === 'de') langCode = 'de-DE';
+
             this.recognition.lang = langCode;
 
             try {
@@ -251,26 +281,25 @@ const SpeakingApp = {
     },
 
     updateMicUI() {
-        const micBtn = document.getElementById('speaking-mic-btn');
-        const statusPill = document.getElementById('speaking-ai-status-indicator');
+        const micBtn = document.getElementById('studio-mic-btn');
         if (micBtn) {
             if (this.isRecording) {
-                micBtn.classList.add('recording-pulse');
+                micBtn.classList.add('mic-active');
                 micBtn.innerHTML = `
-                    <span class="mic-wave-anim"></span>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <div class="mic-ripple-pulse"></div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="1" y1="1" x2="23" y2="23"></line>
                         <path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"></path>
                         <path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"></path>
                         <line x1="12" y1="19" x2="12" y2="23"></line>
                         <line x1="8" y1="23" x2="16" y2="23"></line>
                     </svg>
-                    <span>Eshitilmoqda (To'xtatish)...</span>
+                    <span>Eshitilmoqda... (To'xtatish)</span>
                 `;
             } else {
-                micBtn.classList.remove('recording-pulse');
+                micBtn.classList.remove('mic-active');
                 micBtn.innerHTML = `
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
                         <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
                         <line x1="12" y1="19" x2="12" y2="23"></line>
@@ -280,19 +309,9 @@ const SpeakingApp = {
                 `;
             }
         }
-
-        if (statusPill) {
-            if (this.isRecording) {
-                statusPill.innerHTML = `<span class="status-dot status-recording"></span> Ovoz yozilmoqda...`;
-                statusPill.style.color = '#ef4444';
-            } else {
-                statusPill.innerHTML = `<span class="status-dot status-online"></span> AI Tayyor • Muloqot faol`;
-                statusPill.style.color = '#10b981';
-            }
-        }
     },
 
-    // User sends a message (spoken or typed)
+    // User speaks or sends a message
     handleSendUserMessage(customText) {
         const input = document.getElementById('speaking-text-input');
         const text = (customText || (input ? input.value : '')).trim();
@@ -300,468 +319,747 @@ const SpeakingApp = {
 
         if (input) input.value = '';
 
-        // Add user message
-        const userMsg = {
-            id: 'msg-' + (this.messages.length + 1),
-            sender: 'user',
+        // Collect words for vocabulary analysis
+        const words = text.toLowerCase().match(/[\p{L}]+/gu) || [];
+        this.userWordList.push(...words);
+
+        this.userTurnsCount++;
+
+        // Store user speech
+        this.lastUserSpeech = {
             text: text,
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            feedback: this.generateSmartFeedback(text)
+            feedback: this.step === 'in_conversation' ? this.generateSmartFeedback(text) : null
         };
-        this.messages.push(userMsg);
-        this.userTurnsCount++;
 
         if (window.SoundEffects) SoundEffects.playClick();
 
-        // Award Stars every 3 turns
-        if (this.userTurnsCount % 3 === 0) {
-            this.sessionStarsEarned += 10;
-            if (window.App && window.App.user) {
-                window.App.user.stars += 10;
-                window.App.saveUserState();
-                window.App.updateHeaderStats();
-                window.App.showToast('Ajoyib nutq faolligi! +10 Star ⭐ hisobingizga qo\'shildi!', 'success');
-                if (window.SoundEffects) SoundEffects.playSuccess();
+        // Switch emotion to thinking while AI prepares speech
+        this.setEmotion('thinking');
+        this.renderSubtitles();
+
+        // Process response
+        setTimeout(() => {
+            this.processAIResponse(text);
+        }, 800);
+    },
+
+    // Process either Language Selection step or In-Conversation dialogue (Server AI + Local Fallback)
+    async processAIResponse(userText) {
+        const coach = this.coaches[this.selectedCoach] || this.coaches.laylo;
+        const coachKey = this.selectedCoach || 'laylo';
+
+        // 1. Prioritize Server AI (/api/ai/chat)
+        let serverData = null;
+        try {
+            const apiBase = (typeof AdminApp !== 'undefined' && AdminApp.apiBaseUrl)
+                ? AdminApp.apiBaseUrl
+                : (window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
+                    ? window.location.origin + '/api'
+                    : 'http://localhost:3000/api');
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+            const res = await fetch(apiBase + '/ai/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    coach: coachKey,
+                    lang: this.targetLang || 'en',
+                    step: this.step,
+                    message: userText
+                }),
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+
+            if (res.ok) {
+                const json = await res.json();
+                if (json && json.success) {
+                    serverData = json;
+                }
             }
+        } catch (err) {
+            // Server offline or request timeout — seamlessly fall back to local AI engine
         }
 
-        this.renderChatList();
-        this.scrollToBottom();
+        if (serverData) {
+            if (serverData.detectedLang) {
+                this.targetLang = serverData.detectedLang;
+            }
+            if (serverData.step) {
+                this.step = serverData.step;
+            }
+            this.setEmotion(serverData.emotion || 'happy');
+            this.currentAISpeech = {
+                text: serverData.reply,
+                tr: serverData.tr || ''
+            };
+            this.suggestionChips = serverData.suggestions || [];
+            this.renderSubtitles();
+            this.renderSuggestionChips();
 
-        // Show AI thinking indicator
-        this.showAIThinking();
+            if (this.autoSpeakAI) {
+                this.speakAI(serverData.reply, coach.gender, this.targetLang);
+            }
+            return;
+        }
 
-        // Generate and speak AI response after realistic pause
-        setTimeout(() => {
-            this.respondAsAI(text);
-        }, 900);
-    },
+        // STEP 1: Handle Language Selection (Local Fallback)
+        if (this.step === 'ask_language') {
+            const detectedLang = this.detectLanguageChoice(userText);
+            this.targetLang = detectedLang;
+            this.step = 'in_conversation';
 
-    showAIThinking() {
-        const list = document.getElementById('speaking-chat-flow');
-        if (!list) return;
-        const thinkingHtml = `
-            <div class="ai-speaking-bubble ai-thinking-bubble" id="speaking-thinking-temp">
-                <div class="speaking-avatar ai-avatar">${this.coaches[this.coachId].avatar}</div>
-                <div class="speaking-bubble-body">
-                    <div class="typing-wave">
-                        <span></span><span></span><span></span>
-                    </div>
-                </div>
-            </div>
-        `;
-        list.insertAdjacentHTML('beforeend', thinkingHtml);
-        this.scrollToBottom();
-    },
+            let greetingData = {};
+            if (detectedLang === 'en') {
+                greetingData = {
+                    text: coach.gender === 'female'
+                        ? "Wonderful choice! Let's speak in English! 🇬🇧 I'm Laylo, and I'm very happy to be your speaking partner. How was your day today, or what would you like to talk about?"
+                        : "Awesome choice! Let's speak in English! 🇬🇧 I'm Jasur, ready to help you boost your confidence and fluency. Tell me, how was your day and what's on your mind?",
+                    tr: "Ajoyib tanlov! Keling, ingliz tilida suhbatlashamiz! 🇬🇧 Kuningiz qanday o'tdi yoki bugun nima haqida suhbatlashmoqchisiz?",
+                    suggestions: [
+                        { label: 'My day was really good!', value: 'My day was really productive and great!' },
+                        { label: 'I want to talk about travel', value: 'I would love to talk about travel and visiting new countries.' },
+                        { label: 'How can I practice speaking?', value: 'How can I improve my English speaking fluency?' }
+                    ]
+                };
+            } else if (detectedLang === 'ru') {
+                greetingData = {
+                    text: coach.gender === 'female'
+                        ? "Прекрасно! Будем общаться на русском языке! 🇷🇺 Меня зовут Лейла. Я с радостью помогу вам говорить свободно и красиво. Расскажите, как прошёл ваш день?"
+                        : "Отличный выбор! Говорим по-русски! 🇷🇺 Меня зовут Жасур. Давайте развивать уверенную и грамотную речь. Как ваши дела и чем вы сегодня занимались?",
+                    tr: "Ajoyib tanlov! Rus tilida suhbatlashamiz! 🇷🇺 Ismim " + coach.name + ". Kuningiz qanday o'tdi va bugun nimalar bilan mashg'ul bo'ldingiz?",
+                    suggestions: [
+                        { label: 'Мой день прошёл отлично', value: 'Мой день прошёл очень насыщенно и отлично!' },
+                        { label: 'О моих хобби', value: 'В свободное время я люблю читать книги и изучать языки.' },
+                        { label: 'Практика речи', value: 'Я хочу научиться свободно общаться без языкового барьера.' }
+                    ]
+                };
+            } else { // de
+                greetingData = {
+                    text: coach.gender === 'female'
+                        ? "Wunderbar! Wir sprechen heute auf Deutsch! 🇩🇪 Ich bin Layla. Ich freue mich sehr darauf, mit Ihnen Deutsch zu üben. Wie geht es Ihnen heute und was haben Sie Schönes gemacht?"
+                        : "Fantastisch! Wir sprechen auf Deutsch! 🇩🇪 Ich bin Jasur. Gemeinsam machen wir Ihre Aussprache und Grammatik perfekt. Wie läuft Ihr Tag und worüber möchten Sie sprechen?",
+                    tr: "Ajoyib tanlov! Nemis tilida suhbatlashamiz! 🇩🇪 Ismim " + coach.name + ". Bugun kuningiz qanday o'tmoqda va nima haqida gaplashamiz?",
+                    suggestions: [
+                        { label: 'Mir geht es sehr gut!', value: 'Mir geht es sehr gut und mein Tag war erfolgreich!' },
+                        { label: 'Über Deutschland', value: 'Ich interessiere mich sehr für das Leben und Studium in Deutschland.' },
+                        { label: 'Deutsch lernen', value: 'Ich lerne jeden Tag fleißig Deutsch mit School77.' }
+                    ]
+                };
+            }
 
-    removeAIThinking() {
-        const el = document.getElementById('speaking-thinking-temp');
-        if (el) el.remove();
-    },
+            this.setEmotion('happy');
 
-    // Generate intelligent contextual response
-    respondAsAI(userText) {
-        this.removeAIThinking();
-        const coach = this.coaches[this.coachId] || this.coaches.alex;
-        const responseData = this.generateAIResponseText(userText);
+            this.currentAISpeech = {
+                text: greetingData.text,
+                tr: greetingData.tr
+            };
+            this.suggestionChips = greetingData.suggestions;
 
-        const aiMsg = {
-            id: 'msg-' + (this.messages.length + 1),
-            sender: 'ai',
-            text: responseData.text,
-            tr: responseData.tr,
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            feedback: null
+            this.renderSubtitles();
+            this.renderSuggestionChips();
+
+            if (this.autoSpeakAI) {
+                this.speakAI(greetingData.text, coach.gender, detectedLang);
+            }
+            return;
+        }
+
+        // STEP 2: In-Conversation Dialogue
+        const dialogueData = this.generateContextualResponse(userText, this.targetLang, coach);
+
+        if (userText.split(/\s+/).length >= 7) {
+            this.setEmotion('impressed');
+        } else if (dialogueData.type === 'tip') {
+            this.setEmotion('supportive');
+        } else {
+            this.setEmotion('happy');
+        }
+
+        this.currentAISpeech = {
+            text: dialogueData.text,
+            tr: dialogueData.tr
         };
+        this.suggestionChips = dialogueData.suggestions;
 
-        this.messages.push(aiMsg);
-        this.suggestionChips = responseData.suggestions;
-
-        this.renderChatList();
+        this.renderSubtitles();
         this.renderSuggestionChips();
-        this.scrollToBottom();
 
         if (this.autoSpeakAI) {
-            this.speak(responseData.text);
+            this.speakAI(dialogueData.text, coach.gender, this.targetLang);
         }
     },
 
-    // AI Natural Dialogue Generator
-    generateAIResponseText(userText) {
+    // Detect language from user input
+    detectLanguageChoice(text) {
+        const lower = text.toLowerCase();
+        if (lower.includes('rus') || lower.includes('рус') || lower.includes('russian')) {
+            return 'ru';
+        }
+        if (lower.includes('nemis') || lower.includes('nem') || lower.includes('deutsch') || lower.includes('german') || lower.includes('germany')) {
+            return 'de';
+        }
+        return 'en';
+    },
+
+    // Generate natural, context-aware dialogue with engaging follow-ups
+    generateContextualResponse(userText, lang, coach) {
         const lower = userText.toLowerCase();
 
-        if (this.lang === 'en') {
-            if (lower.includes('name') || lower.includes('who are you')) {
+        if (lang === 'en') {
+            if (lower.includes('good') || lower.includes('great') || lower.includes('fine') || lower.includes('well') || lower.includes('happy')) {
                 return {
-                    text: `I am ${this.coaches[this.coachId].name}, your dedicated AI English partner. My mission is to make you completely fluent, confident and natural in English!`,
-                    tr: `Men ${this.coaches[this.coachId].name}man — sizning shaxsiy sun'iy intellekt ingliz tili repetitoringiz. Maqsadim sizni ingliz tilida ravon, ishonchli va tabiiy so'zlashishga o'rgatish!`,
-                    suggestions: ['What is your favorite topic to discuss?', 'How can I improve my English pronunciation?', 'Let us practice job interview questions!']
+                    text: "I am really glad to hear that! Positive energy makes language learning so much easier. What was the most memorable part of your day?",
+                    tr: "Buni eshitganimdan juda xursandman! Ijobiy kayfiyat til o'rganishni ancha osonlashtiradi. Bugungi kuningizning eng esda qolarli voqeasi nima bo'ldi?",
+                    suggestions: [
+                        { label: 'I met with friends', value: 'I met up with some good friends and had coffee.' },
+                        { label: 'I worked on my goals', value: 'I made great progress on my learning goals today.' },
+                        { label: 'Just relaxed at home', value: 'I had a quiet evening relaxing and reading.' }
+                    ]
                 };
-            } else if (lower.includes('ielts') || lower.includes('exam') || lower.includes('test')) {
+            } else if (lower.includes('work') || lower.includes('job') || lower.includes('study') || lower.includes('student') || lower.includes('it') || lower.includes('tech')) {
                 return {
-                    text: 'That is fantastic! In IELTS Speaking, clarity, lexical resource, and grammatical range are crucial. Could you elaborate on what specific band score you are targeting?',
-                    tr: 'Bu juda ajoyib! IELTS Speaking bo\'limida aniqlik, so\'z boyligi va grammatik diapazon hal qiluvchi ahamiyatga ega. Aynan qaysi ballni maqsad qilayotganingizni ayta olasizmi?',
-                    suggestions: ['I am aiming for an overall Band 7.5 or higher.', 'I want to improve my fluency and coherence.', 'Can we practice IELTS Part 2 cue cards?']
+                    text: "That sounds very purposeful! Continuous learning and career ambition are wonderful qualities. What is a skill or subject you are currently most excited to master?",
+                    tr: "Bu juda maqsadli eshitilmoqda! Tinimsiz izlanish va kasbiy intilish — ajoyib fazilatlar. Hozirda qaysi ko'nikma yoki sohani chuqurroq o'rganishga ko'proq qiziqmoqdasiz?",
+                    suggestions: [
+                        { label: 'Technology & AI', value: 'I am deeply interested in technology, programming and AI.' },
+                        { label: 'Foreign languages', value: 'Mastering fluent spoken English is my top priority right now.' },
+                        { label: 'Business & Management', value: 'I want to build my own international project in the future.' }
+                    ]
                 };
-            } else if (lower.includes('work') || lower.includes('job') || lower.includes('career') || lower.includes('developer') || lower.includes('it')) {
+            } else if (lower.includes('travel') || lower.includes('country') || lower.includes('city') || lower.includes('visit') || lower.includes('vacation')) {
                 return {
-                    text: 'Career and modern technology are wonderful areas! Effective professional communication helps you present complex ideas simply. What motivated you to pursue this career path?',
-                    tr: 'Karyera va zamonaviy texnologiyalar — ajoyib soha! Samarali kasbiy muloqot murakkab g\'oyalarni sodda tushuntirishga yordam beradi. Ushbu kasbni tanlashingizga nima turtki bo\'lgan?',
-                    suggestions: ['I enjoy creating innovative solutions for people.', 'Technology evolves rapidly and offers huge global opportunities.', 'I love collaborating with international teams.']
+                    text: "Traveling is such an enriching adventure! It expands our perspective on the world. If you could book a flight right now, which country would you fly to first?",
+                    tr: "Sayohat inson dunyoqarashini juda boyitadi! Agar hozir samolyotga chipta olish imkoni bo'lsa, birinchi qaysi davlatga uchgan bo'lardingiz?",
+                    suggestions: [
+                        { label: 'United Kingdom', value: 'I would love to explore London and historic British cities.' },
+                        { label: 'Germany or Switzerland', value: 'I would visit Germany or Switzerland to see the Alps.' },
+                        { label: 'United States', value: 'I dream of visiting New York and California.' }
+                    ]
                 };
-            } else if (lower.includes('travel') || lower.includes('trip') || lower.includes('city') || lower.includes('country') || lower.includes('germany') || lower.includes('usa')) {
+            } else if (lower.includes('hobby') || lower.includes('free time') || lower.includes('music') || lower.includes('book') || lower.includes('sport')) {
                 return {
-                    text: 'Travel gives us unforgettable memories and teaches cultural adaptability. If you had the chance to embark on a journey tomorrow, which country would be at the top of your list?',
-                    tr: 'Sayohat bizga unutilmas xotiralar baxsh etadi va madaniy moslashuvchanlikka o\'rgatadi. Agar ertaga sayohatga chiqish imkoni bo\'lsa, ro\'yxatingizda qaysi davlat birinchi o\'rinda turardi?',
-                    suggestions: ['I would definitely travel to Germany or the UK.', 'I love discovering historical architecture and local food.', 'Traveling helps me practice speaking with locals.']
+                    text: "Hobbies give our minds the perfect creative refreshment! How often do you get the chance to enjoy your hobbies during a busy week?",
+                    tr: "Qiziqishlar ongimizga ajoyib quvvat bag'ishlaydi! Band haftangiz davomida qanchalik tez-tez o'z sevimli mashg'ulotlaringizga vaqt ajrata olasiz?",
+                    suggestions: [
+                        { label: 'Every evening', value: 'I try to dedicate at least 30 minutes every evening.' },
+                        { label: 'On weekends', value: 'I mostly enjoy my hobbies freely on weekends.' },
+                        { label: 'Whenever I can', value: 'Whenever I have free time, I love listening to podcasts.' }
+                    ]
                 };
             } else {
                 return {
-                    text: 'That is very insightful and well-articulated! I love how you expressed that idea. How do you usually balance your language practice with your daily routine?',
-                    tr: 'Bu juda mazmunli va chiroyli ifodalangan fikr! G\'oyangizni bunday bayon qilganingiz menga juda yoqdi. Odatda til o\'rganishni kundalik yumushlaringiz bilan qanday muvofiqlashtirasiz?',
-                    suggestions: ['I try to dedicate at least 30 minutes every morning.', 'Using SpeakPro makes practicing fun and consistent.', 'I watch English videos and repeat after native speakers.']
+                    text: "That is very thoughtful and clearly expressed! You speak with genuine natural confidence. How do you feel about your speaking progress so far?",
+                    tr: "Bu juda chuqur va aniq ifodalangan fikr! O'zingizga bo'lgan ishonch bilan gapirayotganingiz menga juda yoqdi. O'zingizning nutqiy o'sishingizni qanday baholaysiz?",
+                    suggestions: [
+                        { label: 'I feel more confident', value: 'I definitely feel more confident speaking day by day!' },
+                        { label: 'I want more vocabulary', value: 'I want to expand my active vocabulary even further.' },
+                        { label: 'Practice makes perfect', value: 'Regular practice with AI gives me tremendous confidence.' }
+                    ]
                 };
             }
-        } else if (this.lang === 'ru') {
-            if (lower.includes('привет') || lower.includes('здравствуй') || lower.includes('добр')) {
+        } else if (lang === 'ru') {
+            if (lower.includes('хорош') || lower.includes('отличн') || lower.includes('нормальн')) {
                 return {
-                    text: 'Очень приятно слышать вас! Прекрасное начало нашего диалога. Расскажите немного о ваших главных целях в изучении русского языка?',
-                    tr: 'Sizni eshitish juda yoqimli! Suhbatimizning ajoyib boshlanishi. Rus tilini o\'rganishdagi asosiy maqsadlaringiz haqida bir oz aytib bering?',
-                    suggestions: ['Я хочу свободно общаться с коллегами по работе.', 'Мне нужен русский язык для путешествий и бизнеса.', 'Я хочу говорить уверенно и без грамматических ошибок.']
+                    text: "Рад это слышать! Когда у нас хороший настрой, слова запоминаются намного легче. Чем вы обычно любите заниматься по вечерам?",
+                    tr: "Buni eshitganimdan xursandman! Yaxshi kayfiyatda so'zlar ancha tez esda qoladi. Kechqurunlari nima bilan shug'ullanishni yoqtirasiz?",
+                    suggestions: [
+                        { label: 'Читаю книги', value: 'По вечерам я люблю читать книги и отдыхать.' },
+                        { label: 'Провожу время с семьей', value: 'Я провожу время с семьёй или гуляю на свежем воздухе.' },
+                        { label: 'Учу языки', value: 'Я практикую иностранные языки на School77.' }
+                    ]
                 };
             } else {
                 return {
-                    text: 'Замечательная мысль! Вы отлично формулируете предложения. Скажите, что для вас самое интересное или сложное при изучении языка?',
-                    tr: 'Ajoyib fikr! Gaplarni juda yaxshi tuzmoqdasiz. Ayting-chi, til o\'rganishda siz uchun eng qiziqarli yoki murakkab narsa nima?',
-                    suggestions: ['Больше всего мне нравится расширять словарный запас.', 'Иногда бывает сложно сразу подобрать нужное слово.', 'Постоянная практика помогает преодолеть языковой барьер.']
+                    text: "Замечательная мысль! Вы строите предложения грамотно и понятно. Что для вас самое интересное в русском языке?",
+                    tr: "Ajoyib fikr! Gaplarni savodli va tushunarli tuzmoqdasiz. Rus tilida siz uchun eng qiziqarli jihat nima?",
+                    suggestions: [
+                        { label: 'Богатый словарный запас', value: 'Мне очень нравится богатство и выразительность языка.' },
+                        { label: 'Культура и общение', value: 'Русский язык открывает большие возможности для общения.' },
+                        { label: 'Свободная речь', value: 'Моя главная цель — говорить легко и без пауз.' }
+                    ]
                 };
             }
         } else { // de
             return {
-                text: 'Ausgezeichnet! Ihr Deutsch klingt schon sehr flüssig und strukturiert. Was gefällt Ihnen am meisten an der deutschen Sprache und Kultur?',
-                tr: 'Ajoyib! Nemischa nutqingiz juda ravon va tartibli eshitilmoqda. Nemis tili va madaniyatida sizga eng ko\'p yoqadigan jihat nima?',
-                suggestions: ['Die deutsche Sprache ist sehr logisch und präzise aufgebaut.', 'Ich interessiere mich für Kultur und Technologie in Deutschland.', 'Ich möchte meine Aussprache und Grammatik täglich verbessern.']
+                text: "Sehr gut formuliert! Ihr Satzbau und Ihre Ausdrucksweise werden von Mal zu Mal flüssiger. Was motiviert Sie am meisten beim Deutschlernen?",
+                tr: "Juda yaxshi shakllantirilgan! Gap tuzishingiz va ifodalashingiz borgan sari ravonlashmoqda. Nemis tilini o'rganishda sizni eng ko'p nima ruhlantiradi?",
+                suggestions: [
+                    { label: 'Studium & Karriere', value: 'Ich möchte in Deutschland studieren und erfolgreich arbeiten.' },
+                    { label: 'Reisen & Kultur', value: 'Ich liebe die deutsche Kultur, Geschichte und Architektur.' },
+                    { label: 'Persönliche Entwicklung', value: 'Das Lernen einer neuen Sprache entwickelt mein Denken.' }
+                ]
             };
         }
     },
 
-    // AI Smart Feedback calculation
+    // Micro feedback for each spoken user sentence
     generateSmartFeedback(text) {
         const words = text.trim().split(/\s+/).filter(Boolean);
-        const wordCount = words.length;
+        const count = words.length;
 
-        // Fluency score based on length and structure
-        let score = 86;
-        if (wordCount >= 3) score += 4;
-        if (wordCount >= 6) score += 5;
-        if (wordCount >= 10) score += 3;
+        let score = 84;
+        if (count >= 3) score += 5;
+        if (count >= 6) score += 5;
+        if (count >= 10) score += 4;
         if (score > 98) score = 98;
 
-        let note = "A'lo darajada! Fikringiz aniq va tushunarli bayon etildi.";
-        let suggestion = "Muloqotni yanada boyitish uchun so'zlarni bog'lovchi iboralar (Furthermore, As a result, Actually) qo'shishingiz mumkin.";
+        let note = "A'lo talaffuz va to'g'ri fikr!";
+        let tip = "Keyingi gaplarda bog'lovchi so'zlar (Furthermore, Honestly, Actually) ishlatib ko'ring.";
 
-        if (this.lang === 'en') {
-            if (wordCount < 3) {
-                note = "Yaxshi boshlanish, ammo to'liq gap bilan javob berish nutqingizni yanada professional qiladi.";
-                suggestion = `Tavsiya: "Yes, definitely! I completely agree with this." shaklida kengaytirib ayting.`;
+        if (count < 3) {
+            note = "Yaxshi javob, to'liq gap bilan aytsangiz nutqingiz yanada boy bo'ladi.";
+            tip = "Masalan: 'Yes, absolutely, I feel that...' deb davom eting.";
+        }
+
+        return { score, note, tip };
+    },
+
+    // High quality voice synthesis with interactive mouth lip-sync
+    speakAI(text, gender, langCode = 'en') {
+        if (!('speechSynthesis' in window)) return;
+        if (window.App && window.App.user && window.App.user.speechEnabled === false) return;
+
+        window.speechSynthesis.cancel();
+
+        const cleanText = text.replace(/[\u{1F300}-\u{1FAFF}]/gu, '').replace(/[()]/g, '').trim();
+        if (!cleanText) return;
+
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+
+        let target = 'en-US';
+        if (langCode === 'ru' || langCode === 'ru-RU') target = 'ru-RU';
+        else if (langCode === 'de' || langCode === 'de-DE') target = 'de-DE';
+        else if (langCode === 'uz' || langCode === 'uz-UZ') target = 'uz-UZ';
+
+        utterance.lang = target;
+
+        const coach = this.coaches[this.selectedCoach] || this.coaches.laylo;
+        utterance.pitch = coach.pitch;
+        utterance.rate = coach.rate;
+
+        if (window.App && window.App.user && window.App.user.volume !== undefined) {
+            utterance.volume = window.App.user.volume / 100;
+        }
+
+        const voices = window.speechSynthesis.getVoices();
+        if (voices && voices.length > 0) {
+            const langPrefix = target.slice(0, 2);
+            const matchingVoices = voices.filter(v => v.lang.toLowerCase().startsWith(langPrefix));
+
+            let pickedVoice = null;
+            if (gender === 'female') {
+                pickedVoice = matchingVoices.find(v => {
+                    const n = v.name.toLowerCase();
+                    return n.includes('female') || n.includes('zira') || n.includes('jenny') || n.includes('samantha') || n.includes('victoria') || n.includes('eva') || n.includes('hedda');
+                });
             } else {
-                note = "Juda ravon va ishonchli talaffuz! Grammatik tuzilma mantiqiy.";
-                suggestion = `Alternativ ifoda: "To be honest, ${text.toLowerCase().replace(/[.?!]/g, '')} is quite important to me."`;
+                pickedVoice = matchingVoices.find(v => {
+                    const n = v.name.toLowerCase();
+                    return n.includes('male') || n.includes('david') || n.includes('alex') || n.includes('george') || n.includes('daniel') || n.includes('stefan');
+                });
             }
-        } else if (this.lang === 'ru') {
-            note = "Отличная интонация и чистая речь! Предложение построено верно.";
-            suggestion = "Слова-связки: 'На самом деле', 'Я считаю, что...' nutqni yanada jonli qiladi.";
-        } else {
-            note = "Sehr gute Aussprache und Struktur! Weiter so.";
-            suggestion = "Tipp: Achten Sie immer auf die Verbstellung an zweiter Position im Hauptsatz.";
+
+            if (!pickedVoice && matchingVoices.length > 0) {
+                pickedVoice = matchingVoices[0];
+            }
+
+            if (pickedVoice) {
+                utterance.voice = pickedVoice;
+            }
         }
 
-        return {
-            score: score,
-            note: note,
-            suggestion: suggestion
+        utterance.onstart = () => {
+            this.isSpeakingAudio = true;
+            this.updateFaceVisuals();
         };
+
+        utterance.onend = () => {
+            this.isSpeakingAudio = false;
+            this.updateFaceVisuals();
+        };
+
+        utterance.onerror = () => {
+            this.isSpeakingAudio = false;
+            this.updateFaceVisuals();
+        };
+
+        window.speechSynthesis.speak(utterance);
     },
 
-    // Speech Output
-    speak(text) {
-        if (typeof speakForeignWord === 'function') {
-            let code = 'en-US';
-            if (this.lang === 'ru') code = 'ru-RU';
-            else if (this.lang === 'de') code = 'de-DE';
-            speakForeignWord(text, code);
+    // =========================================================================
+    // FINISH CONVERSATION & SCORE COMPARISON (NO STARS!)
+    // =========================================================================
+    finishConversation() {
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        if (this.recognition && this.isRecording) {
+            this.recognition.stop();
         }
-    },
 
-    // Select Language
-    selectLang(langCode) {
-        this.lang = langCode;
-        if (langCode === 'en') this.coachId = 'alex';
-        else if (langCode === 'ru') this.coachId = 'maxim';
-        else if (langCode === 'de') this.coachId = 'hans';
-        this.resetConversation();
-    },
+        // Calculate conversation performance score (0 - 100)
+        const turns = this.userTurnsCount;
+        const uniqueWords = new Set(this.userWordList).size;
 
-    // Select Coach
-    selectCoach(coachId) {
-        this.coachId = coachId;
-        const coach = this.coaches[coachId];
-        if (coach) {
-            this.lang = coach.lang;
+        let baseScore = 78;
+        if (turns >= 2) baseScore += 5;
+        if (turns >= 4) baseScore += 5;
+        if (turns >= 7) baseScore += 4;
+        if (uniqueWords >= 15) baseScore += 4;
+        if (uniqueWords >= 30) baseScore += 3;
+
+        const currentScore = Math.min(98, Math.max(72, baseScore));
+
+        // Read previous score from localStorage
+        const prevScoreRaw = localStorage.getItem('School77_ai_last_speaking_score');
+        const prevScore = prevScoreRaw !== null ? parseInt(prevScoreRaw, 10) : null;
+
+        // Calculate difference
+        let diff = null;
+        let comparisonStatus = 'first'; // 'better' | 'worse' | 'equal' | 'first'
+
+        if (prevScore !== null) {
+            diff = currentScore - prevScore;
+            if (diff > 0) comparisonStatus = 'better';
+            else if (diff < 0) comparisonStatus = 'worse';
+            else comparisonStatus = 'equal';
         }
-        this.resetConversation();
-    },
 
-    // Select Topic
-    selectTopic(topicId) {
-        this.topicId = topicId;
-        this.resetConversation();
-    },
+        // Save current score as the new baseline
+        localStorage.setItem('School77_ai_last_speaking_score', currentScore.toString());
 
-    // Select Level
-    selectLevel(lvl) {
-        this.level = lvl;
+        // Save to full session history
+        const history = JSON.parse(localStorage.getItem('School77_ai_speaking_history') || '[]');
+        history.push({
+            date: new Date().toISOString(),
+            score: currentScore,
+            prevScore: prevScore,
+            diff: diff,
+            turns: turns,
+            coach: this.selectedCoach,
+            lang: this.targetLang || 'en'
+        });
+        localStorage.setItem('School77_ai_speaking_history', JSON.stringify(history));
+
+        // (NO STARS GIVEN as requested by user!)
+
+        if (window.SoundEffects) {
+            if (comparisonStatus === 'better' || comparisonStatus === 'first') {
+                SoundEffects.playSuccess();
+            } else {
+                SoundEffects.playClick();
+            }
+        }
+
+        // Store result for render
+        this.lastResult = {
+            currentScore,
+            prevScore,
+            diff,
+            comparisonStatus,
+            turns,
+            uniqueWords
+        };
+
+        this.mode = 'result';
         this.render();
     },
 
-    toggleTranslations() {
-        this.showTranslations = !this.showTranslations;
-        this.renderChatList();
+    // Reset back to coach selection
+    resetToCoachSelection() {
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        if (this.recognition && this.isRecording) this.recognition.stop();
+        this.mode = 'select_coach';
+        this.render();
     },
 
-    scrollToBottom() {
-        const flow = document.getElementById('speaking-chat-flow');
-        if (flow) {
-            flow.scrollTop = flow.scrollHeight;
-        }
-    },
-
-    // Main View Render
+    // =========================================================================
+    // RENDERING
+    // =========================================================================
     render() {
         const root = document.getElementById('speaking-app-container');
         if (!root) return;
 
-        const currentCoach = this.coaches[this.coachId] || this.coaches.alex;
-        const activeTopic = this.topics.find(t => t.id === this.topicId) || this.topics[0];
-
-        root.innerHTML = `
-            <div class="speaking-layout-wrapper">
-                
-                <!-- TOP HEADER & CONTROLS STRIP -->
-                <div class="speaking-top-bar">
-                    <!-- Language & Coach Selector -->
-                    <div class="speaking-controls-group">
-                        <div class="speaking-lang-pills">
-                            <button class="sp-pill ${this.lang === 'en' ? 'active' : ''}" onclick="SpeakingApp.selectLang('en')">
-                                🇬🇧 English
-                            </button>
-                            <button class="sp-pill ${this.lang === 'ru' ? 'active' : ''}" onclick="SpeakingApp.selectLang('ru')">
-                                🇷🇺 Русский
-                            </button>
-                            <button class="sp-pill ${this.lang === 'de' ? 'active' : ''}" onclick="SpeakingApp.selectLang('de')">
-                                🇩🇪 Deutsch
-                            </button>
-                        </div>
-
-                        <!-- Level Selector -->
-                        <div class="speaking-level-pills">
-                            ${['A1', 'A2', 'B1', 'B2', 'C1'].map(l => `
-                                <button class="sp-lvl-btn ${this.level === l ? 'active' : ''}" onclick="SpeakingApp.selectLevel('${l}')">
-                                    ${l}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
-
-                    <!-- Right Stats & Reset -->
-                    <div class="speaking-stats-strip">
-                        <div class="speaking-stat-item" title="Bugungi suhbatdagi replikalar">
-                            <span>🗣️ Replikalar:</span>
-                            <strong>${this.userTurnsCount} ta</strong>
-                        </div>
-                        <div class="speaking-stat-item" style="color: #f59e0b;" title="Suhbat davomida to'plangan yulduzlar">
-                            <span>⭐ Ishlangan:</span>
-                            <strong>+${this.sessionStarsEarned} Star</strong>
-                        </div>
-                        <button class="btn btn-secondary btn-sm" onclick="SpeakingApp.resetConversation()" title="Suhbatni boshidan boshlash">
-                            🔄 Yangi Suhbat
-                        </button>
-                    </div>
-                </div>
-
-                <!-- COACH SELECTION ROW -->
-                <div class="speaking-coaches-row">
-                    ${Object.values(this.coaches).map(c => `
-                        <div class="coach-mini-card ${this.coachId === c.id ? 'active' : ''}" onclick="SpeakingApp.selectCoach('${c.id}')">
-                            <span class="coach-avatar">${c.avatar}</span>
-                            <div class="coach-text">
-                                <div class="coach-name-row">
-                                    <strong>${c.name}</strong>
-                                    <span class="coach-flag">${c.flag}</span>
-                                </div>
-                                <span class="coach-badge-sub">${c.badge}</span>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-
-                <!-- TOPIC STRIP -->
-                <div class="speaking-topic-row">
-                    <strong style="font-size: 13px; color: var(--text-secondary); margin-right: 6px;">Mavzu:</strong>
-                    ${this.topics.map(t => `
-                        <button class="topic-pill-btn ${this.topicId === t.id ? 'active' : ''}" onclick="SpeakingApp.selectTopic('${t.id}')">
-                            ${t.icon} ${t.name}
-                        </button>
-                    `).join('')}
-                </div>
-
-                <!-- MAIN CHAT CONTAINER -->
-                <div class="speaking-chat-arena">
-                    <!-- Arena Header -->
-                    <div class="chat-arena-header">
-                        <div class="active-coach-banner">
-                            <div class="speaking-avatar ai-avatar">${currentCoach.avatar}</div>
-                            <div>
-                                <h4 style="margin: 0; font-size: 17px; font-weight: 800; color: var(--text-primary);">
-                                    ${currentCoach.name} — ${currentCoach.role}
-                                </h4>
-                                <p style="margin: 2px 0 0; font-size: 12px; color: var(--text-muted);">
-                                    ${activeTopic.icon} Mavzu: <strong>${activeTopic.name}</strong> • Daraja: <strong>${this.level}</strong>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="chat-header-actions">
-                            <button class="btn-toggle-tr ${this.showTranslations ? 'active' : ''}" onclick="SpeakingApp.toggleTranslations()" title="Barcha xabarlar tarjimasini ko'rsatish">
-                                👁️ ${this.showTranslations ? 'Tarjimalar (Ochiq)' : 'Tarjimalarni Ko\'rsatish'}
-                            </button>
-                            <div class="ai-status-pill" id="speaking-ai-status-indicator">
-                                <span class="status-dot status-online"></span> AI Tayyor • Muloqot faol
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Scrollable Chat Flow -->
-                    <div class="speaking-chat-flow" id="speaking-chat-flow">
-                        <!-- Populated dynamically by renderChatList() -->
-                    </div>
-
-                    <!-- Suggestion Chips Bar -->
-                    <div class="speaking-chips-container" id="speaking-chips-container">
-                        <!-- Populated dynamically by renderSuggestionChips() -->
-                    </div>
-
-                    <!-- Input & Voice Controls Bottom Bar -->
-                    <div class="speaking-bottom-controls">
-                        <div class="speaking-input-row">
-                            <input type="text" id="speaking-text-input" class="speaking-text-input" 
-                                placeholder="Javobingizni shu yerga yozing yoki pastdagi mikrofonni bosing..." 
-                                autocomplete="off"
-                                onkeydown="if(event.key === 'Enter') SpeakingApp.handleSendUserMessage()">
-                            
-                            <button class="btn btn-primary speaking-send-btn" onclick="SpeakingApp.handleSendUserMessage()" title="Yuborish">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                                </svg>
-                                <span>Yuborish</span>
-                            </button>
-                        </div>
-
-                        <!-- Big Microphone & Audio Assist Bar -->
-                        <div class="speaking-mic-action-bar">
-                            <button id="speaking-mic-btn" class="speaking-mic-btn" onclick="SpeakingApp.toggleSpeechRecognition()">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                                    <line x1="12" y1="19" x2="12" y2="23"></line>
-                                    <line x1="8" y1="23" x2="16" y2="23"></line>
-                                </svg>
-                                <span>Ovoz Bilan Gapirish 🎙️</span>
-                            </button>
-
-                            <div class="speaking-mic-hint">
-                                💡 <strong>Maslahat:</strong> Mikrofon tugmasini bosing va to'g'ridan-to'g'ri chet tilida gapiring. AI ovozingizni tushunadi va talaffuzingizga baho beradi!
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        `;
-
-        this.renderChatList();
-        this.renderSuggestionChips();
-        this.scrollToBottom();
-    },
-
-    // Render individual chat bubbles
-    renderChatList() {
-        const flow = document.getElementById('speaking-chat-flow');
-        if (!flow) return;
-
-        const currentCoach = this.coaches[this.coachId] || this.coaches.alex;
-
-        flow.innerHTML = this.messages.map(m => {
-            const isAI = m.sender === 'ai';
-            return `
-                <div class="speaking-bubble-wrap ${isAI ? 'bubble-ai' : 'bubble-user'}">
-                    <div class="speaking-avatar ${isAI ? 'ai-avatar' : 'user-avatar'}">
-                        ${isAI ? currentCoach.avatar : '👤'}
-                    </div>
-                    <div class="speaking-bubble-content">
-                        <div class="bubble-meta-header">
-                            <strong>${isAI ? currentCoach.name : (window.App && window.App.user ? window.App.user.name : 'Siz')}</strong>
-                            <span class="bubble-time">${m.time}</span>
-                            ${isAI ? `
-                                <button class="btn-bubble-audio" onclick="SpeakingApp.speak('${m.text.replace(/['\\]/g, '')}')" title="Ovozni qayta eshitish">
-                                    🔊 Eshitish
-                                </button>
-                            ` : ''}
-                        </div>
-
-                        <div class="bubble-main-text">${m.text}</div>
-
-                        ${isAI && (this.showTranslations || m.showTr) ? `
-                            <div class="bubble-translation-text">
-                                🇺🇿 ${m.tr}
-                            </div>
-                        ` : ''}
-
-                        ${isAI && !this.showTranslations && !m.showTr ? `
-                            <button class="btn-reveal-tr" onclick="SpeakingApp.revealSingleTr('${m.id}')">
-                                👁️ O'zbekcha tarjimasi
-                            </button>
-                        ` : ''}
-
-                        <!-- AI Smart Feedback for User messages -->
-                        ${!isAI && m.feedback ? `
-                            <div class="ai-smart-feedback-box">
-                                <div class="feedback-badge-row">
-                                    <span class="fb-score-pill">🎯 Talaffuz & Ravonlik: <strong>${m.feedback.score}%</strong></span>
-                                    <span class="fb-eval-tag">A'lo nutq</span>
-                                </div>
-                                <div class="fb-note-text">${m.feedback.note}</div>
-                                <div class="fb-suggestion-text">💡 ${m.feedback.suggestion}</div>
-                            </div>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
-        }).join('');
-    },
-
-    revealSingleTr(msgId) {
-        const msg = this.messages.find(m => m.id === msgId);
-        if (msg) {
-            msg.showTr = true;
-            this.renderChatList();
+        if (this.mode === 'select_coach') {
+            this.renderCoachSelection(root);
+        } else if (this.mode === 'studio') {
+            this.renderStudio(root);
+        } else if (this.mode === 'result') {
+            this.renderResultComparison(root);
         }
     },
 
-    // Render 3 suggestion chips
+    // SCREEN 1: Clean Coach Selection
+    renderCoachSelection(root) {
+        root.innerHTML = `
+            <div class="speaking-coach-select-wrapper">
+                <div class="coach-select-hero">
+                    <span class="sp-hero-badge">✨ Jonli Virtual AI Ustoz</span>
+                    <h2 class="sp-hero-title">Kim bilan suhbatlashishni xohlaysiz?</h2>
+                    <p class="sp-hero-subtitle">
+                        O'zingizga yoqimli AI murabbiyni tanlang. U ko'zlari va og'zi bilan sizga qarab, jonli ovozda suhbatlashadi.
+                    </p>
+                </div>
+
+                <div class="speaking-coaches-duo-grid">
+                    <!-- QIZ COACH CARD -->
+                    <div class="coach-card-luxury coach-card-female" onclick="SpeakingApp.chooseCoach('laylo')">
+                        <div class="coach-card-badge-pill">🌸 Qiz Coach</div>
+                        <div class="coach-avatar-large-wrap">
+                            <div class="coach-avatar-circle female-aura">
+                                <span class="coach-avatar-emoji">👩‍💼</span>
+                            </div>
+                            <div class="coach-voice-pulse"></div>
+                        </div>
+                        <h3 class="coach-card-name">Laylo</h3>
+                        <p class="coach-card-role">Mayin va Samimiy AI Qiz Ustoz</p>
+                        <p class="coach-card-description">
+                            "Salom! Men siz bilan samimiy va erkin suhbatlashaman. Yoqimli, mayin qiz ovozi bilan nutqingizni oshirishga ko'maklashaman."
+                        </p>
+                        <div class="coach-card-features">
+                            <span class="feat-pill">🌸 Mayin qiz ovozi</span>
+                            <span class="feat-pill">👀 Jonli ko'z & og'iz</span>
+                            <span class="feat-pill">✨ Sabrli va dalda beruvchi</span>
+                        </div>
+                        <button class="btn btn-primary w-full coach-start-btn">
+                            Laylo bilan suhbatlashish 💬
+                        </button>
+                    </div>
+
+                    <!-- O'G'IL COACH CARD -->
+                    <div class="coach-card-luxury coach-card-male" onclick="SpeakingApp.chooseCoach('jasur')">
+                        <div class="coach-card-badge-pill">⚡ O'g'il Coach</div>
+                        <div class="coach-avatar-large-wrap">
+                            <div class="coach-avatar-circle male-aura">
+                                <span class="coach-avatar-emoji">👨‍💼</span>
+                            </div>
+                            <div class="coach-voice-pulse"></div>
+                        </div>
+                        <h3 class="coach-card-name">Jasur</h3>
+                        <p class="coach-card-role">Intellektual va G'ayratli AI O'g'il Ustoz</p>
+                        <p class="coach-card-description">
+                            "Salom! Men sizni chet tilida dadil, ravon va ishonchli gapirishga o'rgataman. Bariton ovoz va jonli tahlillar bilan shug'ullanamiz."
+                        </p>
+                        <div class="coach-card-features">
+                            <span class="feat-pill">🎙️ Aniq bariton ovoz</span>
+                            <span class="feat-pill">👀 Jonli ko'z & og'iz</span>
+                            <span class="feat-pill">💡 Mantiqiy savol-javob</span>
+                        </div>
+                        <button class="btn btn-primary w-full coach-start-btn" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">
+                            Jasur bilan suhbatlashish 💬
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Last score reminder if exists -->
+                ${localStorage.getItem('School77_ai_last_speaking_score') ? `
+                    <div class="speaking-history-preview-card">
+                        <div class="sp-history-icon">📈</div>
+                        <div class="sp-history-text">
+                            <strong>O'tgan suhbatingiz natijasi: ${localStorage.getItem('School77_ai_last_speaking_score')} ball</strong>
+                            <p>Yangi suhbatni boshlang va o'tgan safargidan ko'ra yaxshiroq natija ko'rsating!</p>
+                        </div>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    },
+
+    // SCREEN 2: Live AI Studio (ANIMATED TALKING FACE WITH EYES & MOUTH, NO CHAT MESSAGES!)
+    renderStudio(root) {
+        const coach = this.coaches[this.selectedCoach] || this.coaches.laylo;
+        const emotionInfo = this.emotionsMap[this.emotion] || this.emotionsMap.neutral;
+
+        root.innerHTML = `
+            <div class="speaking-studio-arena">
+                
+                <!-- TOP HEADER -->
+                <div class="studio-top-bar">
+                    <div class="studio-coach-info">
+                        <div class="studio-coach-mini-avatar" style="background: ${coach.accentColor};">
+                            ${coach.gender === 'female' ? '👩‍💼' : '👨‍💼'}
+                        </div>
+                        <div>
+                            <div class="studio-coach-name-row">
+                                <h3 class="studio-coach-name">${coach.name}</h3>
+                                <span class="studio-badge-pill">${coach.gender === 'female' ? 'Qiz Coach' : 'O\'g\'il Coach'}</span>
+                            </div>
+                            <div class="studio-emotion-pill" id="ai-emotion-pill" style="border-color: ${emotionInfo.aura};">
+                                <span class="emotion-icon">${emotionInfo.icon}</span>
+                                <span>${emotionInfo.label}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="studio-top-actions">
+                        <div class="studio-turns-badge">
+                            🗣️ <strong>${this.userTurnsCount} ta replika</strong>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="SpeakingApp.resetToCoachSelection()" title="Boshqa coachni tanlash">
+                            👥 Coachni almashtirish
+                        </button>
+                        <button class="btn btn-primary btn-sm btn-finish-conversation" onclick="SpeakingApp.finishConversation()" title="Suhbatni yakunlab, natija va o'sishni ko'rish">
+                            🏁 Suhbatni yakunlash
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MAIN ANIMATED FACE STAGE (EYES & TALKING MOUTH) -->
+                <div class="ai-face-stage-wrapper">
+                    <div class="ai-talking-face-stage emotion-${this.emotion} ${this.isSpeakingAudio ? 'is-talking' : ''} ${this.isRecording ? 'is-listening' : ''}" id="ai-face-stage">
+                        
+                        <!-- Living Animated Face Sphere -->
+                        <div class="ai-face-sphere ${coach.gender}-face" style="box-shadow: 0 0 50px ${coach.auraColor};">
+                            
+                            <!-- Ambient Glow Aura -->
+                            <div class="face-aura-halo"></div>
+
+                            <!-- Eyebrows -->
+                            <div class="face-eyebrows-row">
+                                <div class="face-eyebrow brow-left"></div>
+                                <div class="face-eyebrow brow-right"></div>
+                            </div>
+
+                            <!-- Big Expressive Animated Eyes -->
+                            <div class="face-eyes-row">
+                                <!-- Left Eye -->
+                                <div class="ai-eye eye-left">
+                                    <div class="eye-pupil">
+                                        <div class="eye-reflection"></div>
+                                        <div class="eye-iris"></div>
+                                    </div>
+                                    <div class="eyelid-upper"></div>
+                                </div>
+
+                                <!-- Right Eye -->
+                                <div class="ai-eye eye-right">
+                                    <div class="eye-pupil">
+                                        <div class="eye-reflection"></div>
+                                        <div class="eye-iris"></div>
+                                    </div>
+                                    <div class="eyelid-upper"></div>
+                                </div>
+                            </div>
+
+                            <!-- Rosy Cheeks -->
+                            <div class="face-cheeks-row">
+                                <div class="face-blush blush-left"></div>
+                                <div class="face-blush blush-right"></div>
+                            </div>
+
+                            <!-- Animated Talking Mouth -->
+                            <div class="face-mouth-zone">
+                                <div class="ai-mouth ${this.isSpeakingAudio ? 'mouth-talking' : ''}" id="ai-face-mouth">
+                                    <div class="mouth-inner-cavity">
+                                        <div class="mouth-teeth"></div>
+                                        <div class="mouth-tongue"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Voice Soundwave Rings (when AI is speaking) -->
+                            <div class="voice-soundwave-rings">
+                                <span></span><span></span><span></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIVE SUBTITLE DISPLAY (AI CURRENT SPEECH + USER CURRENT SPEECH) -->
+                <div class="studio-subtitles-container" id="studio-subtitles-container">
+                    <!-- Populated dynamically by renderSubtitles() -->
+                </div>
+
+                <!-- QUICK ACTION CHIPS (LANGUAGE PICKER / CONVERSATION IDEAS) -->
+                <div class="studio-chips-container" id="studio-chips-container">
+                    <!-- Populated dynamically by renderSuggestionChips() -->
+                </div>
+
+                <!-- BOTTOM CONTROLS: CENTRAL GLOWING MIC & INPUT -->
+                <div class="studio-bottom-controls">
+                    <!-- Big Glowing Central Microphone -->
+                    <div class="studio-mic-center-wrap">
+                        <button id="studio-mic-btn" class="studio-mic-btn" onclick="SpeakingApp.toggleSpeechRecognition()">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                <line x1="12" y1="19" x2="12" y2="23"></line>
+                                <line x1="8" y1="23" x2="16" y2="23"></line>
+                            </svg>
+                            <span>Ovoz Bilan Gapirish 🎙️</span>
+                        </button>
+                    </div>
+
+                    <!-- Optional Text Input Bar -->
+                    <div class="studio-input-row">
+                        <input type="text" id="speaking-text-input" class="studio-text-input" 
+                            placeholder="Ovoz chiqarib gapiring yoki matn yozing..." 
+                            autocomplete="off"
+                            onkeydown="if(event.key === 'Enter') SpeakingApp.handleSendUserMessage()">
+                        
+                        <button class="btn btn-primary studio-send-btn" onclick="SpeakingApp.handleSendUserMessage()" title="Yuborish">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                            <span>Yuborish</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        `;
+
+        this.renderSubtitles();
+        this.renderSuggestionChips();
+    },
+
+    // Render Live Subtitles (clean presentation, no chat history)
+    renderSubtitles() {
+        const container = document.getElementById('studio-subtitles-container');
+        if (!container) return;
+
+        const coach = this.coaches[this.selectedCoach] || this.coaches.laylo;
+        const aiSpeech = this.currentAISpeech;
+        const userSpeech = this.lastUserSpeech;
+
+        container.innerHTML = `
+            <!-- AI Spoken Subtitle Box -->
+            <div class="studio-ai-speech-box">
+                <div class="speech-header-row">
+                    <span class="speech-speaker-label">🤖 ${coach.name}:</span>
+                    <button class="btn-replay-audio" onclick="SpeakingApp.speakAI('${aiSpeech.text.replace(/['\\]/g, '')}', '${coach.gender}', '${this.targetLang || 'en'}')" title="Ovozni qayta eshitish">
+                        🔊 Qayta Eshitish
+                    </button>
+                </div>
+                <div class="speech-main-text">${aiSpeech.text}</div>
+                ${aiSpeech.tr ? `<div class="speech-translation-text">🇺🇿 ${aiSpeech.tr}</div>` : ''}
+            </div>
+
+            <!-- User Last Spoken Response (if any) -->
+            ${userSpeech ? `
+                <div class="studio-user-speech-box">
+                    <div class="speech-header-row">
+                        <span class="speech-speaker-label user-label">👤 Siz:</span>
+                        ${userSpeech.feedback ? `
+                            <span class="speech-user-badge">🎯 Talaffuz & Ravonlik: <strong>${userSpeech.feedback.score}%</strong></span>
+                        ` : ''}
+                    </div>
+                    <div class="user-speech-text">"${userSpeech.text}"</div>
+                    ${userSpeech.feedback ? `
+                        <div class="user-speech-feedback-note">💡 ${userSpeech.feedback.note} ${userSpeech.feedback.tip}</div>
+                    ` : ''}
+                </div>
+            ` : ''}
+        `;
+    },
+
+    // Render suggestion chips
     renderSuggestionChips() {
-        const container = document.getElementById('speaking-chips-container');
+        const container = document.getElementById('studio-chips-container');
         if (!container) return;
 
         if (!this.suggestionChips || this.suggestionChips.length === 0) {
@@ -769,14 +1067,166 @@ const SpeakingApp = {
             return;
         }
 
+        const titleText = this.step === 'ask_language'
+            ? '🌍 Qaysi tilda suhbatlashamiz? Quyidagilardan birini tanlang:'
+            : '💡 Nima deb javob berishni bilmayapsizmi? Bosing:';
+
         container.innerHTML = `
-            <div class="chips-title">💡 Nima deb javob berishni bilmayapsizmi? Quyidagilardan birini bosing:</div>
-            <div class="chips-flex-row">
+            <div class="studio-chips-title">${titleText}</div>
+            <div class="studio-chips-flex">
                 ${this.suggestionChips.map(chip => `
-                    <button class="speaking-chip-btn" onclick="SpeakingApp.handleSendUserMessage('${chip.replace(/['\\]/g, "\\'")}')">
-                        💬 "${chip}"
+                    <button class="studio-chip-btn" onclick="SpeakingApp.handleSendUserMessage('${(chip.value || chip.label).replace(/['\\]/g, "\\'")}')">
+                        💬 ${chip.label || chip.value}
                     </button>
                 `).join('')}
+            </div>
+        `;
+    },
+
+    // SCREEN 3: Result & Score Comparison View (NO STARS!)
+    renderResultComparison(root) {
+        const res = this.lastResult;
+        if (!res) {
+            this.mode = 'select_coach';
+            this.render();
+            return;
+        }
+
+        let diffBannerHtml = '';
+        if (res.comparisonStatus === 'better') {
+            diffBannerHtml = `
+                <div class="comparison-banner banner-better">
+                    <div class="comp-icon">📈</div>
+                    <div class="comp-text">
+                        <h4 class="comp-title">O'tgan suhbatdan +${res.diff} ball YAXSHIROQ!</h4>
+                        <p class="comp-desc">
+                            Ajoyib natija! O'tgan safargi suhbatingiz (${res.prevScore} ball)ga nisbatan ancha ravonroq va ishonchli gapirdingiz. Leksikangiz boyidi!
+                        </p>
+                    </div>
+                </div>
+            `;
+        } else if (res.comparisonStatus === 'worse') {
+            diffBannerHtml = `
+                <div class="comparison-banner banner-worse">
+                    <div class="comp-icon">📉</div>
+                    <div class="comp-text">
+                        <h4 class="comp-title">O'tgan suhbatdan ${Math.abs(res.diff)} ball pastroq</h4>
+                        <p class="comp-desc">
+                            O'tgan suhbatingiz natijasi (${res.prevScore} ball) biroz yuqoriroq edi. Hechqisi yo'q! Har bir jonli mashq tajribangizni oshiradi. Keyingi safar yana-da faolroq bo'ling!
+                        </p>
+                    </div>
+                </div>
+            `;
+        } else if (res.comparisonStatus === 'equal') {
+            diffBannerHtml = `
+                <div class="comparison-banner banner-equal">
+                    <div class="comp-icon">🎯</div>
+                    <div class="comp-text">
+                        <h4 class="comp-title">O'tgan suhbat bilan bir xil barqaror natija!</h4>
+                        <p class="comp-desc">
+                            Natijangiz barqaror (${res.currentScore} ball). Keyingi darajaga chiqish uchun yangi murakkab iboralarni qo'llab ko'ring.
+                        </p>
+                    </div>
+                </div>
+            `;
+        } else {
+            diffBannerHtml = `
+                <div class="comparison-banner banner-first">
+                    <div class="comp-icon">🌟</div>
+                    <div class="comp-text">
+                        <h4 class="comp-title">Ilk AI suhbatingiz muvaffaqiyatli yakunlandi!</h4>
+                        <p class="comp-desc">
+                            Boshlang'ich bazaviy natijangiz saqlandi (${res.currentScore} ball). Keyingi suhbatlaringizdagi o'sish aynan shu ko'rsatkich bilan solishtirib boriladi!
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        root.innerHTML = `
+            <div class="speaking-result-wrapper">
+                
+                <div class="result-hero-box">
+                    <span class="result-trophy-badge">🏆 Suhbat Tahlili</span>
+                    <h2 class="result-headline">Suhbat Muvaffaqiyatli Yakunlandi!</h2>
+                    <p class="result-subtext">AI virtual ustoz bilan o'tkazilgan ovozli muloqot to'liq baholandi.</p>
+                </div>
+
+                <!-- COMPARISON BANNER -->
+                ${diffBannerHtml}
+
+                <!-- MAIN SCORE METRICS CARDS (NO STARS - ONLY ACTUAL SKILL SCORES) -->
+                <div class="speaking-score-grid">
+                    <!-- Current Score -->
+                    <div class="score-metric-card score-main-card">
+                        <span class="metric-label">Joriy Suhbat Bali</span>
+                        <div class="metric-score-value">${res.currentScore}<span class="score-denom">/100</span></div>
+                        <div class="metric-progress-bar">
+                            <div class="metric-progress-fill" style="width: ${res.currentScore}%;"></div>
+                        </div>
+                        <span class="metric-sub-note">${res.currentScore >= 85 ? 'Yuqori Nutqiy Mahorat' : 'Yaxshi Muloqot Darajasi'}</span>
+                    </div>
+
+                    <!-- Previous Score -->
+                    <div class="score-metric-card">
+                        <span class="metric-label">O'tgan Suhbat Bali</span>
+                        <div class="metric-score-value" style="color: var(--text-secondary);">
+                            ${res.prevScore !== null ? res.prevScore : '—'}<span class="score-denom">/100</span>
+                        </div>
+                        <span class="metric-sub-note">${res.prevScore !== null ? 'Oldingi sessiya' : 'Bu ilk suhbatingiz'}</span>
+                    </div>
+
+                    <!-- Turns count -->
+                    <div class="score-metric-card">
+                        <span class="metric-label">Replikalar Soni</span>
+                        <div class="metric-score-value" style="color: #3b82f6;">${res.turns} ta</div>
+                        <span class="metric-sub-note">Siz aytgan fikrlar</span>
+                    </div>
+
+                    <!-- Unique words -->
+                    <div class="score-metric-card">
+                        <span class="metric-label">Faol So'zlar</span>
+                        <div class="metric-score-value" style="color: #10b981;">${res.uniqueWords} ta</div>
+                        <span class="metric-sub-note">Turli xil so'zlar boyligi</span>
+                    </div>
+                </div>
+
+                <!-- DETAILED EVALUATION BARS -->
+                <div class="speaking-eval-breakdown">
+                    <h4 class="breakdown-title">📊 Mezonlar Bo'yicha Tahlil:</h4>
+                    <div class="eval-row">
+                        <div class="eval-row-header">
+                            <span>🎙️ Talaffuz va Ohang</span>
+                            <strong>${Math.min(98, res.currentScore + 2)}%</strong>
+                        </div>
+                        <div class="eval-bar"><div class="eval-fill" style="width: ${Math.min(98, res.currentScore + 2)}%;"></div></div>
+                    </div>
+                    <div class="eval-row">
+                        <div class="eval-row-header">
+                            <span>📚 So'z Boyligi va Leksika</span>
+                            <strong>${Math.min(96, res.currentScore - 1)}%</strong>
+                        </div>
+                        <div class="eval-bar"><div class="eval-fill" style="width: ${Math.min(96, res.currentScore - 1)}%;"></div></div>
+                    </div>
+                    <div class="eval-row">
+                        <div class="eval-row-header">
+                            <span>⚡ Nutq Ravonligi va Ishonch</span>
+                            <strong>${res.currentScore}%</strong>
+                        </div>
+                        <div class="eval-bar"><div class="eval-fill" style="width: ${res.currentScore}%;"></div></div>
+                    </div>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="speaking-result-actions">
+                    <button class="btn btn-primary btn-lg" onclick="SpeakingApp.resetToCoachSelection()">
+                        🔄 Yangi Suhbat Boshlash
+                    </button>
+                    <button class="btn btn-secondary btn-lg" onclick="App.navigateTo('reyting')">
+                        🏆 Reyting Arenasini Ko'rish
+                    </button>
+                </div>
+
             </div>
         `;
     }

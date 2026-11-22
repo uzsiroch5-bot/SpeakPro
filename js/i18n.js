@@ -1,9 +1,9 @@
-// ==========================================================================
-// SpeakPro — To'liq Ko'p Tilli Interfeys Dvijogi (Full-Site i18n Engine)
+﻿// ==========================================================================
+// School77 — To'liq Ko'p Tilli Interfeys Dvijogi (Full-Site i18n Engine)
 // Tillari: O'zbek tili (uz), Русский язык (ru), English (en)
 // ==========================================================================
 
-const SpeakProI18n = {
+const School77I18n = {
     currentLang: 'uz',
 
     dictionaries: {
@@ -22,12 +22,12 @@ const SpeakProI18n = {
             nav_speaking: 'Speaking AI',
             nav_settings: 'Sozlamalar',
             nav_login: 'Kirish / Ro\'yxatdan o\'tish',
-            brand_tagline: '"Planeta" o\'quv markazi',
+            brand_tagline: '77-School o\'quv markazi',
 
             // Home - Hero
-            hero_seal: '"Planeta" O\'quv Markazi Loyihasi • 2026',
-            hero_title: 'SpeakPro haqida — <span class="gradient-text">Tillarni oson, qiziqarli va raqobat ruhida o\'rganing!</span>',
-            hero_desc: 'SpeakPro — bu zamonaviy va interaktiv til o\'rganish platformasi bo\'lib, u til o\'rganishni zerikarli yodlash jarayonidan qiziqarli sarguzashtga aylantirish uchun yaratilgan. Bizning asosiy maqsadimiz — har bir o\'quvchiga sifatli ta\'limni qulay va motivatsion muhitda taqdim etish.',
+            hero_seal: '77-School O\'quv Markazi Loyihasi • 2026',
+            hero_title: 'School77 haqida — <span class="gradient-text">Tillarni oson, qiziqarli va raqobat ruhida o\'rganing!</span>',
+            hero_desc: 'School77 — bu zamonaviy va interaktiv til o\'rganish platformasi bo\'lib, u til o\'rganishni zerikarli yodlash jarayonidan qiziqarli sarguzashtga aylantirish uchun yaratilgan. Bizning asosiy maqsadimiz — har bir o\'quvchiga sifatli ta\'limni qulay va motivatsion muhitda taqdim etish.',
             hero_btn_lessons: 'Darslarni Tanlash',
             hero_btn_1v1: '1 vs 1 Bellashuvga Kirish',
             hero_btn_store: 'Sovg\'alar Do\'koni',
@@ -54,7 +54,7 @@ const SpeakProI18n = {
             // Home - Gamification (Star)
             gamify_badge: 'Gamifikatsiya & Sovrinlar',
             gamify_title: '🏆 Musobaqa va Yulduzlar tizimi (Star)',
-            gamify_sub: 'SpeakPro shunchaki darslik emas, bu haqiqiy bilimlar arenasidir! Bizda o\'qish jarayoni yanada qiziqarli bo\'lishi uchun maxsus gamifikatsiya tizimi joriy qilingan:',
+            gamify_sub: 'School77 shunchaki darslik emas, bu haqiqiy bilimlar arenasidir! Bizda o\'qish jarayoni yanada qiziqarli bo\'lishi uchun maxsus gamifikatsiya tizimi joriy qilingan:',
             feat_duel_title: 'O\'zaro musobaqalar',
             feat_duel_desc: 'Boshqa o\'quvchilar bilan bellashing, o\'z bilimingizni sinovdan o\'tkazing va reyting jadvalida yuqori o\'rinlarni egallang.',
             feat_duel_pill: '1v1, 6 kishilik, 2v2 rejimlar',
@@ -68,8 +68,8 @@ const SpeakProI18n = {
             // Home - About App
             about_app_title: '📱 Ilova haqida',
             about_meta_year: '📅 <strong>Yaratilgan yili:</strong> 2026-yil',
-            about_meta_author: '🏢 <strong>Tashkilotchi / Muallif:</strong> "Planeta" o\'quv markazi',
-            about_copyright: '<strong>Mualliflik huquqi:</strong> © 2026 "Planeta" o\'quv markazi. Barcha huquqlar himoyalangan. Materiallardan nusxa ko\'chirish, ularni tarqatish yoki tijorat maqsadida foydalanish qat\'iyan taqiqlanadi.',
+            about_meta_author: '🏢 <strong>Tashkilotchi / Muallif:</strong> 77-School o\'quv markazi',
+            about_copyright: '<strong>Mualliflik huquqi:</strong> © 2026 77-School o\'quv markazi. Barcha huquqlar himoyalangan. Materiallardan nusxa ko\'chirish, ularni tarqatish yoki tijorat maqsadida foydalanish qat\'iyan taqiqlanadi.',
 
             // Tillar View
             view_tillar_badge: 'Tillarni O\'zlashtirish',
@@ -92,17 +92,17 @@ const SpeakProI18n = {
             star_balance_sub: 'Darslarni tamomlash, 1vs1 va 6 kishilik bellashuvlarda g\'alaba qozonish orqali ko\'proq yulduz to\'plang!',
             star_store_badge: 'Mukofotlar Bozori',
             star_store_title: '🎁 Sovg\'alar va Mukofotlar Do\'koni',
-            star_store_sub: 'To\'plagan yulduzlaringizni "Planeta" o\'quv markazining esdalik sovg\'alari va vaucherlariga almashtiring!',
+            star_store_sub: 'To\'plagan yulduzlaringizni 77-School o\'quv markazining esdalik sovg\'alari va vaucherlariga almashtiring!',
             btn_redeem: 'Almashtirish 🎁',
 
             // Store Gift Localizations
-            store_g1_title: 'SpeakPro & "Planeta" Maxsus Ryukzaki',
+            store_g1_title: 'School77 & 77-School Maxsus Ryukzaki',
             store_g1_category: 'ESDALIK SOVG\'ALARI',
             store_g1_desc: 'Suv o\'tkazmaydigan, noutbuk uchun maxsus bo\'lmali zamonaviy ryukzak.',
             store_g1_badge: 'ENG OMMABOP',
-            store_g2_title: '"Planeta" Brendli Hoodie (Sviter)',
+            store_g2_title: '77-School Brendli Hoodie (Sviter)',
             store_g2_category: 'KIYIM-KECHAK',
-            store_g2_desc: 'Issiq va qulay, 100% paxta sifatli matodan tayyorlangan SpeakPro sviteri.',
+            store_g2_desc: 'Issiq va qulay, 100% paxta sifatli matodan tayyorlangan School77 sviteri.',
             store_g2_badge: 'TRENDDA',
             store_g3_title: 'Simsiz Bluetooth Quloqchinlar',
             store_g3_category: 'ELEKTRONIKA',
@@ -112,17 +112,17 @@ const SpeakProI18n = {
             store_g4_category: 'KITOBLAR',
             store_g4_desc: 'Grammatika va so\'z boyligi bo\'yicha original xorijiy darsliklar va badiiy asar.',
             store_g4_badge: 'BESTSELLER',
-            store_g5_title: '"Planeta"da 1 Oylik Bepul Kurs Vaucheri',
+            store_g5_title: '77-Schoolda 1 Oylik Bepul Kurs Vaucheri',
             store_g5_category: 'TA\'LIM',
-            store_g5_desc: '"Planeta" o\'quv markazining jonli yoki onlayn istalgan tildagi to\'liq oylik kursi.',
+            store_g5_desc: '77-School o\'quv markazining jonli yoki onlayn istalgan tildagi to\'liq oylik kursi.',
             store_g5_badge: 'SUPER MUKOFOT',
-            store_g6_title: 'SpeakPro Aqlli Termo-Krujka',
+            store_g6_title: 'School77 Aqlli Termo-Krujka',
             store_g6_category: 'AKSESSUARLAR',
             store_g6_desc: 'Haroratni ko\'rsatib turuvchi LED displeyli, zamonaviy metall termo-krujka.',
             store_g6_badge: 'YANGI',
             store_not_enough: 'Yulduzlaringiz yetarli emas! Sizda: {stars} ⭐, kerak: {cost} ⭐. Bellashuvlarda ko\'proq yulduz to\'plang!',
-            store_confirm: '"{title}" sovg\'asini {cost} ⭐ evaziga olmoqchimisiz?\n\nSovg\'angiz "Planeta" o\'quv markazining ma\'muriyati orqali topshiriladi.',
-            store_success_title: '🎉 Tabriklaymiz! Siz "{title}" sovg\'asiga buyurtma berdingiz!\n\nBuyurtmangiz tasdiqlandi. "Planeta" o\'quv markazi ma\'muriyati tez orada siz bilan bog\'lanadi.',
+            store_confirm: '"{title}" sovg\'asini {cost} ⭐ evaziga olmoqchimisiz?\n\nSovg\'angiz 77-School o\'quv markazining ma\'muriyati orqali topshiriladi.',
+            store_success_title: '🎉 Tabriklaymiz! Siz "{title}" sovg\'asiga buyurtma berdingiz!\n\nBuyurtmangiz tasdiqlandi. 77-School o\'quv markazi ma\'muriyati tez orada siz bilan bog\'lanadi.',
             store_success_toast: '"{title}" muvaffaqiyatli xarid qilindi! -{cost} ⭐',
 
             // Leaderboard
@@ -238,7 +238,7 @@ const SpeakProI18n = {
             btn_save_all: 'Barcha Sozlamalarni Saqlash ✅',
 
             // Footer & Modals
-            footer_copy: '© 2026 "Planeta" o\'quv markazi. Barcha huquqlar himoyalangan.<br>Materiallardan nusxa ko\'chirish, ularni tarqatish yoki tijorat maqsadida foydalanish qat\'iyan taqiqlanadi.',
+            footer_copy: '© 2026 77-School o\'quv markazi. Barcha huquqlar himoyalangan.<br>Materiallardan nusxa ko\'chirish, ularni tarqatish yoki tijorat maqsadida foydalanish qat\'iyan taqiqlanadi.',
             auth_tab_login: 'Kirish',
             auth_tab_register: 'Ro\'yxatdan O\'tish',
             auth_btn_submit: 'Tizimga Kirish',
@@ -264,8 +264,8 @@ const SpeakProI18n = {
 
             // Home - Hero
             hero_seal: 'Проект Учебного Центра «Планета» • 2026',
-            hero_title: 'О SpeakPro — <span class="gradient-text">Изучайте языки легко, интересно и в духе соревнований!</span>',
-            hero_desc: 'SpeakPro — это современная и интерактивная платформа для изучения иностранных языков, созданная для того, чтобы превратить скучную зубрёжку в увлекательное приключение. Наша главная цель — предоставить каждому ученику качественное образование в комфортной и мотивирующей среде.',
+            hero_title: 'О School77 — <span class="gradient-text">Изучайте языки легко, интересно и в духе соревнований!</span>',
+            hero_desc: 'School77 — это современная и интерактивная платформа для изучения иностранных языков, созданная для того, чтобы превратить скучную зубрёжку в увлекательное приключение. Наша главная цель — предоставить каждому ученику качественное образование в комфортной и мотивирующей среде.',
             hero_btn_lessons: 'Выбрать Уроки',
             hero_btn_1v1: '1 на 1 Словарная дуэль',
             hero_btn_store: 'Магазин Подарков',
@@ -292,7 +292,7 @@ const SpeakProI18n = {
             // Home - Gamification (Star)
             gamify_badge: 'Геймификация и Призы',
             gamify_title: '🏆 Соревнования и Система Звёзд (Star)',
-            gamify_sub: 'SpeakPro — это не просто учебник, это настоящая арена знаний! Для максимального интереса к учёбе внедрена уникальная система геймификации:',
+            gamify_sub: 'School77 — это не просто учебник, это настоящая арена знаний! Для максимального интереса к учёбе внедрена уникальная система геймификации:',
             feat_duel_title: 'Соревнования между учениками',
             feat_duel_desc: 'Соревнуйтесь с другими учениками, проверяйте свои знания и занимайте верхние строчки в рейтинговой таблице лиги.',
             feat_duel_pill: 'Режимы 1 на 1, на 6 игроков, 2 на 2',
@@ -334,13 +334,13 @@ const SpeakProI18n = {
             btn_redeem: 'Обменять 🎁',
 
             // Store Gift Localizations
-            store_g1_title: 'Фирменный рюкзак SpeakPro & «Планета»',
+            store_g1_title: 'Фирменный рюкзак School77 & «Планета»',
             store_g1_category: 'СУВЕНИРЫ',
             store_g1_desc: 'Водонепроницаемый современный рюкзак с отделением для ноутбука.',
             store_g1_badge: 'ПОПУЛЯРНОЕ',
             store_g2_title: 'Брендовое худи «Планета»',
             store_g2_category: 'ОДЕЖДА',
-            store_g2_desc: 'Тёплое и удобное худи SpeakPro из 100% качественного хлопка.',
+            store_g2_desc: 'Тёплое и удобное худи School77 из 100% качественного хлопка.',
             store_g2_badge: 'В ТРЕНДЕ',
             store_g3_title: 'Беспроводные Bluetooth-наушники',
             store_g3_category: 'ЭЛЕКТРОНИКА',
@@ -354,7 +354,7 @@ const SpeakProI18n = {
             store_g5_category: 'ОБРАЗОВАНИЕ',
             store_g5_desc: 'Полный месячный курс любого языка в учебном центре «Планета» — онлайн или очно.',
             store_g5_badge: 'СУПЕР ПРИЗ',
-            store_g6_title: 'Умная термокружка SpeakPro',
+            store_g6_title: 'Умная термокружка School77',
             store_g6_category: 'АКСЕССУАРЫ',
             store_g6_desc: 'Современная металлическая термокружка с LED-дисплеем, показывающим температуру.',
             store_g6_badge: 'НОВИНКА',
@@ -498,12 +498,12 @@ const SpeakProI18n = {
             nav_speaking: 'Speaking with AI',
             nav_settings: 'Settings',
             nav_login: 'Login / Register',
-            brand_tagline: '"Planeta" Learning Center',
+            brand_tagline: '77-School Learning Center',
 
             // Home - Hero
-            hero_seal: '"Planeta" Learning Center Project • 2026',
-            hero_title: 'About SpeakPro — <span class="gradient-text">Learn languages easily, fun and with competitive spirit!</span>',
-            hero_desc: 'SpeakPro is a state-of-the-art interactive language learning platform built to transform monotonous memorization into an exciting competitive adventure. Our primary mission is to deliver quality education in a comfortable, highly motivating environment.',
+            hero_seal: '77-School Learning Center Project • 2026',
+            hero_title: 'About School77 — <span class="gradient-text">Learn languages easily, fun and with competitive spirit!</span>',
+            hero_desc: 'School77 is a state-of-the-art interactive language learning platform built to transform monotonous memorization into an exciting competitive adventure. Our primary mission is to deliver quality education in a comfortable, highly motivating environment.',
             hero_btn_lessons: 'Explore Lessons',
             hero_btn_1v1: 'Enter 1 vs 1 Duel',
             hero_btn_store: 'Gifts & Rewards Store',
@@ -530,7 +530,7 @@ const SpeakProI18n = {
             // Home - Gamification (Star)
             gamify_badge: 'Gamification & Rewards',
             gamify_title: '🏆 Competition and Star Reward System',
-            gamify_sub: 'SpeakPro is much more than a textbook — it is a true knowledge arena! We implemented a specialized gamification engine to maximize engagement:',
+            gamify_sub: 'School77 is much more than a textbook — it is a true knowledge arena! We implemented a specialized gamification engine to maximize engagement:',
             feat_duel_title: 'Peer-to-Peer Battles',
             feat_duel_desc: 'Compete against other learners in real-time word duels, test your vocabulary, and claim top ranks in the league.',
             feat_duel_pill: '1v1, 6-Player, 2v2 Modes',
@@ -544,8 +544,8 @@ const SpeakProI18n = {
             // Home - About App
             about_app_title: '📱 About the Application',
             about_meta_year: '📅 <strong>Year Created:</strong> 2026',
-            about_meta_author: '🏢 <strong>Organizer / Author:</strong> "Planeta" Learning Center',
-            about_copyright: '<strong>Copyright:</strong> © 2026 "Planeta" Learning Center. All rights reserved. Reproduction, distribution, or commercial exploitation is strictly prohibited.',
+            about_meta_author: '🏢 <strong>Organizer / Author:</strong> 77-School Learning Center',
+            about_copyright: '<strong>Copyright:</strong> © 2026 77-School Learning Center. All rights reserved. Reproduction, distribution, or commercial exploitation is strictly prohibited.',
 
             // Tillar View
             view_tillar_badge: 'Language Mastery',
@@ -568,17 +568,17 @@ const SpeakProI18n = {
             star_balance_sub: 'Complete video lessons, pass mock exams, and triumph in 1v1 battles to earn more stars!',
             star_store_badge: 'Rewards Marketplace',
             star_store_title: '🎁 Gifts and Rewards Store',
-            star_store_sub: 'Redeem your earned stars for commemorative gifts and merchandise from «Planeta» Learning Center!',
+            star_store_sub: 'Redeem your earned stars for commemorative gifts and merchandise from «77-School» Learning Center!',
             btn_redeem: 'Redeem Gift 🎁',
 
             // Store Gift Localizations
-            store_g1_title: 'SpeakPro & "Planeta" Special Backpack',
+            store_g1_title: 'School77 & 77-School Special Backpack',
             store_g1_category: 'SOUVENIRS',
             store_g1_desc: 'Water-resistant modern backpack with dedicated laptop compartment.',
             store_g1_badge: 'MOST POPULAR',
-            store_g2_title: '"Planeta" Branded Hoodie',
+            store_g2_title: '77-School Branded Hoodie',
             store_g2_category: 'APPAREL',
-            store_g2_desc: 'Warm and comfortable SpeakPro hoodie made of 100% premium cotton.',
+            store_g2_desc: 'Warm and comfortable School77 hoodie made of 100% premium cotton.',
             store_g2_badge: 'TRENDING',
             store_g3_title: 'Wireless Bluetooth Headphones',
             store_g3_category: 'ELECTRONICS',
@@ -588,17 +588,17 @@ const SpeakProI18n = {
             store_g4_category: 'BOOKS',
             store_g4_desc: 'Original imported textbooks and graded readers to expand your vocabulary.',
             store_g4_badge: 'BESTSELLER',
-            store_g5_title: '1-Month Free Course Voucher at "Planeta"',
+            store_g5_title: '1-Month Free Course Voucher at 77-School',
             store_g5_category: 'EDUCATION',
-            store_g5_desc: 'Full month of any language course at "Planeta" Learning Center — online or in-person.',
+            store_g5_desc: 'Full month of any language course at 77-School Learning Center — online or in-person.',
             store_g5_badge: 'SUPER PRIZE',
-            store_g6_title: 'SpeakPro Smart Thermo Mug',
+            store_g6_title: 'School77 Smart Thermo Mug',
             store_g6_category: 'ACCESSORIES',
             store_g6_desc: 'Modern stainless steel thermal mug with LED temperature display.',
             store_g6_badge: 'NEW ARRIVAL',
             store_not_enough: 'Not enough stars! You have: {stars} ⭐, need: {cost} ⭐. Win more battles to earn stars!',
-            store_confirm: 'Do you want to redeem "{title}" for {cost} ⭐?\n\nYour gift will be delivered by "Planeta" Learning Center administration.',
-            store_success_title: '🎉 Congratulations! You ordered the "{title}" gift!\n\nOrder confirmed. "Planeta" Learning Center will contact you soon.',
+            store_confirm: 'Do you want to redeem "{title}" for {cost} ⭐?\n\nYour gift will be delivered by 77-School Learning Center administration.',
+            store_success_title: '🎉 Congratulations! You ordered the "{title}" gift!\n\nOrder confirmed. 77-School Learning Center will contact you soon.',
             store_success_toast: '"{title}" successfully redeemed! -{cost} ⭐',
 
             // Leaderboard
@@ -714,7 +714,7 @@ const SpeakProI18n = {
             btn_save_all: 'Save All Settings ✅',
 
             // Footer & Modals
-            footer_copy: '© 2026 "Planeta" Learning Center. All rights reserved.<br>Copying, distribution, or commercial exploitation is strictly prohibited.',
+            footer_copy: '© 2026 77-School Learning Center. All rights reserved.<br>Copying, distribution, or commercial exploitation is strictly prohibited.',
             auth_tab_login: 'Log In',
             auth_tab_register: 'Register',
             auth_btn_submit: 'Sign In to Account',
@@ -723,7 +723,7 @@ const SpeakProI18n = {
     },
 
     init() {
-        const saved = localStorage.getItem('speakpro_app_lang');
+        const saved = localStorage.getItem('School77_app_lang');
         if (saved && this.dictionaries[saved]) {
             this.currentLang = saved;
         } else {
@@ -735,7 +735,7 @@ const SpeakProI18n = {
     setLanguage(langCode) {
         if (!this.dictionaries[langCode]) return;
         this.currentLang = langCode;
-        localStorage.setItem('speakpro_app_lang', langCode);
+        localStorage.setItem('School77_app_lang', langCode);
         this.applyLanguage(langCode);
         if (window.App) {
             App.user.appLang = langCode;
@@ -806,7 +806,7 @@ const SpeakProI18n = {
         }
 
         // 3. Home View - Hero & Metrics
-        const heroSeal = document.querySelector('.hero-planeta-seal');
+        const heroSeal = document.querySelector('.hero-77-School-seal');
         if (heroSeal) {
             heroSeal.childNodes.forEach(node => {
                 if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
@@ -1098,4 +1098,4 @@ const SpeakProI18n = {
     }
 };
 
-window.SpeakProI18n = SpeakProI18n;
+window.School77I18n = School77I18n;

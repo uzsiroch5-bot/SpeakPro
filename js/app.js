@@ -1,4 +1,4 @@
-// SpeakPro - Main Application Logic & Single Page Router
+﻿// School77 - Main Application Logic & Single Page Router
 
 const App = {
     // Current user state
@@ -11,27 +11,32 @@ const App = {
         sound: true,
         speechEnabled: true,
         volume: 100,
-        email: 'student@speakpro.uz',
+        email: 'student@School77.uz',
         phone: '+998 90 123 45 67',
-        wins: 18,
+        wins: 58,
+        langWins: { en: 32, ru: 16, de: 10 },
+        claimedTiers: ['bronze_1'],
         appLang: 'uz',
-        isLoggedIn: true
+        isLoggedIn: false,
+        role: 'student'
     },
 
     currentView: 'home',
+    currentLeaderboardTab: 'all',
 
     init() {
         this.loadUserState();
-        if (window.SpeakProI18n) {
-            SpeakProI18n.init();
+        if (window.School77I18n) {
+            School77I18n.init();
         }
         this.applyTheme(this.user.theme);
         this.updateHeaderProfile();
         this.bindEvents();
         this.renderLanguages();
         this.renderLessons();
-        this.renderLeaderboard('weekly');
+        this.renderLeaderboard('all');
         this.renderStarStore();
+        this.updateProfileOverview();
 
         // Listen for popstate if needed
         window.addEventListener('hashchange', () => this.handleHashChange());
@@ -47,15 +52,26 @@ const App = {
 
     loadUserState() {
         try {
-            const savedTheme = localStorage.getItem('speakpro_theme');
+            const savedTheme = localStorage.getItem('School77_theme');
             if (savedTheme) this.user.theme = savedTheme;
-            const savedLang = localStorage.getItem('speakpro_app_lang');
+            const savedLang = localStorage.getItem('School77_app_lang');
             if (savedLang) this.user.appLang = savedLang;
-            const saved = localStorage.getItem('speakpro_user');
+            const saved = localStorage.getItem('School77_user');
             if (saved) {
                 this.user = { ...this.user, ...JSON.parse(saved) };
                 if (savedTheme) this.user.theme = savedTheme;
                 if (savedLang) this.user.appLang = savedLang;
+            }
+
+            // Load custom store gifts if customized by Admin
+            const savedStore = localStorage.getItem('School77_admin_store');
+            if (savedStore && window.School77Data) {
+                try {
+                    const parsed = JSON.parse(savedStore);
+                    if (parsed && Array.isArray(parsed) && parsed.length > 0) {
+                        School77Data.storeGifts = parsed;
+                    }
+                } catch(e) {}
             }
         } catch (e) {
             console.error('Failed to load user state', e);
@@ -65,9 +81,28 @@ const App = {
 
     saveUserState() {
         try {
-            localStorage.setItem('speakpro_user', JSON.stringify(this.user));
-            localStorage.setItem('speakpro_theme', this.user.theme);
-            if (this.user.appLang) localStorage.setItem('speakpro_app_lang', this.user.appLang);
+            localStorage.setItem('School77_user', JSON.stringify(this.user));
+            localStorage.setItem('School77_theme', this.user.theme);
+            if (this.user.appLang) localStorage.setItem('School77_app_lang', this.user.appLang);
+
+            // Sync student star updates into Admin database
+            if (this.user.email && this.user.role !== 'admin') {
+                const adminList = JSON.parse(localStorage.getItem('School77_admin_students') || '[]');
+                const idx = adminList.findIndex(s => s.email === this.user.email);
+                if (idx !== -1) {
+                    adminList[idx].stars = this.user.stars;
+                    adminList[idx].wins = this.user.wins || adminList[idx].wins;
+                    adminList[idx].name = this.user.name;
+                    localStorage.setItem('School77_admin_students', JSON.stringify(adminList));
+                    if (window.AdminApp && AdminApp.data && Array.isArray(AdminApp.data.students)) {
+                        const aIdx = AdminApp.data.students.findIndex(s => s.email === this.user.email);
+                        if (aIdx !== -1) {
+                            AdminApp.data.students[aIdx].stars = this.user.stars;
+                            AdminApp.data.students[aIdx].wins = this.user.wins || AdminApp.data.students[aIdx].wins;
+                        }
+                    }
+                }
+            }
         } catch (e) {
             console.error('Failed to save user state', e);
         }
@@ -114,6 +149,28 @@ const App = {
             if (userProfileGroup) userProfileGroup.style.display = 'none';
         }
 
+        // Header logout button & mobile login/logout links
+        const headerLogoutBtn = document.getElementById('header-btn-logout');
+        const headerAdminBtn = document.getElementById('header-btn-admin');
+        const mobileLogoutLink = document.getElementById('mobile-logout-link');
+        const mobileLoginLink = document.getElementById('mobile-login-link');
+        if (this.user.isLoggedIn) {
+            if (headerLogoutBtn) headerLogoutBtn.style.display = 'flex';
+            if (mobileLogoutLink) mobileLogoutLink.style.display = '';
+            if (mobileLoginLink) mobileLoginLink.style.display = 'none';
+        } else {
+            if (headerLogoutBtn) headerLogoutBtn.style.display = 'none';
+            if (mobileLogoutLink) mobileLogoutLink.style.display = 'none';
+            if (mobileLoginLink) mobileLoginLink.style.display = '';
+        }
+
+        // Toggle Admin Panel button in header
+        if (this.user.isLoggedIn && this.user.role === 'admin') {
+            if (headerAdminBtn) headerAdminBtn.style.display = 'inline-flex';
+        } else {
+            if (headerAdminBtn) headerAdminBtn.style.display = 'none';
+        }
+
         // Update settings form inputs
         const settingName = document.getElementById('setting-name-input');
         const settingEmail = document.getElementById('setting-email-input');
@@ -125,7 +182,7 @@ const App = {
         const userWinsStat = document.getElementById('settings-user-wins');
 
         if (settingName) settingName.value = this.user.name;
-        if (settingEmail) settingEmail.value = this.user.email || 'student@speakpro.uz';
+        if (settingEmail) settingEmail.value = this.user.email || 'student@School77.uz';
         if (settingPhone) settingPhone.value = this.user.phone || '+998 90 123 45 67';
         if (settingSound) settingSound.checked = this.user.sound;
         if (settingSpeech) settingSpeech.checked = this.user.speechEnabled !== false;
@@ -143,7 +200,7 @@ const App = {
         });
 
         // Update active language card
-        const currentAppLang = this.user.appLang || (window.SpeakProI18n ? SpeakProI18n.currentLang : 'uz');
+        const currentAppLang = this.user.appLang || (window.School77I18n ? School77I18n.currentLang : 'uz');
         document.querySelectorAll('.lang-option-card').forEach(card => {
             if (card.getAttribute('data-app-lang') === currentAppLang) {
                 card.classList.add('active');
@@ -161,8 +218,8 @@ const App = {
 
     setAppLanguage(langCode) {
         this.user.appLang = langCode;
-        if (window.SpeakProI18n) {
-            SpeakProI18n.setLanguage(langCode);
+        if (window.School77I18n) {
+            School77I18n.setLanguage(langCode);
         }
         this.saveUserState();
         SoundEffects.playClick();
@@ -193,7 +250,7 @@ const App = {
         if (confirm('Barcha darslar progressi va yulduzlaringizni qayta tiklamoqchimisiz?')) {
             this.user.stars = 100;
             this.user.wins = 0;
-            localStorage.removeItem('speakpro_lessons_progress');
+            localStorage.removeItem('School77_lessons_progress');
             if (window.LessonsApp) {
                 LessonsApp.progress = { watchedVideos: {}, passedLevelTests: {}, mockTestsDone: {} };
             }
@@ -254,6 +311,39 @@ const App = {
             }
         } else if (viewId === 'speaking' && window.SpeakingApp) {
             SpeakingApp.init();
+        } else if (viewId === 'login') {
+            const loggedInCard = document.getElementById('auth-logged-in-card');
+            const mainCard = document.getElementById('auth-main-card');
+            if (mainCard) mainCard.style.display = 'grid';
+            if (this.user.isLoggedIn) {
+                if (loggedInCard) loggedInCard.style.display = 'block';
+                const bannerAvatar = document.getElementById('auth-banner-avatar');
+                const bannerUsername = document.getElementById('auth-banner-username');
+                const bannerEmail = document.getElementById('auth-banner-email');
+                if (bannerAvatar) bannerAvatar.textContent = this.user.avatar;
+                if (bannerUsername) bannerUsername.textContent = this.user.name;
+                if (bannerEmail) bannerEmail.textContent = this.user.email || 'student@School77.uz';
+            } else {
+                if (loggedInCard) loggedInCard.style.display = 'none';
+                this.switchAuthMode('login');
+            }
+        } else if (viewId === 'star') {
+            this.renderStarStore();
+            const counter = document.getElementById('star-page-counter');
+            if (counter) counter.textContent = (this.user.stars || 0) + ' ⭐';
+        } else if (viewId === 'admin') {
+            if (!this.user.isLoggedIn || this.user.role !== 'admin') {
+                this.showToast("Admin panelga faqat admin@school77.uz va 7578mf paroli bilan kirish mumkin!", 'error');
+                this.navigate('login');
+                return;
+            }
+            if (window.AdminApp) {
+                AdminApp.init();
+            }
+        } else if (viewId === 'reyting') {
+            this.renderLeaderboard(this.currentLeaderboardTab || 'all');
+        } else if (viewId === 'sozlamalar') {
+            this.updateProfileOverview();
         }
 
         // Update URL hash for browser history & sharing
@@ -311,7 +401,7 @@ const App = {
         }
 
         try {
-            localStorage.setItem('speakpro_theme', theme);
+            localStorage.setItem('School77_theme', theme);
         } catch(e) {}
 
         // Also update visual theme cards in settings
@@ -375,17 +465,17 @@ const App = {
             });
         }
 
-        // Auth Modal open triggers
+        // Auth Modal open triggers — now navigate to login page instead
         const loginBtn = document.getElementById('btn-open-login');
         const registerBtn = document.getElementById('btn-open-register');
         const authModal = document.getElementById('auth-modal');
         const authCloseBtn = document.getElementById('auth-modal-close');
 
         if (loginBtn) {
-            loginBtn.addEventListener('click', () => this.openAuthModal('login'));
+            loginBtn.addEventListener('click', () => { this.navigate('login'); this.switchAuthMode('login'); });
         }
         if (registerBtn) {
-            registerBtn.addEventListener('click', () => this.openAuthModal('register'));
+            registerBtn.addEventListener('click', () => { this.navigate('login'); this.switchAuthMode('register'); });
         }
         if (authCloseBtn && authModal) {
             authCloseBtn.addEventListener('click', () => authModal.classList.remove('active'));
@@ -469,7 +559,7 @@ const App = {
 
                 this.saveUserState();
                 SoundEffects.playCorrect();
-                const msg = window.SpeakProI18n ? SpeakProI18n.t('toast_saved') : 'Barcha sozlamalar muvaffaqiyatli saqlandi! ✅';
+                const msg = window.School77I18n ? School77I18n.t('toast_saved') : 'Barcha sozlamalar muvaffaqiyatli saqlandi! ✅';
                 this.showToast(msg, 'success');
             });
         }
@@ -552,6 +642,210 @@ const App = {
         }
     },
 
+    // ==================== LOGIN PAGE METHODS ====================
+
+    logout() {
+        this.user.isLoggedIn = false;
+        this.user.role = 'student';
+        this.saveUserState();
+        this.showToast('Akkauntdan muvaffaqiyatli chiqildi.', 'info');
+        this.navigate('login');
+    },
+
+    switchAuthMode(mode) {
+        const loginTab = document.getElementById('page-auth-tab-login');
+        const registerTab = document.getElementById('page-auth-tab-register');
+        const nameGroup = document.getElementById('p-auth-name-group');
+        const langGroup = document.getElementById('p-auth-lang-group');
+        const submitBtn = document.getElementById('p-auth-submit-btn');
+        const heading = document.getElementById('page-auth-heading');
+        const subheading = document.getElementById('page-auth-subheading');
+        const forgotLink = document.getElementById('p-auth-forgot');
+
+        if (mode === 'register') {
+            if (loginTab) loginTab.classList.remove('active');
+            if (registerTab) registerTab.classList.add('active');
+            if (nameGroup) nameGroup.style.display = 'block';
+            if (langGroup) langGroup.style.display = 'block';
+            if (submitBtn) submitBtn.querySelector('span').textContent = "Ro'yxatdan O'tish 🎉";
+            if (heading) heading.textContent = "Yangi hisob yaratish! 🚀";
+            if (subheading) subheading.textContent = "Bir daqiqada ro'yxatdan o'ting va o'rganishni boshlang.";
+            if (forgotLink) forgotLink.style.display = 'none';
+        } else {
+            if (registerTab) registerTab.classList.remove('active');
+            if (loginTab) loginTab.classList.add('active');
+            if (nameGroup) nameGroup.style.display = 'none';
+            if (langGroup) langGroup.style.display = 'none';
+            if (submitBtn) submitBtn.querySelector('span').textContent = "Tizimga Kirish 🚀";
+            if (heading) heading.textContent = "Xush kelibsiz! 👋";
+            if (subheading) subheading.textContent = "Platformaga kirish uchun ma'lumotlaringizni kiriting.";
+            if (forgotLink) forgotLink.style.display = '';
+        }
+    },
+
+    handlePageAuthSubmit(event) {
+        event.preventDefault();
+        const isRegister = document.getElementById('page-auth-tab-register')?.classList.contains('active');
+        const nameInput = document.getElementById('p-auth-name');
+        const idInput = document.getElementById('p-auth-id');
+        const pwdInput = document.getElementById('p-auth-pwd');
+
+        const rawId = (idInput?.value || '').trim();
+        const rawPwd = (pwdInput?.value || '').trim();
+
+        // Check Super Admin Credentials: admin@school77.uz / 7578mf
+        if (rawId.toLowerCase() === 'admin@school77.uz' && rawPwd === '7578mf') {
+            this.user.name = "Bosh Administrator";
+            this.user.email = "admin@school77.uz";
+            this.user.avatar = "👑";
+            this.user.role = "admin";
+            this.user.isLoggedIn = true;
+            this.saveUserState();
+            this.showToast("👑 Xush kelibsiz, Bosh Administrator! Admin panel ochilmoqda...", 'success');
+            if (window.SoundEffects) SoundEffects.playWin();
+            this.navigate('admin');
+            return;
+        }
+
+        if (isRegister) {
+            const studentName = (nameInput && nameInput.value.trim()) || 'Yangi O\'quvchi';
+            const studentLang = document.getElementById('p-auth-lang')?.value || 'en';
+            const studentContact = rawId || '+998 90 000 00 00';
+            const isEmail = studentContact.includes('@');
+
+            const newStudent = {
+                id: 'std-' + Date.now(),
+                name: studentName,
+                email: isEmail ? studentContact : (studentName.toLowerCase().replace(/[^a-z0-9]/g, '.') + '@mail.uz'),
+                phone: isEmail ? '+998 90 ' + Math.floor(1000000 + Math.random() * 9000000) : studentContact,
+                lang: studentLang,
+                avatar: '👨‍🎓',
+                stars: 100,
+                wins: 0,
+                tier: 'bronze_1',
+                registeredAt: new Date().toISOString().split('T')[0],
+                status: 'active'
+            };
+
+            this.user.name = studentName;
+            this.user.email = newStudent.email;
+            this.user.phone = newStudent.phone;
+            this.user.stars = 100;
+            this.user.role = 'student';
+
+            // Sync directly with Admin database (LocalStorage + Backend)
+            if (window.AdminApp) {
+                if (!AdminApp.data.students || AdminApp.data.students.length === 0) {
+                    AdminApp.loadLocalData();
+                }
+                AdminApp.data.students.unshift(newStudent);
+                AdminApp.saveLocalData();
+                if (typeof AdminApp.renderStats === 'function') AdminApp.renderStats();
+            } else {
+                try {
+                    const existing = JSON.parse(localStorage.getItem('School77_admin_students') || '[]');
+                    existing.unshift(newStudent);
+                    localStorage.setItem('School77_admin_students', JSON.stringify(existing));
+                } catch(e) {}
+            }
+
+            // Also post to backend server if running
+            try {
+                fetch('http://localhost:3000/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newStudent)
+                }).catch(() => {});
+            } catch(e) {}
+        } else {
+            if (idInput && idInput.value) {
+                const contact = idInput.value.trim();
+                const displayName = contact.includes('@') ? contact.split('@')[0] : contact;
+                this.user.name = displayName;
+                this.user.email = contact.includes('@') ? contact : (displayName.toLowerCase().replace(/[^a-z0-9]/g, '.') + '@mail.uz');
+                this.user.phone = contact.includes('@') ? '+998 90 ' + Math.floor(1000000 + Math.random() * 9000000) : contact;
+                this.user.role = 'student';
+
+                // Check if already in students database, if not, record as active student
+                let existingList = [];
+                try {
+                    existingList = JSON.parse(localStorage.getItem('School77_admin_students') || '[]');
+                } catch(e) {}
+
+                const alreadyExists = existingList.some(s => s.email === this.user.email || s.phone === this.user.phone);
+                if (!alreadyExists) {
+                    const newLoginStudent = {
+                        id: 'std-' + Date.now(),
+                        name: displayName,
+                        email: this.user.email,
+                        phone: this.user.phone,
+                        lang: 'en',
+                        avatar: '👨‍🎓',
+                        stars: this.user.stars || 100,
+                        wins: 0,
+                        tier: 'bronze_1',
+                        registeredAt: new Date().toISOString().split('T')[0],
+                        status: 'active'
+                    };
+                    if (window.AdminApp) {
+                        if (!AdminApp.data.students || AdminApp.data.students.length === 0) {
+                            AdminApp.loadLocalData();
+                        }
+                        AdminApp.data.students.unshift(newLoginStudent);
+                        AdminApp.saveLocalData();
+                        if (typeof AdminApp.renderStats === 'function') AdminApp.renderStats();
+                    } else {
+                        existingList.unshift(newLoginStudent);
+                        localStorage.setItem('School77_admin_students', JSON.stringify(existingList));
+                    }
+                    try {
+                        fetch('http://localhost:3000/api/auth/register', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(newLoginStudent)
+                        }).catch(() => {});
+                    } catch(e) {}
+                }
+            }
+        }
+        this.user.isLoggedIn = true;
+        this.saveUserState();
+        this.showToast(`Xush kelibsiz, ${this.user.name}! ✅`, 'success');
+        if (window.SoundEffects) SoundEffects.playCorrect();
+        this.navigate('home');
+    },
+
+    loginAsDemo() {
+        this.user.isLoggedIn = true;
+        this.user.name = "Demo O'quvchi";
+        this.saveUserState();
+        this.showToast("⚡ Demo rejimda kirdingiz! Xush kelibsiz!", 'success');
+        if (window.SoundEffects) SoundEffects.playCorrect();
+        this.navigate('home');
+    },
+
+    socialLogin(provider) {
+        this.showToast(`${provider} orqali kirish tez orada qo'shiladi!`, 'info');
+    },
+
+    togglePasswordVisibility(inputId, btn) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.textContent = '🙈';
+        } else {
+            input.type = 'password';
+            btn.textContent = '👁️';
+        }
+    },
+
+    handleForgotPassword() {
+        this.showToast("Parolni tiklash funksiyasi tez orada qo'shiladi!", 'info');
+    },
+
+    // ============================================================
+
     handleAuthSubmit() {
         const isRegister = document.getElementById('auth-tab-register')?.classList.contains('active');
         const nameInput = document.getElementById('auth-input-name');
@@ -581,7 +875,7 @@ const App = {
             de: `<svg viewBox="0 0 60 60" width="56" height="56"><clipPath id="deClip"><circle cx="30" cy="30" r="30"/></clipPath><g clip-path="url(#deClip)"><rect y="0" width="60" height="20" fill="#000000"/><rect y="20" width="60" height="20" fill="#DD0000"/><rect y="40" width="60" height="20" fill="#FFCE00"/></g></svg>`
         };
 
-        const uiLang = (window.SpeakProI18n && SpeakProI18n.currentLang) || 'uz';
+        const uiLang = (window.School77I18n && School77I18n.currentLang) || 'uz';
         const localizedLangNames = {
             en: { uz: '🇬🇧 Ingliz tili', ru: '🇬🇧 Английский язык', en: '🇬🇧 English Language' },
             ru: { uz: '🇷🇺 Rus tili', ru: '🇷🇺 Русский язык', en: '🇷🇺 Russian Language' },
@@ -609,7 +903,7 @@ const App = {
         const livePronounceText = uiLang === 'ru' ? 'Живое произношение:' : uiLang === 'en' ? 'Live Pronunciation:' : 'Jonli Talaffuz:';
         const vocabLabel = uiLang === 'ru' ? 'активных слов' : uiLang === 'en' ? 'active words' : 'so\'z boyligi';
 
-        container.innerHTML = Object.values(SpeakProData.languages).map(lang => `
+        container.innerHTML = Object.values(School77Data.languages).map(lang => `
             <div class="luxury-lang-card">
                 <div class="lang-card-header">
                     <div class="vector-flag-emblem">${flagSvgs[lang.id] || ''}</div>
@@ -683,7 +977,7 @@ const App = {
     },
 
     openLessonModal(lessonId) {
-        const lesson = SpeakProData.lessons.find(l => l.id === lessonId);
+        const lesson = School77Data.lessons.find(l => l.id === lessonId);
         if (!lesson) return;
 
         const modal = document.getElementById('lesson-detail-modal');
@@ -719,71 +1013,539 @@ const App = {
         modal.classList.add('active');
     },
 
-    renderLeaderboard(filter = 'weekly') {
+    // =========================================================================
+    // LEAGUES AND TIERS MATRIX (50-100 Bronza, 100-300 Kumush, 300-800+ Oltin)
+    // =========================================================================
+    getLeagueTier(wins = 0) {
+        const TIERS = [
+            { id: 'bronze_1', league: 'bronze', tier: 1, name: 'Bronza 1', icon: '🥉', minWins: 50, maxWins: 66, rewardStars: 10, color: '#cd7f32', bg: 'rgba(205, 127, 50, 0.15)', border: '#cd7f32' },
+            { id: 'bronze_2', league: 'bronze', tier: 2, name: 'Bronza 2', icon: '🥉', minWins: 67, maxWins: 83, rewardStars: 15, color: '#cd7f32', bg: 'rgba(205, 127, 50, 0.15)', border: '#cd7f32' },
+            { id: 'bronze_3', league: 'bronze', tier: 3, name: 'Bronza 3', icon: '🥉', minWins: 84, maxWins: 100, rewardStars: 30, color: '#cd7f32', bg: 'rgba(205, 127, 50, 0.15)', border: '#cd7f32' },
+            { id: 'silver_1', league: 'silver', tier: 1, name: 'Kumush 1', icon: '🥈', minWins: 101, maxWins: 166, rewardStars: 40, color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.15)', border: '#94a3b8' },
+            { id: 'silver_2', league: 'silver', tier: 2, name: 'Kumush 2', icon: '🥈', minWins: 167, maxWins: 233, rewardStars: 50, color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.15)', border: '#94a3b8' },
+            { id: 'silver_3', league: 'silver', tier: 3, name: 'Kumush 3', icon: '🥈', minWins: 234, maxWins: 300, rewardStars: 60, color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.15)', border: '#94a3b8' },
+            { id: 'gold_1', league: 'gold', tier: 1, name: 'Oltin 1', icon: '🥇', minWins: 301, maxWins: 466, rewardStars: 80, color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.15)', border: '#f59e0b' },
+            { id: 'gold_2', league: 'gold', tier: 2, name: 'Oltin 2', icon: '🥇', minWins: 467, maxWins: 633, rewardStars: 100, color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.15)', border: '#f59e0b' },
+            { id: 'gold_3', league: 'gold', tier: 3, name: 'Oltin 3', icon: '👑', minWins: 634, maxWins: 999999, rewardStars: 120, color: '#eab308', bg: 'rgba(234, 179, 8, 0.18)', border: '#eab308' }
+        ];
+
+        if (wins < 50) {
+            return {
+                id: 'starter',
+                league: 'starter',
+                tier: 0,
+                name: 'Boshlang\'ich',
+                icon: '🌱',
+                minWins: 0,
+                maxWins: 49,
+                rewardStars: 0,
+                color: '#10b981',
+                bg: 'rgba(16, 185, 129, 0.15)',
+                border: '#10b981',
+                nextTier: TIERS[0],
+                winsToNext: 50 - wins,
+                progressPercent: Math.min(100, Math.round((wins / 50) * 100)),
+                allTiers: TIERS
+            };
+        }
+
+        for (let i = TIERS.length - 1; i >= 0; i--) {
+            if (wins >= TIERS[i].minWins) {
+                const current = TIERS[i];
+                const next = TIERS[i + 1] || null;
+                let winsToNext = 0;
+                let progressPercent = 100;
+
+                if (next) {
+                    winsToNext = Math.max(0, next.minWins - wins);
+                    const range = next.minWins - current.minWins;
+                    const earnedInRange = wins - current.minWins;
+                    progressPercent = Math.min(100, Math.max(0, Math.round((earnedInRange / range) * 100)));
+                }
+
+                return {
+                    ...current,
+                    nextTier: next,
+                    winsToNext,
+                    progressPercent,
+                    allTiers: TIERS
+                };
+            }
+        }
+        return { ...TIERS[0], allTiers: TIERS };
+    },
+
+    // Calculate Lessons Progress & Mastery Rating
+    calculateLessonsProgress() {
+        let watchedCount = 0;
+        let testsPassedCount = 0;
+        let mockDoneCount = 0;
+
+        try {
+            const saved = localStorage.getItem('School77_lessons_progress');
+            if (saved) {
+                const prog = JSON.parse(saved);
+                watchedCount = Object.keys(prog.watchedVideos || {}).length;
+                testsPassedCount = Object.keys(prog.passedLevelTests || {}).length;
+                mockDoneCount = Object.keys(prog.mockTestsDone || {}).length;
+            }
+        } catch(e) {}
+
+        const benchmarkVideos = 30;
+        const benchmarkTests = 15;
+
+        const videoScore = Math.min(50, (watchedCount / benchmarkVideos) * 50);
+        const testScore = Math.min(50, (testsPassedCount / benchmarkTests) * 50);
+        const totalPercent = Math.min(100, Math.max(12, Math.round(videoScore + testScore + (mockDoneCount * 5))));
+
+        let grade = 'O\'rta (C)';
+        if (totalPercent >= 85) {
+            grade = 'A\'lo daraja (A+)';
+        } else if (totalPercent >= 70) {
+            grade = 'Yaxshi (B+)';
+        } else if (totalPercent >= 50) {
+            grade = 'Qoniqarli (B)';
+        }
+
+        return {
+            percent: totalPercent,
+            grade,
+            watchedCount,
+            testsPassedCount,
+            mockDoneCount
+        };
+    },
+
+    // Record a Win and Check Tier Promotion Rewards
+    recordWin(lang = 'en') {
+        this.user.wins = (this.user.wins || 0) + 1;
+        this.user.langWins = this.user.langWins || { en: 0, ru: 0, de: 0 };
+        this.user.langWins[lang] = (this.user.langWins[lang] || 0) + 1;
+        this.user.claimedTiers = this.user.claimedTiers || [];
+
+        const tierInfo = this.getLeagueTier(this.user.wins);
+        if (tierInfo.allTiers) {
+            tierInfo.allTiers.forEach(t => {
+                if (this.user.wins >= t.minWins && !this.user.claimedTiers.includes(t.id)) {
+                    this.user.claimedTiers.push(t.id);
+                    this.user.stars = (this.user.stars || 0) + t.rewardStars;
+                    this.showToast(`🎉 TABRIKLAYMIZ! Siz "${t.name}" ligasiga ko'tarildingiz va +${t.rewardStars} Star ⭐ mukofotini qo'lga kiritdingiz!`, 'success');
+                    if (window.SoundEffects) SoundEffects.playWin();
+                    this.triggerConfetti();
+                }
+            });
+        }
+
+        this.saveUserState();
+        this.updateHeaderProfile();
+        this.renderLeaderboard(this.currentLeaderboardTab || 'all');
+        this.updateProfileOverview();
+    },
+
+    // Switch Leaderboard Tab
+    switchLeaderboardTab(tabLang) {
+        this.currentLeaderboardTab = tabLang;
+        document.querySelectorAll('.lb-tab-btn').forEach(btn => {
+            if (btn.getAttribute('data-lb-lang') === tabLang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        this.renderLeaderboard(tabLang);
+    },
+
+    // Get combined sorted leaderboard data
+    getLeaderboardData(lang = 'all') {
+        let players = [...(School77Data.leaderboard || [])];
+        if (lang !== 'all') {
+            players = players.filter(p => p.lang === lang);
+        }
+
+        // Get user wins for current tab
+        let userWins = this.user.wins || 58;
+        if (lang !== 'all') {
+            const lw = this.user.langWins || {};
+            userWins = lw[lang] !== undefined ? lw[lang] : (lang === 'en' ? Math.round(this.user.wins * 0.5) : (lang === 'ru' ? Math.round(this.user.wins * 0.3) : Math.round(this.user.wins * 0.2)));
+        }
+
+        const userTier = this.getLeagueTier(userWins);
+        const userEntry = {
+            isCurrentUser: true,
+            name: this.user.name || 'Azizbek',
+            avatar: this.user.avatar || '👨‍🎓',
+            wins: userWins,
+            stars: this.user.stars || 350,
+            lang: lang === 'all' ? 'all' : lang,
+            langName: lang === 'en' ? 'Ingliz tili' : (lang === 'ru' ? 'Rus tili' : (lang === 'de' ? 'Nemis tili' : 'Barcha tillar')),
+            tier: userTier
+        };
+
+        const combined = players.map(p => ({
+            ...p,
+            isCurrentUser: false,
+            tier: this.getLeagueTier(p.wins)
+        }));
+        combined.push(userEntry);
+
+        // SORT STRICTLY BY WINS (with stars tie-breaker)
+        combined.sort((a, b) => b.wins - a.wins || b.stars - a.stars);
+
+        let userRank = 1;
+        combined.forEach((p, idx) => {
+            p.rank = idx + 1;
+            if (p.isCurrentUser) userRank = p.rank;
+        });
+
+        return { combined, userRank, userEntry, userTier };
+    },
+
+    // Render Full Leaderboard with Multi-Language Support, Podium & Standings
+    renderLeaderboard(tabLang = 'all') {
+        this.currentLeaderboardTab = tabLang;
         const tbody = document.getElementById('leaderboard-tbody');
-        if (!tbody) return;
+        const userCard = document.getElementById('leaderboard-user-card');
+        const podiumWrap = document.getElementById('leaderboard-podium');
+        const rulesBody = document.getElementById('league-rules-body');
 
-        const i18n = window.SpeakProI18n;
-        const t = (key) => i18n ? i18n.t(key) : key;
+        const { combined, userRank, userEntry, userTier } = this.getLeaderboardData(this.currentLeaderboardTab);
 
-        // League name localizer
-        const localizeLeague = (league) => {
-            const lowerLeague = league.toLowerCase();
-            if (lowerLeague.includes('oltin') || lowerLeague.includes('gold') || lowerLeague.includes('золот')) return t('league_gold');
-            if (lowerLeague.includes('kumush') || lowerLeague.includes('silver') || lowerLeague.includes('сереб')) return t('league_silver');
-            if (lowerLeague.includes('bronza') || lowerLeague.includes('bronze') || lowerLeague.includes('бронз')) return t('league_bronze');
-            return league;
-        };
+        // 1. Render User Standings Card
+        if (userCard) {
+            const nextInfo = userTier.nextTier ? `
+                <div class="user-tier-next-info">
+                    <span>Keyingi bosqich: <strong>${userTier.nextTier.name} (${userTier.nextTier.minWins} g'alaba)</strong></span>
+                    <span class="user-tier-reward-tag">+${userTier.nextTier.rewardStars} Star ⭐ mukofot</span>
+                </div>
+                <div class="tier-progress-track">
+                    <div class="tier-progress-bar" style="width: ${userTier.progressPercent}%;"></div>
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                    Yana <strong>${userTier.winsToNext} ta g'alaba</strong> qoldi (${userTier.progressPercent}% yakunlandi)
+                </div>
+            ` : `
+                <div class="user-tier-next-info">
+                    <span style="color: #eab308; font-weight: 800;">👑 Siz eng oliy Oltin 3 Ligasidasiz!</span>
+                </div>
+            `;
 
-        // Language tag localizer
-        const localizeLang = (lang) => {
-            const lowerLang = lang.toLowerCase();
-            if (lowerLang.includes('ingliz') || lowerLang.includes('english') || lowerLang.includes('англ')) return t('lang_tag_en');
-            if (lowerLang.includes('rus') || lowerLang.includes('russian') || lowerLang.includes('рус')) return t('lang_tag_ru');
-            if (lowerLang.includes('nemis') || lowerLang.includes('german') || lowerLang.includes('немец')) return t('lang_tag_de');
-            return lang;
-        };
-
-        const winsSuffix = t('wins_suffix');
-
-        // Sort data
-        const sorted = [...SpeakProData.leaderboard].sort((a, b) => b.stars - a.stars);
-
-        tbody.innerHTML = sorted.map((p, idx) => {
-            let rankPill = '';
-            if (idx === 0) rankPill = '<span class="rank-badge-pill gold">🥇 1</span>';
-            else if (idx === 1) rankPill = '<span class="rank-badge-pill silver">🥈 2</span>';
-            else if (idx === 2) rankPill = '<span class="rank-badge-pill bronze">🥉 3</span>';
-            else rankPill = `<span class="rank-badge-pill">#${idx + 1}</span>`;
-
-            return `
-                <tr>
-                    <td class="rank-cell">${rankPill}</td>
-                    <td>
-                        <div class="user-cell">
-                            <div class="user-avatar-circle">${p.avatar}</div>
-                            <div class="user-details">
-                                <span class="user-name-text">${p.name}</span>
-                                <span class="user-sub-text">${localizeLang(p.lang)}</span>
+            userCard.innerHTML = `
+                <div class="live-user-inner">
+                    <div class="live-user-left">
+                        <div class="live-user-avatar">${userEntry.avatar}</div>
+                        <div>
+                            <div class="live-user-name-row">
+                                <span class="live-user-name">${userEntry.name}</span>
+                                <span class="live-user-you-tag">Siz</span>
+                                <span class="rank-hero-pill">#${userRank} - O'rin</span>
+                            </div>
+                            <div class="live-user-meta-sub">
+                                <span class="tier-badge-pill" style="background: ${userTier.bg}; color: ${userTier.color}; border: 1px solid ${userTier.border};">
+                                    ${userTier.icon} ${userTier.name} Ligasi
+                                </span>
+                                <span>🔥 <strong>${userEntry.wins} ta</strong> g'alaba</span>
+                                <span>⭐ <strong>${userEntry.stars}</strong> star</span>
                             </div>
                         </div>
-                    </td>
-                    <td><span class="league-badge ${p.league.toLowerCase().replace(' ', '-')}">${localizeLeague(p.league)}</span></td>
-                    <td><strong>${p.wins}${winsSuffix ? ' ' + winsSuffix : ''}</strong></td>
-                    <td><span class="stars-cell-value">${p.stars} ⭐</span></td>
-                </tr>
+                    </div>
+
+                    <div class="live-user-center">
+                        ${nextInfo}
+                    </div>
+
+                    <div class="live-user-actions">
+                        <button class="btn btn-primary btn-sm" onclick="App.recordWin('${this.currentLeaderboardTab === 'all' ? 'en' : this.currentLeaderboardTab}')" title="G'alaba qo'shish va reytingda ko'tarilish">
+                            ⚡ +1 G'alaba Qozonish (Sinov)
+                        </button>
+                        <button class="btn btn-secondary btn-sm" onclick="App.navigate('game-1v1')">
+                            ⚔️ 1vs1 Bellashuv
+                        </button>
+                    </div>
+                </div>
             `;
-        }).join('');
+        }
+
+        // 2. Render Top 3 Podium
+        if (podiumWrap && combined.length >= 3) {
+            const p1 = combined[0];
+            const p2 = combined[1];
+            const p3 = combined[2];
+
+            podiumWrap.innerHTML = `
+                <!-- 2-O'rin (Kumush) -->
+                <div class="podium-card podium-rank-2">
+                    <div class="podium-medal-icon">🥈</div>
+                    <div class="podium-avatar-wrap">
+                        <span class="podium-avatar">${p2.avatar}</span>
+                        <span class="podium-rank-tag tag-silver">2</span>
+                    </div>
+                    <h4 class="podium-name">${p2.name}</h4>
+                    <span class="podium-tier" style="color: ${p2.tier.color};">${p2.tier.icon} ${p2.tier.name}</span>
+                    <div class="podium-stats">
+                        <span>🔥 <strong>${p2.wins}</strong> g'alaba</span>
+                        <span>⭐ ${p2.stars}</span>
+                    </div>
+                </div>
+
+                <!-- 1-O'rin (Oltin) -->
+                <div class="podium-card podium-rank-1">
+                    <div class="podium-crown-icon">👑</div>
+                    <div class="podium-avatar-wrap">
+                        <span class="podium-avatar">${p1.avatar}</span>
+                        <span class="podium-rank-tag tag-gold">1</span>
+                    </div>
+                    <h4 class="podium-name">${p1.name}</h4>
+                    <span class="podium-tier" style="color: ${p1.tier.color};">${p1.tier.icon} ${p1.tier.name}</span>
+                    <div class="podium-stats">
+                        <span>🔥 <strong>${p1.wins}</strong> g'alaba</span>
+                        <span>⭐ ${p1.stars}</span>
+                    </div>
+                </div>
+
+                <!-- 3-O'rin (Bronza) -->
+                <div class="podium-card podium-rank-3">
+                    <div class="podium-medal-icon">🥉</div>
+                    <div class="podium-avatar-wrap">
+                        <span class="podium-avatar">${p3.avatar}</span>
+                        <span class="podium-rank-tag tag-bronze">3</span>
+                    </div>
+                    <h4 class="podium-name">${p3.name}</h4>
+                    <span class="podium-tier" style="color: ${p3.tier.color};">${p3.tier.icon} ${p3.tier.name}</span>
+                    <div class="podium-stats">
+                        <span>🔥 <strong>${p3.wins}</strong> g'alaba</span>
+                        <span>⭐ ${p3.stars}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3. Render League Rules & Star Rewards Roadmap
+        if (rulesBody) {
+            rulesBody.innerHTML = this.renderLeagueRoadmapHtml();
+        }
+
+        // 4. Render Table Rows
+        if (tbody) {
+            tbody.innerHTML = combined.map(p => {
+                let rankBadge = '';
+                if (p.rank === 1) rankBadge = '<span class="rank-badge-pill gold">🥇 1</span>';
+                else if (p.rank === 2) rankBadge = '<span class="rank-badge-pill silver">🥈 2</span>';
+                else if (p.rank === 3) rankBadge = '<span class="rank-badge-pill bronze">🥉 3</span>';
+                else rankBadge = `<span class="rank-badge-pill">#${p.rank}</span>`;
+
+                const langIcon = p.lang === 'en' ? '🇬🇧 Ingliz' : (p.lang === 'ru' ? '🇷🇺 Rus' : (p.lang === 'de' ? '🇩🇪 Nemis' : '🌐 Barcha'));
+
+                return `
+                    <tr class="${p.isCurrentUser ? 'current-user-row' : ''}">
+                        <td class="rank-cell" style="text-align: center;">${rankBadge}</td>
+                        <td>
+                            <div class="user-cell">
+                                <div class="user-avatar-circle">${p.avatar}</div>
+                                <div class="user-details">
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <span class="user-name-text">${p.name}</span>
+                                        ${p.isCurrentUser ? '<span class="user-tag-pill">Siz</span>' : ''}
+                                    </div>
+                                    <span class="user-sub-text">${p.langName || langIcon}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="lang-flag-pill">${langIcon}</span></td>
+                        <td style="text-align: center;">
+                            <span class="wins-highlight-pill">🔥 <strong>${p.wins}</strong> ta</span>
+                        </td>
+                        <td>
+                            <span class="tier-badge-pill" style="background: ${p.tier.bg}; color: ${p.tier.color}; border: 1px solid ${p.tier.border};">
+                                ${p.tier.icon} ${p.tier.name}
+                            </span>
+                        </td>
+                        <td style="text-align: right;"><span class="stars-cell-value">${p.stars.toLocaleString()} ⭐</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+    },
+
+    // Render League Roadmap Grid HTML
+    renderLeagueRoadmapHtml() {
+        const TIERS = [
+            { id: 'bronze_1', league: 'Bronza Liga', tier: 'Bronza 1', min: 50, max: 66, reward: 10, icon: '🥉', color: '#cd7f32' },
+            { id: 'bronze_2', league: 'Bronza Liga', tier: 'Bronza 2', min: 67, max: 83, reward: 15, icon: '🥉', color: '#cd7f32' },
+            { id: 'bronze_3', league: 'Bronza Liga', tier: 'Bronza 3', min: 84, max: 100, reward: 30, icon: '🥉', color: '#cd7f32' },
+            { id: 'silver_1', league: 'Kumush Liga', tier: 'Kumush 1', min: 101, max: 166, reward: 40, icon: '🥈', color: '#94a3b8' },
+            { id: 'silver_2', league: 'Kumush Liga', tier: 'Kumush 2', min: 167, max: 233, reward: 50, icon: '🥈', color: '#94a3b8' },
+            { id: 'silver_3', league: 'Kumush Liga', tier: 'Kumush 3', min: 234, max: 300, reward: 60, icon: '🥈', color: '#94a3b8' },
+            { id: 'gold_1', league: 'Oltin Liga', tier: 'Oltin 1', min: 301, max: 466, reward: 80, icon: '🥇', color: '#f59e0b' },
+            { id: 'gold_2', league: 'Oltin Liga', tier: 'Oltin 2', min: 467, max: 633, reward: 100, icon: '🥇', color: '#f59e0b' },
+            { id: 'gold_3', league: 'Oltin Liga', tier: 'Oltin 3', min: 634, max: '800+', reward: 120, icon: '👑', color: '#eab308' }
+        ];
+
+        const userWins = this.user.wins || 58;
+
+        return `
+            <div class="roadmap-grid">
+                ${TIERS.map(t => {
+                    const isUnlocked = userWins >= t.min;
+                    const isNext = !isUnlocked && userWins < t.min && (userWins >= (t.min - 35));
+                    return `
+                        <div class="roadmap-tier-card ${isUnlocked ? 'unlocked' : (isNext ? 'next-target' : 'locked')}">
+                            <div class="roadmap-tier-top">
+                                <span class="roadmap-tier-icon">${t.icon}</span>
+                                <span class="roadmap-tier-reward">+${t.reward} ⭐ Star</span>
+                            </div>
+                            <h5 class="roadmap-tier-name">${t.tier}</h5>
+                            <div class="roadmap-tier-range">Talab: <strong>${t.min}${t.max !== '800+' ? '-' + t.max : '+'}</strong> g'alaba</div>
+                            <div class="roadmap-tier-status">
+                                ${isUnlocked ? '<span class="status-tag done">✅ Yutilgan</span>' : (isNext ? '<span class="status-tag target">🎯 Keyingi maqsad</span>' : '<span class="status-tag lock">🔒 Qulflangan</span>')}
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
+    },
+
+    // Render Student Profile Mastery & Ranking Overview
+    updateProfileOverview() {
+        const container = document.getElementById('profile-mastery-container');
+        if (!container) return;
+
+        const wins = this.user.wins || 58;
+        const tier = this.getLeagueTier(wins);
+        const lessonsProg = this.calculateLessonsProgress();
+        const { userRank } = this.getLeaderboardData('all');
+        const lw = this.user.langWins || { en: Math.round(wins * 0.5), ru: Math.round(wins * 0.3), de: Math.round(wins * 0.2) };
+
+        container.innerHTML = `
+            <div class="profile-mastery-wrap">
+                <!-- User Identity Badge Header -->
+                <div class="profile-hero-strip">
+                    <div class="profile-avatar-big">${this.user.avatar || '👨‍🎓'}</div>
+                    <div class="profile-hero-text">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <h3 style="margin: 0; font-size: 20px; font-weight: 900; color: var(--text-primary);">${this.user.name || 'Azizbek'}</h3>
+                            <span class="profile-role-tag">Faol O'quvchi</span>
+                        </div>
+                        <p style="margin: 2px 0 0; font-size: 13px; color: var(--text-muted);">
+                            ID: <strong>SP-2026-9482</strong> • Ro'yxatdan o'tgan: 77-School O'quv Markazi
+                        </p>
+                    </div>
+                    <div class="profile-hero-tier-badge" style="background: ${tier.bg}; color: ${tier.color}; border: 1.5px solid ${tier.border};">
+                        <span style="font-size: 24px;">${tier.icon}</span>
+                        <div>
+                            <div style="font-size: 11px; text-transform: uppercase; font-weight: 800; opacity: 0.85;">Joriy Liga</div>
+                            <strong style="font-size: 15px;">${tier.name}</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4 Core Performance Tiles -->
+                <div class="profile-metrics-grid">
+                    
+                    <!-- Tile 1: Reyting O'rni -->
+                    <div class="profile-metric-tile">
+                        <div class="metric-icon-box" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                            🏆
+                        </div>
+                        <div class="metric-text-box">
+                            <span class="metric-label">Sayt Reyting O'rni</span>
+                            <strong class="metric-val">#${userRank} - o'rin</strong>
+                            <span class="metric-hint">Top ${Math.min(99, Math.max(1, Math.round((userRank / 31) * 100)))}% o'quvchilar orasida</span>
+                        </div>
+                    </div>
+
+                    <!-- Tile 2: Jami G'alabalar -->
+                    <div class="profile-metric-tile">
+                        <div class="metric-icon-box" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
+                            ⚔️
+                        </div>
+                        <div class="metric-text-box">
+                            <span class="metric-label">Yutgan G'alabalar</span>
+                            <strong class="metric-val">${wins} ta g'alaba</strong>
+                            <span class="metric-hint">🇬🇧 ${lw.en || 0} • 🇷🇺 ${lw.ru || 0} • 🇩🇪 ${lw.de || 0}</span>
+                        </div>
+                    </div>
+
+                    <!-- Tile 3: Joriy Liga va Keyingi Tur -->
+                    <div class="profile-metric-tile">
+                        <div class="metric-icon-box" style="background: ${tier.bg}; color: ${tier.color};">
+                            ${tier.icon}
+                        </div>
+                        <div class="metric-text-box" style="width: 100%;">
+                            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                                <span class="metric-label">Liga va Tur</span>
+                                <strong class="metric-val" style="font-size: 15px; color: ${tier.color};">${tier.name}</strong>
+                            </div>
+                            <div class="tier-progress-track" style="margin: 6px 0;">
+                                <div class="tier-progress-bar" style="width: ${tier.progressPercent}%; background: ${tier.color};"></div>
+                            </div>
+                            <span class="metric-hint">
+                                ${tier.nextTier ? `Keyingi (${tier.nextTier.name}) gacha: <strong>${tier.winsToNext} g'alaba</strong> (+${tier.nextTier.rewardStars} ⭐)` : 'Oliy Oltin 3 Ligasidasiz!'}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Tile 4: Dars O'zlashtirish Reytingi -->
+                    <div class="profile-metric-tile">
+                        <div class="metric-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                            📚
+                        </div>
+                        <div class="metric-text-box" style="width: 100%;">
+                            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                                <span class="metric-label">Dars O'zlashtirish Reytingi</span>
+                                <strong class="metric-val" style="color: #10b981;">${lessonsProg.percent}%</strong>
+                            </div>
+                            <div class="tier-progress-track" style="margin: 6px 0;">
+                                <div class="tier-progress-bar" style="width: ${lessonsProg.percent}%; background: #10b981;"></div>
+                            </div>
+                            <span class="metric-hint">
+                                Baho: <strong>${lessonsProg.grade}</strong> • 📹 ${lessonsProg.watchedCount} video ko'rilgan
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Star Balansi & Sinov G'alaba Tugmalari -->
+                <div class="profile-quick-action-strip">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 20px;">⭐</span>
+                        <div>
+                            <span style="font-size: 12px; color: var(--text-muted); font-weight: 700;">Star Balansingiz:</span>
+                            <strong style="font-size: 16px; color: #f59e0b; margin-left: 4px;">${this.user.stars} ⭐</strong>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="App.recordWin('en')" title="G'alaba qo'shish va ligalarda ko'tarilish">
+                            ⚡ +1 G'alaba Qozonish (Sinov)
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="App.navigate('reyting')">
+                            🏆 To'liq Reyting Jadvali
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ligalar Yo'l Xaritasi (Roadmap) -->
+                <div class="profile-roadmap-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <strong style="font-size: 14px; color: var(--text-primary);">🏅 Ligalar Pog'onalari va Star Mukofotlari:</strong>
+                        <span style="font-size: 12px; color: var(--text-muted);">Jami 9 ta bosqich (Bronza, Kumush, Oltin)</span>
+                    </div>
+                    ${this.renderLeagueRoadmapHtml()}
+                </div>
+            </div>
+        `;
     },
 
     renderStarStore() {
         const container = document.getElementById('star-store-grid');
         if (!container) return;
 
-        const i18n = window.SpeakProI18n;
+        const i18n = window.School77I18n;
         const t = (key) => i18n ? i18n.t(key) : key;
 
-        container.innerHTML = SpeakProData.storeGifts.map(gift => {
+        container.innerHTML = School77Data.storeGifts.map(gift => {
             const title = t('store_' + gift.id + '_title') !== 'store_' + gift.id + '_title' ? t('store_' + gift.id + '_title') : gift.title;
             const category = t('store_' + gift.id + '_category') !== 'store_' + gift.id + '_category' ? t('store_' + gift.id + '_category') : gift.category;
             const desc = t('store_' + gift.id + '_desc') !== 'store_' + gift.id + '_desc' ? t('store_' + gift.id + '_desc') : gift.desc;
@@ -808,10 +1570,10 @@ const App = {
     },
 
     redeemGift(giftId) {
-        const gift = SpeakProData.storeGifts.find(g => g.id === giftId);
+        const gift = School77Data.storeGifts.find(g => g.id === giftId);
         if (!gift) return;
 
-        const i18n = window.SpeakProI18n;
+        const i18n = window.School77I18n;
         const t = (key) => i18n ? i18n.t(key) : key;
         const giftTitle = t('store_' + gift.id + '_title') !== 'store_' + gift.id + '_title' ? t('store_' + gift.id + '_title') : gift.title;
 
@@ -885,3 +1647,8 @@ window.SoundEffects = SoundEffects;
 document.addEventListener('DOMContentLoaded', () => {
     App.init();
 });
+
+
+
+
+

@@ -1,7 +1,7 @@
-// SpeakPro - Real-world Practical Dialogues Database
+﻿// School77 - Real-world Practical Dialogues Database
 // Languages: English (en), Russian (ru), German (de)
 
-const SpeakProDialogues = {
+const School77Dialogues = {
     en: [
         {
             id: 'dlg-en-1',
@@ -230,4 +230,4 @@ const SpeakProDialogues = {
     ]
 };
 
-window.SpeakProDialogues = SpeakProDialogues;
+window.School77Dialogues = School77Dialogues;

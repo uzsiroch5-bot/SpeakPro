@@ -1,11 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpeakPro — Tillarni Oson, Qiziqarli va Raqobat Ruhida O'rganing!</title>
-    <meta name="description" content="SpeakPro — Ingliz tili, Rus tili va Nemis tilini o'rganish uchun interaktiv platforma. 1vs1, 6 kishilik bellashuv va yozish musobaqalari.">
+    <title>School77 — Tillarni Oson, Qiziqarli va Raqobat Ruhida O'rganing!</title>
+    <meta name="description" content="School77 — Ingliz tili, Rus tili va Nemis tilini o'rganish uchun interaktiv platforma. 1vs1, 6 kishilik bellashuv va yozish musobaqalari.">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth-page.css">
+    <link rel="stylesheet" href="css/admin.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -14,9 +16,9 @@
 
     <!-- TOP HEADER -->
     <header class="site-header">
-        <!-- 1. Tepa qator: Chapda SpeakPro logosi va yozuvi, O'ngda Star hisobi va Kirish/Ro'yxatdan o'tish -->
+        <!-- 1. Tepa qator: Chapda School77 logosi va yozuvi, O'ngda Star hisobi va Kirish/Ro'yxatdan o'tish -->
         <div class="header-top-row">
-            <!-- Tepa chap burchak: SpeakPro logo va yozuvi -->
+            <!-- Tepa chap burchak: School77 logo va yozuvi -->
             <div class="brand-container" data-view="home">
                 <div class="brand-logo-mark">
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -26,11 +28,11 @@
                 </div>
                 <div class="brand-text-block">
                     <div class="brand-title-row">
-                        <span class="brand-title">SpeakPro</span>
+                        <span class="brand-title">School77</span>
                         <span class="brand-badge-pro">PRO</span>
                     </div>
                     <span class="brand-tagline">
-                        <span class="dot"></span> "Planeta" o'quv markazi
+                        <span class="dot"></span> 77-School O'quv Markazi
                     </span>
                 </div>
             </div>
@@ -70,10 +72,7 @@
                 <!-- Foydalanuvchi tizimga kirgan holat -->
                 <div class="user-profile-badge" id="nav-profile-group" data-view="sozlamalar" title="Profil sozlamalari">
                     <div class="profile-avatar-circle" id="nav-user-avatar">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
+                        👨‍🎓
                     </div>
                     <div class="profile-meta-col">
                         <span class="profile-name" id="nav-user-name">Azizbek</span>
@@ -81,10 +80,24 @@
                     </div>
                 </div>
 
+                <!-- Tezkor Chiqish tugmasi (Header) -->
+                <button class="btn-header-logout" id="header-btn-logout" onclick="App.logout()" title="Akkauntdan chiqish">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Chiqish</span>
+                </button>
+
+                <!-- Admin Panel tugmasi (Superadmin kirganda ko'rinadi) -->
+                <button class="btn-header-admin" id="header-btn-admin" onclick="App.navigate('admin')" title="Admin boshqaruv paneli">
+                    <span>👑 Admin Panel</span>
+                </button>
                 <!-- Ro'yxatdan o'tish / Kirish tugmalari -->
-                <div class="header-auth-group" id="nav-auth-buttons" style="display: none;">
-                    <button class="btn btn-secondary btn-sm" id="btn-open-login">Kirish</button>
-                    <button class="btn btn-primary btn-sm" id="btn-open-register">Ro'yxatdan o'tish</button>
+                <div class="header-auth-group" id="nav-auth-buttons">
+                    <button class="btn btn-secondary btn-sm" onclick="App.navigate('login'); App.switchAuthMode('login');">Kirish</button>
+                    <button class="btn btn-primary btn-sm" onclick="App.navigate('login'); App.switchAuthMode('register');">Ro'yxatdan o'tish</button>
                 </div>
 
                 <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menyuni ochish">
@@ -294,6 +307,10 @@
             </div>
             <a class="nav-menu-link" data-view="speaking">🎙️ Speaking with AI</a>
             <a class="nav-menu-link" data-view="sozlamalar">⚙️ Sozlamalar</a>
+            <div style="border-top: 1px solid var(--border-card); margin-top: 8px; padding-top: 8px;">
+                <a class="nav-menu-link" id="mobile-login-link" data-view="login" style="color: var(--primary); font-weight: 800;">🔑 Kirish / Ro'yxatdan o'tish</a>
+                <a class="nav-menu-link" id="mobile-logout-link" onclick="App.logout()" style="color: #ef4444; font-weight: 800; display: none;">🚪 Akkauntdan Chiqish</a>
+            </div>
         </div>
     </header>
 
@@ -306,20 +323,20 @@
         <section class="app-view active" id="view-home">
             <!-- Hero banner card -->
             <div class="home-hero-card">
-                <div class="hero-planeta-seal">
+                <div class="hero-77-School-seal">
                     <svg class="hero-seal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="9"></circle>
                         <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(-30 12 12)"></ellipse>
                     </svg>
-                    "Planeta" O'quv Markazi Loyihasi • 2026
+                    77-School O'quv Markazi Loyihasi • 2026
                 </div>
 
                 <h1 class="hero-main-title">
-                    SpeakPro haqida — <span class="gradient-text">Tillarni oson, qiziqarli va raqobat ruhida o'rganing!</span>
+                    School77 haqida — <span class="gradient-text">Tillarni oson, qiziqarli va raqobat ruhida o'rganing!</span>
                 </h1>
 
                 <p class="hero-description">
-                    SpeakPro — bu zamonaviy va interaktiv til o'rganish platformasi bo'lib, u til o'rganishni zerikarli yodlash jarayonidan qiziqarli sarguzashtga aylantirish uchun yaratilgan. Bizning asosiy maqsadimiz — har bir o'quvchiga sifatli ta'limni qulay va motivatsion muhitda taqdim etish.
+                    School77 — bu zamonaviy va interaktiv til o'rganish platformasi bo'lib, u til o'rganishni zerikarli yodlash jarayonidan qiziqarli sarguzashtga aylantirish uchun yaratilgan. Bizning asosiy maqsadimiz — har bir o'quvchiga sifatli ta'limni qulay va motivatsion muhitda taqdim etish.
                 </p>
 
                 <div class="hero-actions-row">
@@ -423,9 +440,9 @@
                         <div class="audio-sample-strip">
                             <div>
                                 <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Jonli Talaffuz:</div>
-                                <div class="sample-phrase-text">"Welcome to SpeakPro"</div>
+                                <div class="sample-phrase-text">"Welcome to School77"</div>
                             </div>
-                            <button class="sample-listen-btn" onclick="speakForeignWord('Welcome to SpeakPro', 'en-US')">
+                            <button class="sample-listen-btn" onclick="speakForeignWord('Welcome to School77', 'en-US')">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                                     <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -527,9 +544,9 @@
                         <div class="audio-sample-strip">
                             <div>
                                 <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Jonli Talaffuz:</div>
-                                <div class="sample-phrase-text">"Willkommen bei SpeakPro"</div>
+                                <div class="sample-phrase-text">"Willkommen bei School77"</div>
                             </div>
-                            <button class="sample-listen-btn" onclick="speakForeignWord('Willkommen bei SpeakPro', 'de-DE')">
+                            <button class="sample-listen-btn" onclick="speakForeignWord('Willkommen bei School77', 'de-DE')">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                                     <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -562,7 +579,7 @@
                     <span class="section-badge-pill">Gamifikatsiya & Sovrinlar</span>
                     <h2 class="section-title">🏆 Musobaqa va Yulduzlar tizimi (Star)</h2>
                     <p class="section-subtitle">
-                        SpeakPro shunchaki darslik emas, bu haqiqiy bilimlar arenasidir! Bizda o'qish jarayoni yanada qiziqarli bo'lishi uchun maxsus gamifikatsiya tizimi joriy qilingan:
+                        School77 shunchaki darslik emas, bu haqiqiy bilimlar arenasidir! Bizda o'qish jarayoni yanada qiziqarli bo'lishi uchun maxsus gamifikatsiya tizimi joriy qilingan:
                     </p>
                 </div>
 
@@ -630,7 +647,7 @@
 
             <!-- Ilova haqida -->
             <div class="section-block">
-                <div class="about-planeta-card">
+                <div class="about-77-School-card">
                     <div class="about-app-info">
                         <h3 class="about-app-title">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -646,22 +663,220 @@
                             </div>
                             <div class="about-meta-row">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                                <span>🏢 <strong>Tashkilotchi / Muallif:</strong> "Planeta" o'quv markazi</span>
+                                <span>🏢 <strong>Tashkilotchi / Muallif:</strong> 77-School O'quv Markazi</span>
                             </div>
                         </div>
                         <div class="copyright-legal-block">
-                            <strong>Mualliflik huquqi:</strong> © 2026 "Planeta" o'quv markazi. Barcha huquqlar himoyalangan. Materiallardan nusxa ko'chirish, ularni tarqatish yoki tijorat maqsadida foydalanish qat'iyan taqiqlanadi.
+                            <strong>Mualliflik huquqi:</strong> © 2026 77-School O'quv Markazi. Barcha huquqlar himoyalangan. Materiallardan nusxa ko'chirish, ularni tarqatish yoki tijorat maqsadida foydalanish qat'iyan taqiqlanadi.
                         </div>
                     </div>
-                    <div class="planeta-hologram-seal">
+                    <div class="77-School-hologram-seal">
                         <svg class="hologram-logo" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="1.8">
                             <circle cx="12" cy="12" r="8"></circle>
                             <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-25 12 12)"></ellipse>
                         </svg>
-                        <div class="hologram-name">Planeta</div>
+                        <div class="hologram-name">77-School</div>
                         <div class="hologram-year">EST. 2026</div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+
+        <!-- ==============================================================
+             10. KIRISH VA RO'YXATDAN O'TISH SAHIFASI (PREMIUM AUTH PAGE)
+             ============================================================== -->
+        <section class="app-view" id="view-login">
+            <div class="auth-page-container">
+                
+                <!-- Agar tizimga kirilgan bo'lsa ko'rinuvchi status banner -->
+                <div id="auth-logged-in-card" class="auth-logged-in-banner" style="display: none;">
+                    <div class="logged-in-content">
+                        <div class="logged-in-avatar" id="auth-banner-avatar">👨‍🎓</div>
+                        <div class="logged-in-text">
+                            <span class="logged-in-badge">Tizimga Kirilgan</span>
+                            <h3 class="logged-in-name" id="auth-banner-username">Azizbek</h3>
+                            <p class="logged-in-email" id="auth-banner-email">student@School77.uz</p>
+                        </div>
+                    </div>
+                    <div class="logged-in-actions">
+                        <button class="btn btn-primary" onclick="App.navigate('home')">
+                            🏠 Bosh Sahifaga O'tish
+                        </button>
+                        <button class="btn btn-secondary" onclick="App.navigate('sozlamalar')">
+                            ⚙️ Profil Sozlamalari
+                        </button>
+                        <button class="btn btn-danger-soft" onclick="App.logout()">
+                            🚪 Akkauntdan Chiqish
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Asosiy Premium Kirish / Ro'yxatdan O'tish Kartasi -->
+                <div class="auth-card-luxury" id="auth-main-card">
+                    
+                    <!-- Chap Tomon: Brand & Imkoniyatlar Showcasi -->
+                    <div class="auth-banner-side">
+                        <div class="auth-brand-badge">
+                            <span class="brand-sparkle">✨</span>
+                            <span>School77 2026 • 77-School O'quv Markazi</span>
+                        </div>
+                        <h2 class="auth-banner-title">
+                            Bilimlar sari <span class="gradient-text">eng to'g'ri qadam!</span>
+                        </h2>
+                        <p class="auth-banner-desc">
+                            Xorijiy tillarni erkin, qiziqarli va zamonaviy Sun'iy Intellekt texnologiyalari bilan o'rganing.
+                        </p>
+
+                        <!-- Asosiy Imkoniyatlar Ro'yxati -->
+                        <div class="auth-features-list">
+                            <div class="auth-feature-item">
+                                <div class="feat-icon-box icon-ai">🤖</div>
+                                <div class="feat-text">
+                                    <strong>Jonli Virtual AI Coach</strong>
+                                    <p>Ko'zlari va og'zi bilan sizga qarab, jonli suhbatlashuvchi ustoz</p>
+                                </div>
+                            </div>
+                            <div class="auth-feature-item">
+                                <div class="feat-icon-box icon-leagues">🏆</div>
+                                <div class="feat-text">
+                                    <strong>3 Ta Liga & Global Reyting</strong>
+                                    <p>Bronza, Kumush va Oltin ligalarda o'zaro musobaqa va yutuqlar</p>
+                                </div>
+                            </div>
+                            <div class="auth-feature-item">
+                                <div class="feat-icon-box icon-multi">🎮</div>
+                                <div class="feat-text">
+                                    <strong>Multiplayer Bellashuvlar</strong>
+                                    <p>1 vs 1 duel, 6 kishilik xonalar va 2 vs 2 tezkor yozish arenasi</p>
+                                </div>
+                            </div>
+                            <div class="auth-feature-item">
+                                <div class="feat-icon-box icon-dict">📖</div>
+                                <div class="feat-text">
+                                    <strong>10,000+ Katta Audio Lug'at</strong>
+                                    <p>A1 dan C1 gacha to'liq leksika va audio talaffuzlar bazasi</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="auth-trust-banner">
+                            <div class="trust-avatars">
+                                <span>👩‍🎓</span><span>👨‍🎓</span><span>👩‍💼</span><span>👨‍💻</span>
+                            </div>
+                            <div class="trust-text">
+                                <strong>12,400+ faol o'quvchi</strong>
+                                <span>Bugun biz bilan o'rganmoqda</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- O'ng Tomon: Interaktiv Kirish / Ro'yxatdan O'tish Formasi -->
+                    <div class="auth-form-side">
+                        <!-- Switch Tabs (Kirish / Ro'yxatdan O'tish) -->
+                        <div class="auth-segmented-tabs">
+                            <button type="button" class="auth-segment-btn active" id="page-auth-tab-login" onclick="App.switchAuthMode('login')">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                                <span>Tizimga Kirish</span>
+                            </button>
+                            <button type="button" class="auth-segment-btn" id="page-auth-tab-register" onclick="App.switchAuthMode('register')">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                                <span>Ro'yxatdan O'tish</span>
+                            </button>
+                        </div>
+
+                        <!-- Form Sarlavhasi -->
+                        <div class="auth-form-header">
+                            <h3 class="auth-form-title" id="page-auth-heading">Xush kelibsiz! 👋</h3>
+                            <p class="auth-form-desc" id="page-auth-subheading">Platformaga kirish uchun ma'lumotlaringizni kiriting.</p>
+                        </div>
+
+                        <!-- Asosiy Forma -->
+                        <form id="page-auth-form" onsubmit="App.handlePageAuthSubmit(event)">
+                            
+                            <!-- Faqat Ro'yxatdan O'tishda: Ism -->
+                            <div class="form-group-lux auth-register-field" id="p-auth-name-group" style="display: none;">
+                                <label class="form-lux-label" for="p-auth-name">Ism va Familiyangiz</label>
+                                <div class="input-lux-wrap">
+                                    <span class="input-lux-icon">👤</span>
+                                    <input type="text" id="p-auth-name" class="input-lux" placeholder="Masalan: Sardor Aliyev">
+                                </div>
+                            </div>
+
+                            <!-- Faqat Ro'yxatdan O'tishda: Asosiy Til -->
+                            <div class="form-group-lux auth-register-field" id="p-auth-lang-group" style="display: none;">
+                                <label class="form-lux-label" for="p-auth-lang">O'rganmoqchi bo'lgan asosiy tilingiz</label>
+                                <div class="input-lux-wrap">
+                                    <span class="input-lux-icon">🌍</span>
+                                    <select id="p-auth-lang" class="input-lux select-lux">
+                                        <option value="en">🇬🇧 Ingliz tili (English)</option>
+                                        <option value="ru">🇷🇺 Rus tili (Русский)</option>
+                                        <option value="de">🇩🇪 Nemis tili (Deutsch)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Identifikator: Telefon yoki Email -->
+                            <div class="form-group-lux">
+                                <label class="form-lux-label" id="p-auth-id-label" for="p-auth-id">Telefon raqam yoki Email</label>
+                                <div class="input-lux-wrap">
+                                    <span class="input-lux-icon">📱</span>
+                                    <input type="text" id="p-auth-id" class="input-lux" placeholder="+998 90 123 45 67 yoki email" required autocomplete="username">
+                                </div>
+                            </div>
+
+                            <!-- Parol -->
+                            <div class="form-group-lux">
+                                <div class="label-with-action">
+                                    <label class="form-lux-label" for="p-auth-pwd">Maxfiy Parol</label>
+                                    <a href="#" class="forgot-link" id="p-auth-forgot" onclick="event.preventDefault(); App.handleForgotPassword()">Parolni unutdingizmi?</a>
+                                </div>
+                                <div class="input-lux-wrap">
+                                    <span class="input-lux-icon">🔒</span>
+                                    <input type="password" id="p-auth-pwd" class="input-lux" placeholder="••••••••" required autocomplete="current-password">
+                                    <button type="button" class="btn-pwd-toggle" onclick="App.togglePasswordVisibility('p-auth-pwd', this)" title="Parolni ko'rsatish/yashirish">
+                                        👁️
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Eslab qolish -->
+                            <div class="auth-options-row" id="p-auth-remember-row">
+                                <label class="remember-lux-label">
+                                    <input type="checkbox" id="p-auth-remember" checked>
+                                    <span class="checkbox-custom"></span>
+                                    <span>Meni eslab qol</span>
+                                </label>
+                            </div>
+
+                            <!-- Asosiy Tugma -->
+                            <button type="submit" class="btn btn-primary btn-lg w-full btn-auth-submit" id="p-auth-submit-btn">
+                                <span>Tizimga Kirish 🚀</span>
+                            </button>
+
+                            <!-- Ajratgich -->
+                            <div class="auth-divider">
+                                <span>yoki tezkor kirish</span>
+                            </div>
+
+                            <!-- Bir marta bosish bilan Demo Kirish -->
+
+                            <!-- Tezkor Ijtimoiy Tarmoqlar -->
+                            <div class="auth-social-row">
+                                <button type="button" class="btn-social-lux" onclick="App.socialLogin('Google')">
+                                    <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.15z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.24v3.15C3.26 21.36 7.33 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.24C.45 8.15 0 9.99 0 12s.45 3.85 1.24 5.42l4.04-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.24 6.58l4.04 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+                                    <span>Google</span>
+                                </button>
+                                <button type="button" class="btn-social-lux" onclick="App.socialLogin('Telegram')">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#229ED9"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                                    <span>Telegram</span>
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -681,6 +896,8 @@
         </section>
 
 
+
+
         <!-- ==============================================================
              3. DARSLAR SAHIFASI (Multi-level, Videos, Dialogues, Tests)
              ============================================================== -->
@@ -691,25 +908,76 @@
         </section>
 
 
+
+
         <!-- ==============================================================
-             4. REYTING SAHIFASI
+             4. REYTING SAHIFASI (Peshqadamlar Arenasi, Ligalar & Tillar)
              ============================================================== -->
         <section class="app-view" id="view-reyting">
             <div class="section-header">
-                <span class="section-badge-pill">Peshqadamlar Arenasi</span>
-                <h2 class="section-title">🏆 O'quvchilar Reytingi</h2>
-                <p class="section-subtitle">Eng faol va bilimdon o'quvchilar ligasi. Bellashing va yuqori o'rinni zabt eting!</p>
+                <span class="section-badge-pill">🏆 Peshqadamlar Milliy Arenasi • 2026</span>
+                <h2 class="section-title">🏆 O'quvchilar Reytingi va Ligalar Bellashuvi</h2>
+                <p class="section-subtitle">G'alabalar qozonib yuqori ligaga ko'tariling, reyting peshqadamiga aylaning va qimmatbaho Star ⭐ mukofotlarini qo'lga kiriting!</p>
             </div>
 
+            <!-- Tillar Bo'yicha Filtr Tablari (All, English, Russian, German) -->
+            <div class="leaderboard-nav-tabs">
+                <button class="lb-tab-btn active" data-lb-lang="all" onclick="App.switchLeaderboardTab('all')">
+                    <span class="lb-tab-flag">🌐</span>
+                    <span>Umumiy Reyting</span>
+                </button>
+                <button class="lb-tab-btn" data-lb-lang="en" onclick="App.switchLeaderboardTab('en')">
+                    <span class="lb-tab-flag">🇬🇧</span>
+                    <span>Ingliz Tili</span>
+                </button>
+                <button class="lb-tab-btn" data-lb-lang="ru" onclick="App.switchLeaderboardTab('ru')">
+                    <span class="lb-tab-flag">🇷🇺</span>
+                    <span>Rus Tili</span>
+                </button>
+                <button class="lb-tab-btn" data-lb-lang="de" onclick="App.switchLeaderboardTab('de')">
+                    <span class="lb-tab-flag">🇩🇪</span>
+                    <span>Nemis Tili</span>
+                </button>
+            </div>
+
+            <!-- Sizning Natijangiz (Sticky Live User Standings Card) -->
+            <div class="leaderboard-user-live-card" id="leaderboard-user-card">
+                <!-- Dynamically filled by App.renderLeaderboard() -->
+            </div>
+
+            <!-- Peshqadamlar Shoxsupasi (Top 3 Podium) -->
+            <div class="leaderboard-podium-wrap" id="leaderboard-podium">
+                <!-- Dynamically filled: 2nd, 1st, 3rd -->
+            </div>
+
+            <!-- Ligalar va Star Mukofotlari Info-Akkordeon -->
+            <div class="league-rules-collapsible">
+                <div class="league-rules-header" onclick="this.parentElement.classList.toggle('open')">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 22px;">📜</span>
+                        <div>
+                            <strong style="font-size: 15px; color: var(--text-primary);">Ligalar va Star Mukofotlari Tizimi</strong>
+                            <p style="margin: 0; font-size: 12px; color: var(--text-muted);">Bronza (50-100), Kumush (100-300), Oltin (300-800+) va 10⭐ dan 120⭐ gacha yutuqlar</p>
+                        </div>
+                    </div>
+                    <span class="toggle-arrow">▼ Ko'rish</span>
+                </div>
+                <div class="league-rules-body" id="league-rules-body">
+                    <!-- Roadmap rendered dynamically -->
+                </div>
+            </div>
+
+            <!-- Asosiy Reyting Jadvali -->
             <div class="leaderboard-table-container">
                 <table class="leaderboard-table">
                     <thead>
                         <tr>
-                            <th style="width: 80px; text-align: center;">O'rin</th>
+                            <th style="width: 70px; text-align: center;">O'rin</th>
                             <th>O'quvchi</th>
-                            <th>Liga</th>
-                            <th>G'alabalar</th>
-                            <th>To'plangan Yulduzlar</th>
+                            <th>Til</th>
+                            <th style="text-align: center;">G'alabalar soni</th>
+                            <th>Joriy Liga va Tur</th>
+                            <th style="text-align: right;">Yulduzlar</th>
                         </tr>
                     </thead>
                     <tbody id="leaderboard-tbody">
@@ -718,6 +986,8 @@
                 </table>
             </div>
         </section>
+
+
 
 
         <!-- ==============================================================
@@ -737,13 +1007,15 @@
             <div class="section-header">
                 <span class="section-badge-pill">Mukofotlar Bozori</span>
                 <h2 class="section-title">🎁 Sovg'alar va Mukofotlar Do'koni</h2>
-                <p class="section-subtitle">To'plagan yulduzlaringizni "Planeta" o'quv markazining esdalik sovg'alari va vaucherlariga almashtiring!</p>
+                <p class="section-subtitle">To'plagan yulduzlaringizni 77-School O'quv Markazining esdalik sovg'alari va vaucherlariga almashtiring!</p>
             </div>
 
             <div class="star-store-grid" id="star-store-grid">
                 <!-- JavaScript orqali to'ldiriladi -->
             </div>
         </section>
+
+
 
 
         <!-- ==============================================================
@@ -841,6 +1113,8 @@
         </section>
 
 
+
+
         <!-- ==============================================================
              7. MINI GAME 2: LUG'AT BELLASHUV 6 KISHILIK
              ============================================================== -->
@@ -922,6 +1196,8 @@
                 </div>
             </div>
         </section>
+
+
 
 
         <!-- ==============================================================
@@ -1013,22 +1289,18 @@
         </section>
 
 
+
+
         <!-- ==============================================================
              8. SPEAKING WITH AI SAHIFASI (Interactive Voice & AI Tutor Arena)
              ============================================================== -->
         <section class="app-view" id="view-speaking">
-            <div class="section-header">
-                <span class="section-badge-pill" style="background: rgba(79, 70, 229, 0.15); color: var(--primary); border-color: rgba(79, 70, 229, 0.3);">
-                    🤖 Sun'iy Intellekt Bilan Jonli Muloqot
-                </span>
-                <h2 class="section-title">🎙️ Speaking with AI — Shaxsiy Nutq Repetitori</h2>
-                <p class="section-subtitle">Xorijiy til repetitori bilan jonli ovozli suhbat qiling. Talaffuzni baholash, xatolarni tuzatish va erkin so'zlashuv amaliyoti!</p>
-            </div>
-
             <div id="speaking-app-container">
                 <!-- Rendered dynamically by SpeakingApp.render() -->
             </div>
         </section>
+
+
 
 
         <!-- ==============================================================
@@ -1114,7 +1386,7 @@
 
                             <div class="form-group">
                                 <label for="setting-email-input" data-i18n="label_email">Elektron pochta (Email)</label>
-                                <input type="email" id="setting-email-input" class="form-control" value="student@speakpro.uz" placeholder="Emailingiz">
+                                <input type="email" id="setting-email-input" class="form-control" value="student@School77.uz" placeholder="Emailingiz">
                             </div>
 
                             <div class="form-group">
@@ -1128,20 +1400,9 @@
                             </div>
                         </div>
 
-                        <!-- O'quvchi statistikasi kartalari -->
-                        <div class="user-stats-strip">
-                            <div class="stat-mini-pill">
-                                <span class="stat-mini-label" data-i18n="stat_stars">To'plangan Yulduzlar</span>
-                                <strong class="stat-mini-val" id="settings-user-stars">350 ⭐</strong>
-                            </div>
-                            <div class="stat-mini-pill">
-                                <span class="stat-mini-label">G'alabalar</span>
-                                <strong class="stat-mini-val" id="settings-user-wins">18 ta</strong>
-                            </div>
-                            <div class="stat-mini-pill">
-                                <span class="stat-mini-label" data-i18n="stat_level">Ta'lim darajasi</span>
-                                <strong class="stat-mini-val" id="settings-user-league">Oltin Liga 🏆</strong>
-                            </div>
+                        <!-- O'QUVCHI PROFIL REYTINGI VA DARS O'ZLASHTIRISHI MARKAZI -->
+                        <div id="profile-mastery-container">
+                            <!-- Rendered dynamically by App.updateProfileOverview() -->
                         </div>
 
                         <div class="account-actions-row">
@@ -1242,9 +1503,596 @@
                 </form>
             </div>
         </section>
+        <!-- ==============================================================
+             11. ADMIN BOSHQARUV PANEL (SUPER ADMIN DASHBOARD)
+             Kirish: admin@school77.uz / 7578mf
+             ============================================================== -->
+        <section class="app-view" id="view-admin">
+            <div class="admin-wrapper">
+                
+                <!-- Admin Top Banner -->
+                <div class="admin-top-banner">
+                    <div class="admin-brand-col">
+                        <span class="admin-badge-pill">👑 Bosh Administrator • 77-School O'quv Markazi</span>
+                        <h2 class="admin-banner-title">
+                            School77 Boshqaruv Markazi
+                        </h2>
+                        <p class="admin-banner-desc">
+                            O'quvchilar, Star do'koni narxlari, Lug'atlar, Dialoglar va Idiomalar boshqaruvi
+                        </p>
+                    </div>
+                    <div class="admin-controls-col">
+                        <div class="server-live-pill" id="admin-server-pill">
+                            <span class="server-dot"></span>
+                            <span id="admin-server-status-text">Server: Tekshirilmoqda...</span>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="App.navigate('home')">
+                            🏠 Saytga Qaytish
+                        </button>
+                        <button class="btn btn-danger-soft btn-sm" onclick="App.logout()">
+                            🚪 Chiqish
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KPI Statistika Kartalari -->
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon stat-icon-students">👥</div>
+                        <div class="admin-stat-info">
+                            <div class="stat-val" id="admin-stat-students-count">0 nafar</div>
+                            <div class="stat-lbl">Jami O'quvchilar</div>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon stat-icon-stars">⭐</div>
+                        <div class="admin-stat-info">
+                            <div class="stat-val" id="admin-stat-stars-count">0 ⭐</div>
+                            <div class="stat-lbl">Yulduzlar Aylanmasi</div>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon stat-icon-store">🎁</div>
+                        <div class="admin-stat-info">
+                            <div class="stat-val" id="admin-stat-store-count">0 xil</div>
+                            <div class="stat-lbl">Do'kon Mahsulotlari</div>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon stat-icon-words">📖</div>
+                        <div class="admin-stat-info">
+                            <div class="stat-val" id="admin-stat-words-count">0 ta</div>
+                            <div class="stat-lbl">Yangi Qo'shilgan Leksika</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segmented Tabs Navigation -->
+                <div class="admin-tabs-nav">
+                    <button type="button" class="admin-tab-btn active" data-admin-tab="students" onclick="AdminApp.switchTab('students')">
+                        👥 O'quvchilar Boshqaruvi
+                    </button>
+                    <button type="button" class="admin-tab-btn" data-admin-tab="store" onclick="AdminApp.switchTab('store')">
+                        ⭐ Star Do'koni & Narxlar
+                    </button>
+                    <button type="button" class="admin-tab-btn" data-admin-tab="vocabulary" onclick="AdminApp.switchTab('vocabulary')">
+                        📖 Lug'at Qo'shish
+                    </button>
+                    <button type="button" class="admin-tab-btn" data-admin-tab="dialogues" onclick="AdminApp.switchTab('dialogues')">
+                        💬 Dialoglar Qo'shish
+                    </button>
+                    <button type="button" class="admin-tab-btn" data-admin-tab="idioms" onclick="AdminApp.switchTab('idioms')">
+                        💡 Idiomalar Qo'shish
+                    </button>
+                    <button type="button" class="admin-tab-btn" data-admin-tab="server" onclick="AdminApp.switchTab('server')">
+                        ⚙️ Server & Baza
+                    </button>
+                </div>
+
+                <!-- ==================== PANE 1: O'QUVCHILAR ==================== -->
+                <div class="admin-tab-pane active" id="admin-tab-students">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <h3 class="admin-card-title">👥 Ro'yxatdan O'tgan O'quvchilar</h3>
+                                <p class="admin-card-desc">O'quvchilar ro'yxati, yutuqlari, ligalari va yulduzlar balansi</p>
+                            </div>
+                            <div class="admin-card-actions">
+                                <input type="text" id="admin-student-search" class="admin-input" placeholder="Ism yoki email bo'yicha qidiruv..." style="max-width: 240px;">
+                                <select id="admin-student-tier-filter" class="admin-select" onchange="AdminApp.renderStudents()" style="max-width: 150px;">
+                                    <option value="all">Barcha ligalar</option>
+                                    <option value="bronze">Bronza liga</option>
+                                    <option value="silver">Kumush liga</option>
+                                    <option value="gold">Oltin liga</option>
+                                </select>
+                                <button class="btn btn-primary btn-sm" onclick="AdminApp.openAddStudentModal()">
+                                    ➕ Yangi O'quvchi
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>O'quvchi</th>
+                                        <th>Telefon</th>
+                                        <th>Tili</th>
+                                        <th>Yulduzlar</th>
+                                        <th>G'alabalar</th>
+                                        <th>Liga</th>
+                                        <th>Sana</th>
+                                        <th>Amallar</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-students-tbody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== PANE 2: STAR DO'KONI VA NARXLAR ==================== -->
+                <div class="admin-tab-pane" id="admin-tab-store">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <h3 class="admin-card-title">⭐ Star Do'koni Mahsulotlari va Narxlar</h3>
+                                <p class="admin-card-desc">Do'kondagi barcha mahsulotlar, sovg'alar va ularning yulduz narxlarini boshqarish</p>
+                            </div>
+                            <div class="admin-card-actions">
+                                <button class="btn btn-primary btn-sm" onclick="AdminApp.openAddStoreModal()">
+                                    ➕ Yangi Mahsulot Qo'shish
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="admin-store-grid" id="admin-store-grid">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== PANE 3: LUG'AT QO'SHISH ==================== -->
+                <div class="admin-tab-pane" id="admin-tab-vocabulary">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <h3 class="admin-card-title">📖 Yangi So'z Qo'shish (Lug'at Ensiklopediyasi)</h3>
+                                <p class="admin-card-desc">Ingliz, Rus yoki Nemis tili lug'at bazasiga yangi leksika kiritish</p>
+                            </div>
+                        </div>
+
+                        <form id="admin-voc-form" onsubmit="AdminApp.handleNewWordSubmit(event)">
+                            <div class="admin-form-grid">
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Tilni Tanlang</label>
+                                    <select id="voc-form-lang" class="admin-select" required>
+                                        <option value="en">🇬🇧 Ingliz tili (English)</option>
+                                        <option value="ru">🇷🇺 Rus tili (Русский)</option>
+                                        <option value="de">🇩🇪 Nemis tili (Deutsch)</option>
+                                    </select>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">CEFR Darajasi</label>
+                                    <select id="voc-form-lvl" class="admin-select" required>
+                                        <option value="A1">A1 — Boshlang'ich (Beginner)</option>
+                                        <option value="A2">A2 — Elementar (Elementary)</option>
+                                        <option value="B1">B1 — O'rta (Intermediate)</option>
+                                        <option value="B2">B2 — Yuqori O'rta (Upper-Intermediate)</option>
+                                        <option value="C1">C1 — Ilg'or (Advanced)</option>
+                                    </select>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">So'z (Asl tilda)</label>
+                                    <input type="text" id="voc-form-word" class="admin-input" placeholder="Masalan: determination" required>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Transkripsiya / Talaffuz</label>
+                                    <input type="text" id="voc-form-ph" class="admin-input" placeholder="Masalan: /dɪˌtɜː.mɪˈneɪ.ʃən/">
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">So'z Turkumi</label>
+                                    <select id="voc-form-pos" class="admin-select">
+                                        <option value="noun">Ot (noun)</option>
+                                        <option value="verb">Fe'l (verb)</option>
+                                        <option value="adj">Sifat (adj)</option>
+                                        <option value="adv">Ravish (adv)</option>
+                                        <option value="prep">Old ko'makchi (prep)</option>
+                                        <option value="phrase">Ibora (phrase)</option>
+                                    </select>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">O'zbekcha Tarjimasi</label>
+                                    <input type="text" id="voc-form-uz" class="admin-input" placeholder="Masalan: qat'iyatlilik, azmu shijoat" required>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Ruscha Tarjimasi (Ixtiyoriy)</label>
+                                    <input type="text" id="voc-form-ru" class="admin-input" placeholder="Masalan: решимость, стойкость">
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Misol Gap (Asl tilda)</label>
+                                    <input type="text" id="voc-form-ex" class="admin-input" placeholder="Masalan: Success requires hard work and determination.">
+                                </div>
+                                <div class="admin-form-group col-full">
+                                    <label class="admin-label">Misol Gapning O'zbekcha Tarjimasi</label>
+                                    <input type="text" id="voc-form-extr" class="admin-input" placeholder="Masalan: Muvaffaqiyat mehnat va qat'iyatlilikni talab qiladi.">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                ➕ Yangi So'zni Saqlash va Baza bilan Bog'lash
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Qo'shilgan so'zlar ro'yxati -->
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <h4 class="admin-card-title">📚 Admin Qo'shgan So'zlar</h4>
+                                <p class="admin-card-desc">Siz kiritgan yangi maxsus so'zlar ro'yxati</p>
+                            </div>
+                            <div class="admin-card-actions">
+                                <input type="text" id="admin-voc-search" class="admin-input" placeholder="So'z bo'yicha qidiruv..." style="max-width: 220px;">
+                                <select id="admin-voc-lang-filter" class="admin-select" onchange="AdminApp.renderVocabulary()" style="max-width: 140px;">
+                                    <option value="all">Barcha tillar</option>
+                                    <option value="en">Ingliz tili</option>
+                                    <option value="ru">Rus tili</option>
+                                    <option value="de">Nemis tili</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>So'z</th>
+                                        <th>Til</th>
+                                        <th>Daraja</th>
+                                        <th>O'zbekcha</th>
+                                        <th>Misol</th>
+                                        <th>Amal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-voc-tbody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== PANE 4: DIALOGLAR QO'SHISH ==================== -->
+                <div class="admin-tab-pane" id="admin-tab-dialogues">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <h3 class="admin-card-title">💬 Yangi Dialog Qo'shish</h3>
+                                <p class="admin-card-desc">Hayotiy mavzulardagi jonli suhbatlarni darslikka kiritish</p>
+                            </div>
+                        </div>
+
+                        <form id="admin-dlg-form" onsubmit="AdminApp.handleNewDialogueSubmit(event)">
+                            <div class="admin-form-grid">
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Tilni Tanlang</label>
+                                    <select id="dlg-form-lang" class="admin-select" required>
+                                        <option value="en">🇬🇧 Ingliz tili (English)</option>
+                                        <option value="ru">🇷🇺 Rus tili (Русский)</option>
+                                        <option value="de">🇩🇪 Nemis tili (Deutsch)</option>
+                                    </select>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">CEFR Darajasi</label>
+                                    <select id="dlg-form-lvl" class="admin-select" required>
+                                        <option value="A1">A1 — Boshlang'ich</option>
+                                        <option value="A2">A2 — Elementar</option>
+                                        <option value="B1">B1 — O'rta</option>
+                                        <option value="B2">B2 — Yuqori O'rta</option>
+                                        <option value="C1">C1 — Ilg'or</option>
+                                    </select>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Dialog Sarlavhasi (Inglizcha/Asl)</label>
+                                    <input type="text" id="dlg-form-title" class="admin-input" placeholder="Masalan: Booking a Hotel Room" required>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">O'zbekcha Sarlavhasi</label>
+                                    <input type="text" id="dlg-form-title-uz" class="admin-input" placeholder="Masalan: Mehmonxonada xona band qilish" required>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Mavzu Toifasi</label>
+                                    <input type="text" id="dlg-form-cat" class="admin-input" placeholder="Masalan: Sayohat & Mehmonxona">
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Icon Emoji</label>
+                                    <input type="text" id="dlg-form-icon" class="admin-input" value="🏨" style="max-width: 80px;">
+                                </div>
+                                <div class="admin-form-group col-full">
+                                    <label class="admin-label">Replika Gaplar (Har bir qatorga: A: Gap | Tarjima)</label>
+                                    <textarea id="dlg-form-lines" class="admin-textarea" rows="6" placeholder="A: Good afternoon, I would like to book a single room. | Xayrli kun, bittalik xona band qilmoqchi edim.&#10;B: Welcome! For how many nights will you be staying? | Xush kelibsiz! Necha kechaga qolmoqchisiz?&#10;A: Just two nights, please. | Faqat ikki kechaga, iltimos." required></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                ➕ Yangi Dialogni Saqlash
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Qo'shilgan dialoglar ro'yxati -->
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h4 class="admin-card-title">💬 Admin Qo'shgan Dialoglar</h4>
+                        </div>
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Dialog Sarlavhasi</th>
+                                        <th>Til</th>
+                                        <th>Daraja</th>
+                                        <th>Replika soni</th>
+                                        <th>Amal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-dlg-tbody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== PANE 5: IDIOMALAR QO'SHISH ==================== -->
+                <div class="admin-tab-pane" id="admin-tab-idioms">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <h3 class="admin-card-title">💡 Yangi Idioma Qo'shish</h3>
+                                <p class="admin-card-desc">Nutqni boyituvchi va xalqona iboralarni bazaga kiritish</p>
+                            </div>
+                        </div>
+
+                        <form id="admin-idm-form" onsubmit="AdminApp.handleNewIdiomSubmit(event)">
+                            <div class="admin-form-grid">
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Tilni Tanlang</label>
+                                    <select id="idm-form-lang" class="admin-select" required>
+                                        <option value="en">🇬🇧 Ingliz tili (English)</option>
+                                        <option value="ru">🇷🇺 Rus tili (Русский)</option>
+                                        <option value="de">🇩🇪 Nemis tili (Deutsch)</option>
+                                    </select>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">CEFR Darajasi</label>
+                                    <select id="idm-form-lvl" class="admin-select" required>
+                                        <option value="A1">A1</option>
+                                        <option value="A2">A2</option>
+                                        <option value="B1">B1</option>
+                                        <option value="B2">B2</option>
+                                        <option value="C1">C1</option>
+                                    </select>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Idioma Iborasi (Asl tilda)</label>
+                                    <input type="text" id="idm-form-idiom" class="admin-input" placeholder="Masalan: Hit the nail on the head" required>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">O'zbekcha Ma'nosi / Sharhi</label>
+                                    <input type="text" id="idm-form-uz" class="admin-input" placeholder="Masalan: Mo'ljalga to'g'ri urmoq, ayni haqiqatni aytmoq" required>
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Ruscha Ekvivalenti (Ixtiyoriy)</label>
+                                    <input type="text" id="idm-form-ru" class="admin-input" placeholder="Masalan: Попасть прямо в точку">
+                                </div>
+                                <div class="admin-form-group">
+                                    <label class="admin-label">Misol Gap (Asl tilda)</label>
+                                    <input type="text" id="idm-form-ex" class="admin-input" placeholder="Masalan: You hit the nail on the head with that answer.">
+                                </div>
+                                <div class="admin-form-group col-full">
+                                    <label class="admin-label">Misol Gapning O'zbekcha Tarjimasi</label>
+                                    <input type="text" id="idm-form-extr" class="admin-input" placeholder="Masalan: Bu javobingiz bilan ayni nishonga urdingiz.">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                ➕ Yangi Idiomani Saqlash
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Qo'shilgan idiomalar ro'yxati -->
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h4 class="admin-card-title">💡 Admin Qo'shgan Idiomalar</h4>
+                        </div>
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Idioma</th>
+                                        <th>Til</th>
+                                        <th>Daraja</th>
+                                        <th>O'zbekcha Ma'nosi</th>
+                                        <th>Amal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-idm-tbody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== PANE 6: SERVER VA MA'LUMOTLAR BAZASI ==================== -->
+                <div class="admin-tab-pane" id="admin-tab-server">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div>
+                                <h3 class="admin-card-title">⚙️ Backend Server & Ma'lumotlar Bazasi</h3>
+                                <p class="admin-card-desc">Node.js serverini ulash, zaxira nusxalar va sinxronizatsiya</p>
+                            </div>
+                        </div>
+
+                        <div class="server-box-wrap">
+                            <h4 style="font-size: 16px; margin: 0 0 8px; color: var(--text-primary);">🚀 Serverni Ishga Tushirish (Node.js):</h4>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 10px;">
+                                Terminal yoki PowerShell oching va loyihaning <code>server</code> papkasiga o'tib, quyidagini yozing:
+                            </p>
+                            <div class="server-code-block">
+cd server<br>
+node server.js
+                            </div>
+                            <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0 0;">
+                                Server avtomatik <strong>http://localhost:3000</strong> portida ishga tushadi va <code>server/db.json</code> bazasini boshqaradi.
+                            </p>
+                        </div>
+
+                        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;">
+                            <button class="btn btn-primary" onclick="AdminApp.pushToServer()">
+                                💾 Barcha O'zgarishlarni Serverga Saqlash
+                            </button>
+                            <button class="btn btn-secondary" onclick="AdminApp.checkServerHealth()">
+                                🔄 Server Aloqasini Qayta Tekshirish
+                            </button>
+                            <button class="btn btn-secondary" onclick="AdminApp.exportJSON()">
+                                📥 JSON Zaxira Nusxasini Yuklab Olish (Export)
+                            </button>
+                            <label class="btn btn-secondary" style="cursor: pointer; margin: 0;">
+                                📤 JSON Zaxirani Qayta Tiklash (Import)
+                                <input type="file" accept=".json" onchange="AdminApp.importJSON(event)" style="display: none;">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ==================== MODALS ==================== -->
+
+            <!-- 1. O'quvchi Qo'shish / Tahrirlash Modali -->
+            <div class="admin-modal-overlay" id="admin-student-modal">
+                <div class="admin-modal-box">
+                    <div class="admin-modal-head">
+                        <h4 class="admin-modal-title" id="modal-student-title">O'quvchi Ma'lumotlari</h4>
+                        <button class="admin-modal-close" onclick="AdminApp.closeModal('admin-student-modal')">&times;</button>
+                    </div>
+                    <form onsubmit="AdminApp.saveStudentModal(event)">
+                        <input type="hidden" id="modal-std-id">
+                        <div class="admin-form-group" style="margin-bottom: 12px;">
+                            <label class="admin-label">Ism va Familiya</label>
+                            <input type="text" id="modal-std-name" class="admin-input" required>
+                        </div>
+                        <div class="admin-form-group" style="margin-bottom: 12px;">
+                            <label class="admin-label">Email</label>
+                            <input type="email" id="modal-std-email" class="admin-input" required>
+                        </div>
+                        <div class="admin-form-group" style="margin-bottom: 12px;">
+                            <label class="admin-label">Telefon</label>
+                            <input type="text" id="modal-std-phone" class="admin-input" placeholder="+998 90 123 45 67">
+                        </div>
+                        <div class="admin-form-group" style="margin-bottom: 12px;">
+                            <label class="admin-label">Yulduzlar Balansi (⭐)</label>
+                            <input type="number" id="modal-std-stars" class="admin-input" min="0" required>
+                        </div>
+                        <div class="admin-form-group" style="margin-bottom: 16px;">
+                            <label class="admin-label">Avatar Emoji</label>
+                            <select id="modal-std-avatar" class="admin-select">
+                                <option value="👨‍🎓">👨‍🎓 Talaba yigit</option>
+                                <option value="👩‍🎓">👩‍🎓 Talaba qiz</option>
+                                <option value="👨‍💼">👨‍💼 Biznesmen</option>
+                                <option value="👩‍💼">👩‍💼 Biznesvumen</option>
+                                <option value="👨‍💻">👨‍💻 Dasturchi</option>
+                                <option value="👑">👑 VIP O'quvchi</option>
+                            </select>
+                        </div>
+                        <div class="admin-modal-actions">
+                            <button type="button" class="btn btn-secondary" onclick="AdminApp.closeModal('admin-student-modal')">Bekor Qilish</button>
+                            <button type="submit" class="btn btn-primary">Saqlash ✅</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 2. Yulduz Berish / Ayirish Modali -->
+            <div class="admin-modal-overlay" id="admin-stars-modal">
+                <div class="admin-modal-box">
+                    <div class="admin-modal-head">
+                        <h4 class="admin-modal-title">⭐ O'quvchiga Yulduz Belgilash</h4>
+                        <button class="admin-modal-close" onclick="AdminApp.closeModal('admin-stars-modal')">&times;</button>
+                    </div>
+                    <div>
+                        <input type="hidden" id="modal-stars-std-id">
+                        <p style="font-size: 14px; margin: 0 0 6px;">O'quvchi: <strong id="modal-stars-std-name">Azizbek</strong></p>
+                        <p style="font-size: 14px; margin: 0 0 16px;">Hozirgi balansi: <span id="modal-stars-current" class="stars-count-pill">350 ⭐</span></p>
+
+                        <div class="admin-form-group" style="margin-bottom: 18px;">
+                            <label class="admin-label">Yulduz Miqdori</label>
+                            <input type="number" id="modal-stars-amount" class="admin-input" value="50" min="1">
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                            <button type="button" class="btn btn-primary" onclick="AdminApp.applyStarChange('add')">
+                                ➕ Qo'shish
+                            </button>
+                            <button type="button" class="btn btn-danger-soft" onclick="AdminApp.applyStarChange('deduct')">
+                                ➖ Ayirish
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="AdminApp.applyStarChange('set')">
+                                🎯 O'rnatish
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Star Mahsulot Narxini Belgilash / Qo'shish Modali -->
+            <div class="admin-modal-overlay" id="admin-gift-modal">
+                <div class="admin-modal-box">
+                    <div class="admin-modal-head">
+                        <h4 class="admin-modal-title" id="modal-gift-title-head">Mahsulot Narxini Belgilash</h4>
+                        <button class="admin-modal-close" onclick="AdminApp.closeModal('admin-gift-modal')">&times;</button>
+                    </div>
+                    <form onsubmit="AdminApp.saveGiftModal(event)">
+                        <input type="hidden" id="modal-gift-id">
+                        <div class="admin-form-group" style="margin-bottom: 12px;">
+                            <label class="admin-label">Mahsulot Nomi</label>
+                            <input type="text" id="modal-gift-title" class="admin-input" required>
+                        </div>
+                        <div class="admin-form-group" style="margin-bottom: 12px;">
+                            <label class="admin-label">Narxi (⭐ Yulduzlarda)</label>
+                            <input type="number" id="modal-gift-cost" class="admin-input" min="1" required>
+                        </div>
+                        <div class="admin-form-group" style="margin-bottom: 12px;">
+                            <label class="admin-label">Icon Emoji</label>
+                            <input type="text" id="modal-gift-icon" class="admin-input" value="🎁" style="max-width: 80px;" required>
+                        </div>
+                        <div class="admin-form-group" style="margin-bottom: 12px;">
+                            <label class="admin-label">Toifasi (Kategoriya)</label>
+                            <input type="text" id="modal-gift-category" class="admin-input" placeholder="Masalan: Elektronika">
+                        </div>
+                        <div class="admin-form-group" style="margin-bottom: 12px;">
+                            <label class="admin-label">Nishon (Badge)</label>
+                            <input type="text" id="modal-gift-badge" class="admin-input" placeholder="Masalan: Eng ommabop, Trendda, Premium">
+                        </div>
+                        <div class="admin-form-group" style="margin-bottom: 16px;">
+                            <label class="admin-label">Tavsifi</label>
+                            <textarea id="modal-gift-desc" class="admin-textarea" rows="3"></textarea>
+                        </div>
+                        <div class="admin-modal-actions">
+                            <button type="button" class="btn btn-secondary" onclick="AdminApp.closeModal('admin-gift-modal')">Bekor Qilish</button>
+                            <button type="submit" class="btn btn-primary">Saqlash ✅</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </section>
+
     </main>
 
-    <!-- FOOTER: Planeta o'quv markazi mualliflik huquqi -->
+    <!-- FOOTER: 77-School O'quv Markazi mualliflik huquqi -->
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="brand-container" style="justify-content: center;" onclick="App.navigate('home')">
@@ -1254,12 +2102,12 @@
                     </svg>
                 </div>
                 <div class="brand-text-block" style="text-align: left;">
-                    <span class="brand-title" style="font-size: 22px;">SpeakPro</span>
-                    <span class="brand-tagline">"Planeta" o'quv markazi</span>
+                    <span class="brand-title" style="font-size: 22px;">School77</span>
+                    <span class="brand-tagline">77-School O'quv Markazi</span>
                 </div>
             </div>
             <p class="footer-copy">
-                © 2026 "Planeta" o'quv markazi. Barcha huquqlar himoyalangan.<br>
+                © 2026 77-School O'quv Markazi. Barcha huquqlar himoyalangan.<br>
                 Materiallardan nusxa ko'chirish, ularni tarqatish yoki tijorat maqsadida foydalanish qat'iyan taqiqlanadi.
             </p>
         </div>
@@ -1362,6 +2210,15 @@
     <script src="js/lessons.js"></script>
     <script src="js/games.js"></script>
     <script src="js/speaking.js"></script>
+    <script src="js/admin.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+

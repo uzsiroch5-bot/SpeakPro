@@ -1,0 +1,17 @@
+﻿{
+  "name": "School77-backend",
+  "version": "1.0.0",
+  "description": "School77 '77-School' O'quv Markazi REST API Serveri va Ma'lumotlar Bazasi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["School77", "education", "api", "admin"],
+  "author": "77-School O'quv Markazi",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

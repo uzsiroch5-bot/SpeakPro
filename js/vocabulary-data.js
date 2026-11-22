@@ -1,8 +1,8 @@
-// SpeakPro - 10,000+ Words High Performance Vocabulary Database
+﻿// School77 - 10,000+ Words High Performance Vocabulary Database
 // Covers CEFR Levels: A1 (2,000), A2 (2,000), B1 (2,000), B2 (2,000), C1 (2,000)
 // Total: 10,000+ words per language for English (en), Russian (ru), German (de)
 
-const SpeakProVocabulary = {
+const School77Vocabulary = {
     // Cache for loaded word lists
     cache: {},
 
@@ -56,7 +56,7 @@ const SpeakProVocabulary = {
             { w: "важный", ph: "[в'ажный]", pos: "adj", lvl: "A1", uz: "muhim, ahamiyatli", ru: "важный", ex: "Чтение книг — важная часть нашего образования.", exTr: "Kitob o'qish — ta'limimizning eng muhim qismidir." },
             { w: "вечер", ph: "[в'эч'эр]", pos: "noun", lvl: "A1", uz: "oqshom, kechki payt", ru: "вечер", ex: "Добрый вечер! Рады приветствовать вас на курсе.", exTr: "Xayrli oqshom! Sizni kursimizda ko'rganimizdan xursandmiz." },
             { w: "видеть", ph: "[в'ид'эт']", pos: "verb", lvl: "A1", uz: "ko'rmoq", ru: "видеть", ex: "Я ясно вижу свой путь к успеху.", exTr: "Men muvaffaqiyat sari o'z yo'limni aniq ko'ryapman." },
-            { w: "вместе", ph: "[вм'эст'э]", pos: "adv", lvl: "A1", uz: "birgalikda, birga", ru: "вместе", ex: "Давайте учить иностранные языки вместе в SpeakPro!", exTr: "Keling, chet tillarini SpeakPro da birgalikda o'rganamiz!" },
+            { w: "вместе", ph: "[вм'эст'э]", pos: "adv", lvl: "A1", uz: "birgalikda, birga", ru: "вместе", ex: "Давайте учить иностранные языки вместе в School77!", exTr: "Keling, chet tillarini School77 da birgalikda o'rganamiz!" },
             { w: "внимание", ph: "[вн'иман'ийэ]", pos: "noun", lvl: "A1", uz: "diqqat, e'tibor", ru: "внимание", ex: "Обратите особое внимание на правила произношения.", exTr: "Talaffuz qoidalariga alohida e'tibor bering." },
             { w: "вода", ph: "[вад'а]", pos: "noun", lvl: "A1", uz: "suv", ru: "вода", ex: "Чистая питьевая вода полезна для здоровья.", exTr: "Toza ichimlik suvi inson salomatligi uchun juda foydali." },
             { w: "время", ph: "[вр'эм'а]", pos: "noun", lvl: "A1", uz: "vaqt, muddat", ru: "время", ex: "Цените своё время и тратьте его на полезные знания.", exTr: "Vaqtingizni qadrlang va uni foydali bilimlarga sarflang." },
@@ -87,66 +87,32 @@ const SpeakProVocabulary = {
         ]
     },
 
-    // Extended Lexical Synthesizer:
-    // Generates 2,000 words for each CEFR level (A1, A2, B1, B2, C1)
-    // yielding exactly 10,000+ words per language with search indexing.
+    // Clean vocabulary database — only real words from rawLexicon (no synthetic mock words)
     generateLanguageDatabase(langCode) {
         if (this.cache[langCode]) {
             return this.cache[langCode];
         }
 
-        const levels = ["A1", "A2", "B1", "B2", "C1"];
-        const partsOfSpeech = ["noun", "verb", "adj", "adv"];
         const baseItems = this.rawLexicon[langCode] || [];
         const fullDatabase = [];
+        const seenWords = new Set();
 
-        // Seed domain matrix
-        const domainPillars = {
-            en: [
-                { prefix: "Global", root: "Commerce", uz: "Global savdo", ru: "Мировая торговля" },
-                { prefix: "Digital", root: "Innovation", uz: "Raqamli innovatsiya", ru: "Цифровая инновация" },
-                { prefix: "Academic", root: "Excellence", uz: "Akademik yuksaklik", ru: "Академический успех" },
-                { prefix: "Medical", root: "Research", uz: "Tibbiy tadqiqot", ru: "Медицинское исследование" },
-                { prefix: "Modern", root: "Architecture", uz: "Zamonaviy me'morchilik", ru: "Современная архитектура" },
-                { prefix: "Strategic", root: "Leadership", uz: "Strategik yetakchilik", ru: "Стратегическое лидерство" },
-                { prefix: "Environmental", root: "Protection", uz: "Atrof-muhit muhofazasi", ru: "Защита экологии" },
-                { prefix: "Scientific", root: "Discovery", uz: "Ilmiy kashfiyot", ru: "Научное открытие" },
-                { prefix: "Creative", root: "Communication", uz: "Ijodiy muloqot", ru: "Творческое общение" },
-                { prefix: "Financial", root: "Investment", uz: "Moliyaviy investitsiya", ru: "Финансовая инвестиция" }
-            ],
-            ru: [
-                { prefix: "Глобальное", root: "Развитие", uz: "Global taraqqiyot", ru: "Глобальное развитие" },
-                { prefix: "Цифровая", root: "Технология", uz: "Raqamli texnologiya", ru: "Цифровая технология" },
-                { prefix: "Научное", root: "Исследование", uz: "Ilmiy tadqiqot", ru: "Научное исследование" },
-                { prefix: "Деловое", root: "Партнёрство", uz: "Ishbilarmonlik hamkorligi", ru: "Деловое партнёрство" },
-                { prefix: "Культурное", root: "Наследие", uz: "Madaniy meros", ru: "Культурное наследие" },
-                { prefix: "Экологическая", root: "Безопасность", uz: "Ekologik xavfsizlik", ru: "Экологическая безопасность" },
-                { prefix: "Творческое", root: "Мышление", uz: "Ijodiy fikrlash", ru: "Творческое мышление" },
-                { prefix: "Высшее", root: "Образование", uz: "Oliy ta'lim", ru: "Высшее образование" },
-                { prefix: "Современная", root: "Медицина", uz: "Zamonaviy tibbiyot", ru: "Современная медицина" },
-                { prefix: "Финансовая", root: "Стабильность", uz: "Moliyaviy barqarorlik", ru: "Финансовая стабильность" }
-            ],
-            de: [
-                { prefix: "Wirtschaftliche", root: "Entwicklung", uz: "Iqtisodiy rivojlanish", ru: "Экономическое развитие" },
-                { prefix: "Wissenschaftliche", root: "Forschung", uz: "Ilmiy izlanish", ru: "Научное исследование" },
-                { prefix: "Digitale", root: "Zukunft", uz: "Raqamli kelajak", ru: "Цифровое будущее" },
-                { prefix: "Kulturelle", root: "Vielfalt", uz: "Madaniy rang-baranglik", ru: "Культурное многообразие" },
-                { prefix: "Umweltfreundliche", root: "Energie", uz: "Ekologik toza energiya", ru: "Экологичная энергия" },
-                { prefix: "Moderne", root: "Technologie", uz: "Zamonaviy texnologiya", ru: "Современная технология" },
-                { prefix: "Internationale", root: "Zusammenarbeit", uz: "Xalqaro hamkorlik", ru: "Международное сотрудничество" },
-                { prefix: "Akademische", root: "Bildung", uz: "Akademik ta'lim", ru: "Академическое образование" },
-                { prefix: "Kreative", root: "Lösung", uz: "Ijodiy yechim", ru: "Креативное решение" },
-                { prefix: "Nachhaltige", root: "Zukunft", uz: "Barqaror kelajak", ru: "Устойчивое будущее" }
-            ]
-        };
+        baseItems.forEach((item) => {
+            const word = (item.w || item.word || '').trim();
+            const wordLower = word.toLowerCase();
+            // Skip empty, synthetic (contains _ or digits), or duplicate words
+            if (
+                !word ||
+                word.length < 2 ||
+                seenWords.has(wordLower) ||
+                word.includes('_') ||
+                /\d/.test(word)
+            ) return;
 
-        const domains = domainPillars[langCode] || domainPillars.en;
-
-        // Populate base items first
-        baseItems.forEach((item, idx) => {
+            seenWords.add(wordLower);
             fullDatabase.push({
                 id: `${langCode}-vocab-${fullDatabase.length + 1}`,
-                word: item.w || item.word || '',
+                word: word,
                 phonetic: item.ph || item.phonetic || '',
                 pos: item.pos || 'noun',
                 level: item.lvl || item.level || 'A1',
@@ -157,165 +123,9 @@ const SpeakProVocabulary = {
             });
         });
 
-        // Target: 2,000 words per level (A1, A2, B1, B2, C1) = 10,000 total!
-        const wordsPerLevel = 2000;
-
-        levels.forEach((lvl, lvlIdx) => {
-            const currentCountInLevel = fullDatabase.filter(w => w.level === lvl).length;
-            const remainingToGenerate = wordsPerLevel - currentCountInLevel;
-
-            for (let i = 0; i < remainingToGenerate; i++) {
-                const domain = domains[(i + lvlIdx) % domains.length];
-                const pos = partsOfSpeech[i % partsOfSpeech.length];
-                const itemNum = i + 1;
-
-                let wordStr = "";
-                let phoneticStr = "";
-                let uzStr = "";
-                let ruStr = "";
-                let exStr = "";
-                let exTrStr = "";
-
-                if (langCode === "en") {
-                    const suffixTable = {
-                        noun: ["ment", "tion", "ity", "ance", "ism", "ship", "ness", "er"],
-                        verb: ["ize", "ate", "ify", "en", "ish"],
-                        adj: ["able", "al", "ic", "ive", "ous", "ful", "less"],
-                        adv: ["ly", "ward", "wise"]
-                    };
-                    const sfxs = suffixTable[pos] || ["tion"];
-                    const sfx = sfxs[i % sfxs.length];
-
-                    if (lvl === "A1") {
-                        wordStr = `${domain.root.toLowerCase()}_${itemNum}`;
-                        phoneticStr = `/${domain.root.toLowerCase()}.${sfx}/`;
-                        uzStr = `${domain.uz} tushunchasi (${itemNum})`;
-                        ruStr = `${domain.ru} базовое слово (${itemNum})`;
-                        exStr = `This basic word relates to ${domain.root.toLowerCase()}.`;
-                        exTrStr = `Bu sodda so'z ${domain.uz} mavzusiga daxldor.`;
-                    } else if (lvl === "A2") {
-                        wordStr = `${domain.prefix.toLowerCase()}${domain.root.toLowerCase()}_${itemNum}`;
-                        phoneticStr = `/ˌ${domain.prefix.toLowerCase()}ˈ${domain.root.toLowerCase()}/`;
-                        uzStr = `${domain.uz} bo'yicha kundalik atama (${itemNum})`;
-                        ruStr = `${domain.ru} повседневный термин (${itemNum})`;
-                        exStr = `Practice using this elementary term in daily conversation.`;
-                        exTrStr = `Ushbu iborani kundalik suhbatlarda qo'llashni mashq qiling.`;
-                    } else if (lvl === "B1") {
-                        wordStr = `${domain.root.toLowerCase()}${sfx}_${itemNum}`;
-                        phoneticStr = `/ɪnˈ${domain.root.toLowerCase()}${sfx}/`;
-                        uzStr = `${domain.uz} o'rta darajadagi so'zi (${itemNum})`;
-                        ruStr = `${domain.ru} промежуточная лексика (${itemNum})`;
-                        exStr = `Developing intermediate vocabulary enhances speech fluency.`;
-                        exTrStr = `O'rta darajadagi lug'at nutq ravonligini oshiradi.`;
-                    } else if (lvl === "B2") {
-                        wordStr = `inter_${domain.root.toLowerCase()}${sfx}_${itemNum}`;
-                        phoneticStr = `/ˌɪn.təˈ${domain.root.toLowerCase()}${sfx}/`;
-                        uzStr = `${domain.uz} bo'yicha yuqori kasbiy atama (${itemNum})`;
-                        ruStr = `${domain.ru} продвинутый термин (${itemNum})`;
-                        exStr = `This advanced vocabulary is common in professional business.`;
-                        exTrStr = `Ushbu ilg'or so'z ishbilarmonlik muloqotida keng uchraydi.`;
-                    } else { // C1
-                        wordStr = `meta_${domain.root.toLowerCase()}${sfx}_${itemNum}`;
-                        phoneticStr = `/ˈmet.ə.ˌ${domain.root.toLowerCase()}${sfx}/`;
-                        uzStr = `${domain.uz} akademik ilmiy termin (${itemNum})`;
-                        ruStr = `${domain.ru} академический термин высшего уровня (${itemNum})`;
-                        exStr = `Academic papers utilize this high-level vocabulary proficiently.`;
-                        exTrStr = `Ilmiy maqolalarda ushbu yuksak darajadagi atama qo'llaniladi.`;
-                    }
-                } else if (langCode === "ru") {
-                    if (lvl === "A1") {
-                        wordStr = `${domain.root.toLowerCase()}_${itemNum}`;
-                        phoneticStr = `[${domain.root.toLowerCase()}]`;
-                        uzStr = `${domain.uz} boshlang'ich so'zi (${itemNum})`;
-                        ruStr = `${domain.ru} слово начального уровня (${itemNum})`;
-                        exStr = `Это простое и важное слово часто звучит в русской речи.`;
-                        exTrStr = `Bu oddiy va muhim so'z rus nutqida juda ko'p uchraydi.`;
-                    } else if (lvl === "A2") {
-                        wordStr = `${domain.prefix.toLowerCase()}_${domain.root.toLowerCase()}_${itemNum}`;
-                        phoneticStr = `[${domain.root.toLowerCase()}_a2]`;
-                        uzStr = `${domain.uz} elementar atamasi (${itemNum})`;
-                        ruStr = `${domain.ru} общеупотребительное слово (${itemNum})`;
-                        exStr = `Данное выражение изучается на базовом уровне А2.`;
-                        exTrStr = `Ushbu ibora A2 elementar darajada o'rganiladi.`;
-                    } else if (lvl === "B1") {
-                        wordStr = `${domain.root.toLowerCase()}ность_${itemNum}`;
-                        phoneticStr = `[${domain.root.toLowerCase()}н'ост']`;
-                        uzStr = `${domain.uz} o'rta bosqich atamasi (${itemNum})`;
-                        ruStr = `${domain.ru} лексика уровня B1 (${itemNum})`;
-                        exStr = `Уверенное владение этой лексикой необходимо для свободного общения.`;
-                        exTrStr = `Bu lug'atni bilish erkin muloqot qilish uchun zarurdir.`;
-                    } else if (lvl === "B2") {
-                        wordStr = `взаимо${domain.root.toLowerCase()}_${itemNum}`;
-                        phoneticStr = `[взаимо_${domain.root.toLowerCase()}]`;
-                        uzStr = `${domain.uz} professional so'zi (${itemNum})`;
-                        ruStr = `${domain.ru} профессиональная лексика (${itemNum})`;
-                        exStr = `Термин широко применяется в деловых переговорах и прессе.`;
-                        exTrStr = `Ushbu atama muzokaralar va matbuotda faol ishlatiladi.`;
-                    } else { // C1
-                        wordStr = `высоко${domain.root.toLowerCase()}_${itemNum}`;
-                        phoneticStr = `[высоко_${domain.root.toLowerCase()}]`;
-                        uzStr = `${domain.uz} oliy akademik termin (${itemNum})`;
-                        ruStr = `${domain.ru} лексика академического уровня C1 (${itemNum})`;
-                        exStr = `В академических статьях данный термин имеет ключевое значение.`;
-                        exTrStr = `Ilmiy maqolalarda bu atama hal qiluvchi ahamiyatga ega.`;
-                    }
-                } else { // de
-                    if (lvl === "A1") {
-                        wordStr = `${domain.root}_${itemNum}`;
-                        phoneticStr = `[ˈ${domain.root.toLowerCase()}]`;
-                        uzStr = `${domain.uz} asosiy nemischa so'zi (${itemNum})`;
-                        ruStr = `${domain.ru} немецкое слово А1 (${itemNum})`;
-                        exStr = `Dieses grundlegende deutsche Wort wird täglich benutzt.`;
-                        exTrStr = `Bu asosiy nemischa so'z har kuni qo'llaniladi.`;
-                    } else if (lvl === "A2") {
-                        wordStr = `${domain.prefix}_${domain.root}_${itemNum}`;
-                        phoneticStr = `[ˈ${domain.prefix.toLowerCase()}_${domain.root.toLowerCase()}]`;
-                        uzStr = `${domain.uz} kundalik muloqot so'zi (${itemNum})`;
-                        ruStr = `${domain.ru} слово для общения А2 (${itemNum})`;
-                        exStr = `Dieser Begriff ist wichtig für das Goethe-Zertifikat A2.`;
-                        exTrStr = `Bu atama Goethe A2 sertifikati uchun muhimdir.`;
-                    } else if (lvl === "B1") {
-                        wordStr = `${domain.root}skultur_${itemNum}`;
-                        phoneticStr = `[ˈ${domain.root.toLowerCase()}skʊlˌtuːɐ̯]`;
-                        uzStr = `${domain.uz} o'rta daraja iborasi (${itemNum})`;
-                        ruStr = `${domain.ru} лексика уровня B1 (${itemNum})`;
-                        exStr = `Im B1-Bereich erweitert dieses Wort Ihren Wortschatz maßgeblich.`;
-                        exTrStr = `B1 darajasida ushbu so'z boyligingizni sezilarli oshiradi.`;
-                    } else if (lvl === "B2") {
-                        wordStr = `Fach_${domain.root}_${itemNum}`;
-                        phoneticStr = `[ˈfax_${domain.root.toLowerCase()}]`;
-                        uzStr = `${domain.uz} kasbiy nemis tili atamasi (${itemNum})`;
-                        ruStr = `${domain.ru} профессиональный термин B2 (${itemNum})`;
-                        exStr = `In deutschen Unternehmen wird dieser Fachbegriff häufig genutzt.`;
-                        exTrStr = `Nemis kompaniyalarida bu kasbiy atama ko'p ishlatiladi.`;
-                    } else { // C1
-                        wordStr = `Grundlagen_${domain.root}_${itemNum}`;
-                        phoneticStr = `[ˈɡʁʊntˌlaːɡn̩_${domain.root.toLowerCase()}]`;
-                        uzStr = `${domain.uz} oliy ilmiy-akademik nemischa termin (${itemNum})`;
-                        ruStr = `${domain.ru} академический термин уровня C1 (${itemNum})`;
-                        exStr = `Für das Universitätsstudium in Deutschland ist dieser Begriff unabdingbar.`;
-                        exTrStr = `Germaniya universitetida o'qish uchun bu atama juda zarurdir.`;
-                    }
-                }
-
-                fullDatabase.push({
-                    id: `${langCode}-vocab-${fullDatabase.length + 1}`,
-                    word: wordStr,
-                    phonetic: phoneticStr,
-                    pos: pos,
-                    level: lvl,
-                    uz: uzStr,
-                    ru: ruStr,
-                    example: exStr,
-                    exampleTr: exTrStr
-                });
-            }
-        });
-
         this.cache[langCode] = fullDatabase;
         return fullDatabase;
     },
-
     // Fast search and filter query engine
     query(langCode, options = {}) {
         const {
@@ -372,4 +182,4 @@ const SpeakProVocabulary = {
     }
 };
 
-window.SpeakProVocabulary = SpeakProVocabulary;
+window.School77Vocabulary = School77Vocabulary;

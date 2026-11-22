@@ -1,6 +1,6 @@
-# SpeakPro — Tillarni Oson, Qiziqarli va Raqobat Ruhida O'rganing!
+﻿# School77 — Tillarni Oson, Qiziqarli va Raqobat Ruhida O'rganing!
 
-**"Planeta" o'quv markazi** tomonidan yaratilgan interaktiv til o'rganish platformasi (2026).
+**77-School O'quv Markazi** tomonidan yaratilgan interaktiv til o'rganish platformasi (2026).
 
 ---
 
@@ -14,7 +14,7 @@ Hech qanday murakkab o'rnatishlar shart emas! Shunchaki:
 ## 🌟 Tarkib va Imkoniyatlar
 
 ### 1. Tepa qism (Header & Navbar)
-- **Tepa chap burchakda:** **SpeakPro** logotipi va brend yozuvi (`"Planeta" o'quv markazi`).
+- **Tepa chap burchakda:** **School77** logotipi va brend yozuvi (`77-School O'quv Markazi`).
 - **Tepa o'ng burchakda:**
   - ⭐ **Yulduzlar hisoblagichi** (Star balance)
   - 👤 **Profil** yoki **"Kirish"** / **"Ro'yxatdan o'tish"** tugmalari (interaktiv modal darcha bilan).
@@ -23,7 +23,7 @@ Hech qanday murakkab o'rnatishlar shart emas! Shunchaki:
   - 🌐 **Tillar** (Ingliz tili, Rus tili, Nemis tili haqida to'liq ma'lumot va jonli audio talaffuzlar)
   - 📚 **Darslar** (Interaktiv so'z kartochkalari / flashcardlar, testlar, yulduz mukofotlari)
   - 🏆 **Reyting** (Oltin, Kumush, Bronza ligalari bo'yicha eng kuchli o'quvchilar jadvali)
-  - ⭐ **Star** (To'plangan yulduzlarni "Planeta" o'quv markazining maxsus sovg'alari: ryukzak, hoodie, quloqchin, kitoblar va bepul kurs vaucherlariga almashtirish do'koni)
+  - ⭐ **Star** (To'plangan yulduzlarni 77-School O'quv Markazining maxsus sovg'alari: ryukzak, hoodie, quloqchin, kitoblar va bepul kurs vaucherlariga almashtirish do'koni)
   - 🎮 **Mini games (Ochiluvchi menyu):**
     1. ⚡ **1 vs 1 lug'at bellashuv** — Boshqa o'quvchi bilan tezkor duel
     2. 👥 **Lug'at bellashuv 6 kishilik** — 6 nafar ishtirokchili jonli xona
@@ -34,7 +34,7 @@ Hech qanday murakkab o'rnatishlar shart emas! Shunchaki:
 ---
 
 ## 📱 Asosiy Sahifadagi Rasmiy Matnlar
-- **SpeakPro haqida — Tillarni oson, qiziqarli va raqobat ruhida o'rganing!**
+- **School77 haqida — Tillarni oson, qiziqarli va raqobat ruhida o'rganing!**
 - **🌐 Qaysi tillarni o'rganish mumkin?**
   - 🇬🇧 Ingliz tili
   - 🇷🇺 Rus tili
@@ -45,5 +45,5 @@ Hech qanday murakkab o'rnatishlar shart emas! Shunchaki:
   - Sovg'alar va mukofotlar
 - **📱 Ilova haqida**
   - Yaratilgan yili: 2026-yil
-  - Tashkilotchi / Muallif: "Planeta" o'quv markazi
-  - Mualliflik huquqi: © 2026 "Planeta" o'quv markazi. Barcha huquqlar himoyalangan.
+  - Tashkilotchi / Muallif: 77-School O'quv Markazi
+  - Mualliflik huquqi: © 2026 77-School O'quv Markazi. Barcha huquqlar himoyalangan.

@@ -1,4 +1,4 @@
-// SpeakPro - Web Audio API Sound Synthesizer & Speech Synthesis
+﻿// School77 - Web Audio API Sound Synthesizer & Speech Synthesis
 // Zero external audio files required!
 
 const SoundEffects = {

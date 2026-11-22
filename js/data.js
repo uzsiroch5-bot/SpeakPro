@@ -1,7 +1,7 @@
-// SpeakPro - Knowledge Base & Datastore (English, Russian, German)
+﻿// School77 - Knowledge Base & Datastore (English, Russian, German)
 // Includes vocabulary, lesson modules, leaderboard entries, and Star gift store items.
 
-const SpeakProData = {
+const School77Data = {
     // 3 Supported languages
     languages: {
         en: {
@@ -12,7 +12,7 @@ const SpeakProData = {
             code: 'en-US',
             description: 'Dunyodagi №1 xalqaro muloqot tili. IT, biznes, sayohat va fan sohasi uchun zarur.',
             stats: { words: '3500+', lessons: '48 ta modul', learners: '12,450 o\'quvchi' },
-            samplePhrase: { text: 'Hello, welcome to SpeakPro!', tr: 'Salom, SpeakPro-ga xush kelibsiz!' }
+            samplePhrase: { text: 'Hello, welcome to School77!', tr: 'Salom, School77-ga xush kelibsiz!' }
         },
         ru: {
             id: 'ru',
@@ -22,7 +22,7 @@ const SpeakProData = {
             code: 'ru-RU',
             description: 'MDH davlatlari va xalqaro munosabatlarda muhim til. Adabiyot va amaliy muloqot asosi.',
             stats: { words: '2800+', lessons: '42 ta modul', learners: '9,820 o\'quvchi' },
-            samplePhrase: { text: 'Привет, добро пожаловать в SpeakPro!', tr: 'Salom, SpeakPro-ga xush kelibsiz!' }
+            samplePhrase: { text: 'Привет, добро пожаловать в School77!', tr: 'Salom, School77-ga xush kelibsiz!' }
         },
         de: {
             id: 'de',
@@ -32,7 +32,7 @@ const SpeakProData = {
             code: 'de-DE',
             description: 'Yevropaning iqtisodiy yetakchisi Germaniya, Avstriya va Shveytsariyada ta\'lim va ish kaliti.',
             stats: { words: '2400+', lessons: '36 ta modul', learners: '6,340 o\'quvchi' },
-            samplePhrase: { text: 'Hallo, willkommen bei SpeakPro!', tr: 'Salom, SpeakPro-ga xush kelibsiz!' }
+            samplePhrase: { text: 'Hallo, willkommen bei School77!', tr: 'Salom, School77-ga xush kelibsiz!' }
         }
     },
 
@@ -114,7 +114,7 @@ const SpeakProData = {
             items: [
                 { term: 'Рад познакомиться', tr: 'Tanishganimdan xursandman', audio: 'Рад познакомиться' },
                 { term: 'Откуда вы?', tr: 'Siz qayerdansiz?', audio: 'Откуда вы?' },
-                { term: 'Я изучаю языки в SpeakPro', tr: 'Men SpeakPro-da tillarni o\'rganmoqdaman', audio: 'Я изучаю языки в СпикПро' },
+                { term: 'Я изучаю языки в School77', tr: 'Men School77-da tillarni o\'rganmoqdaman', audio: 'Я изучаю языки в СпикПро' },
                 { term: 'Хорошего дня!', tr: 'Kuningiz yaxshi o\'tsin!', audio: 'Хорошего дня!' },
                 { term: 'Подскажите, пожалуйста', tr: 'Iltimos, aytib yubora olasizmi?', audio: 'Подскажите, пожалуйста' },
                 { term: 'До скорой встречи', tr: 'Tez orada ko\'rishguncha', audio: 'До скорой встречи' }
@@ -158,25 +158,64 @@ const SpeakProData = {
         }
     ],
 
-    // Global Leaderboard mock data
+    // Global Leaderboard data across English, Russian and German
     leaderboard: [
-        { rank: 1, name: 'Sardor Karimov', avatar: '👨‍🎓', league: 'Oltin Liga', stars: 2450, wins: 142, lang: '🇬🇧 Ingliz' },
-        { rank: 2, name: 'Madina Umarova', avatar: '👩‍💼', league: 'Oltin Liga', stars: 2180, wins: 128, lang: '🇩🇪 Nemis' },
-        { rank: 3, name: 'Bekzod Aliyev', avatar: '🧑‍💻', league: 'Oltin Liga', stars: 1950, wins: 110, lang: '🇷🇺 Rus' },
-        { rank: 4, name: 'Shahzoda Rustamova', avatar: '👩‍🎓', league: 'Kumush Liga', stars: 1620, wins: 94, lang: '🇬🇧 Ingliz' },
-        { rank: 5, name: 'Dilshod Yusupov', avatar: '👨‍🚀', league: 'Kumush Liga', stars: 1490, wins: 88, lang: '🇩🇪 Nemis' },
-        { rank: 6, name: 'Malika Qosimova', avatar: '👩‍🎨', league: 'Kumush Liga', stars: 1350, wins: 76, lang: '🇷🇺 Rus' },
-        { rank: 7, name: 'Javohir Toirov', avatar: '🧑‍🔬', league: 'Bronza Liga', stars: 1120, wins: 62, lang: '🇬🇧 Ingliz' },
-        { rank: 8, name: 'Feruza Ergasheva', avatar: '👩‍⚕️', league: 'Bronza Liga', stars: 980, wins: 54, lang: '🇩🇪 Nemis' },
-        { rank: 9, name: 'Azamat Boboev', avatar: '👨‍🏫', league: 'Bronza Liga', stars: 850, wins: 46, lang: '🇷🇺 Rus' },
-        { rank: 10, name: 'Gulnoza Saidova', avatar: '👩‍💻', league: 'Bronza Liga', stars: 740, wins: 39, lang: '🇬🇧 Ingliz' }
+        // Oltin Liga 3 (634 - 800+ g'alaba)
+        { rank: 1, name: 'Sardor Karimov', avatar: '👨‍🎓', stars: 5120, wins: 760, lang: 'en', langName: 'Ingliz tili' },
+        { rank: 2, name: 'Madina Umarova', avatar: '👩‍💼', stars: 4680, wins: 695, lang: 'de', langName: 'Nemis tili' },
+
+        // Oltin Liga 2 (467 - 633 g'alaba)
+        { rank: 3, name: 'Bekzod Aliyev', avatar: '🧑‍💻', stars: 4210, wins: 610, lang: 'ru', langName: 'Rus tili' },
+        { rank: 4, name: 'Shahzoda Rustamova', avatar: '👩‍🎓', stars: 3650, wins: 520, lang: 'en', langName: 'Ingliz tili' },
+        { rank: 5, name: 'Elena Morozova', avatar: '👩‍🏫', stars: 3380, wins: 485, lang: 'ru', langName: 'Rus tili' },
+
+        // Oltin Liga 1 (301 - 466 g'alaba)
+        { rank: 6, name: 'Lukas Weber', avatar: '👨‍💼', stars: 2950, wins: 410, lang: 'de', langName: 'Nemis tili' },
+        { rank: 7, name: 'Jasur Vohidov', avatar: '👨‍🚀', stars: 2580, wins: 345, lang: 'en', langName: 'Ingliz tili' },
+        { rank: 8, name: 'Anastasia Smirnova', avatar: '👩‍🎨', stars: 2420, wins: 320, lang: 'ru', langName: 'Rus tili' },
+        { rank: 9, name: 'Max Richter', avatar: '🧑‍🔬', stars: 2310, wins: 305, lang: 'de', langName: 'Nemis tili' },
+
+        // Kumush Liga 3 (234 - 300 g'alaba)
+        { rank: 10, name: 'Dilshod Yusupov', avatar: '👨‍🚀', stars: 2180, wins: 285, lang: 'de', langName: 'Nemis tili' },
+        { rank: 11, name: 'Malika Qosimova', avatar: '👩‍🎨', stars: 2040, wins: 260, lang: 'ru', langName: 'Rus tili' },
+        { rank: 12, name: 'Jasur Raimov', avatar: '🧑‍💼', stars: 1890, wins: 238, lang: 'en', langName: 'Ingliz tili' },
+
+        // Kumush Liga 2 (167 - 233 g'alaba)
+        { rank: 13, name: 'Anna Ivanova', avatar: '👩‍⚕️', stars: 1710, wins: 195, lang: 'ru', langName: 'Rus tili' },
+        { rank: 14, name: 'Felix Braun', avatar: '👨‍🎓', stars: 1520, wins: 172, lang: 'de', langName: 'Nemis tili' },
+
+        // Kumush Liga 1 (101 - 166 g'alaba)
+        { rank: 15, name: 'Nodira Karimova', avatar: '👩‍💻', stars: 1350, wins: 140, lang: 'en', langName: 'Ingliz tili' },
+        { rank: 16, name: 'Dmitry Petrov', avatar: '👨‍🏫', stars: 1230, wins: 122, lang: 'ru', langName: 'Rus tili' },
+        { rank: 17, name: 'Leon Schmidt', avatar: '🧑‍💻', stars: 1160, wins: 112, lang: 'de', langName: 'Nemis tili' },
+        { rank: 18, name: 'Alisher Usmonov', avatar: '👨‍🎓', stars: 1090, wins: 105, lang: 'en', langName: 'Ingliz tili' },
+
+        // Bronza Liga 3 (84 - 100 g'alaba)
+        { rank: 19, name: 'Javohir Toirov', avatar: '🧑‍🔬', stars: 990, wins: 95, lang: 'en', langName: 'Ingliz tili' },
+        { rank: 20, name: 'Feruza Ergasheva', avatar: '👩‍⚕️', stars: 930, wins: 88, lang: 'de', langName: 'Nemis tili' },
+
+        // Bronza Liga 2 (67 - 83 g'alaba)
+        { rank: 21, name: 'Azamat Boboev', avatar: '👨‍🏫', stars: 880, wins: 82, lang: 'ru', langName: 'Rus tili' },
+        { rank: 22, name: 'Gulnoza Saidova', avatar: '👩‍💻', stars: 820, wins: 74, lang: 'en', langName: 'Ingliz tili' },
+
+        // Bronza Liga 1 (50 - 66 g'alaba)
+        { rank: 23, name: 'Timur Zokirov', avatar: '👨‍🚀', stars: 770, wins: 68, lang: 'ru', langName: 'Rus tili' },
+        { rank: 24, name: 'Sophie Müller', avatar: '👩‍🎨', stars: 720, wins: 61, lang: 'de', langName: 'Nemis tili' },
+        { rank: 25, name: 'Doniyor Karimov', avatar: '🧑‍💻', stars: 680, wins: 56, lang: 'en', langName: 'Ingliz tili' },
+        { rank: 26, name: 'Maria Volkova', avatar: '👩‍🎓', stars: 640, wins: 52, lang: 'ru', langName: 'Rus tili' },
+
+        // Boshlang'ich (0 - 49 g'alaba)
+        { rank: 27, name: 'Kamola Saidova', avatar: '👩‍💼', stars: 550, wins: 44, lang: 'en', langName: 'Ingliz tili' },
+        { rank: 28, name: 'Otabek Mirzayev', avatar: '👨‍🎓', stars: 470, wins: 36, lang: 'de', langName: 'Nemis tili' },
+        { rank: 29, name: 'Doston Rustamov', avatar: '🧑‍🔬', stars: 400, wins: 28, lang: 'ru', langName: 'Rus tili' },
+        { rank: 30, name: 'Hanna Becker', avatar: '👩‍⚕️', stars: 310, wins: 19, lang: 'de', langName: 'Nemis tili' }
     ],
 
     // Star Store Gifts catalog
     storeGifts: [
         {
             id: 'g1',
-            title: 'SpeakPro & "Planeta" Maxsus Ryukzaki',
+            title: 'School77 & 77-School Maxsus Ryukzaki',
             category: 'Esdalik sovg\'alari',
             cost: 500,
             icon: '🎒',
@@ -185,11 +224,11 @@ const SpeakProData = {
         },
         {
             id: 'g2',
-            title: '"Planeta" Brendli Hoodie (Sviter)',
+            title: '77-School Brendli Hoodie (Sviter)',
             category: 'Kiyim-kechak',
             cost: 450,
             icon: '👕',
-            desc: 'Issiq va qulay, 100% paxta sifatli matodan tayyorlangan SpeakPro sviteri.',
+            desc: 'Issiq va qulay, 100% paxta sifatli matodan tayyorlangan School77 sviteri.',
             badge: 'Trendda'
         },
         {
@@ -212,16 +251,16 @@ const SpeakProData = {
         },
         {
             id: 'g5',
-            title: '"Planeta"da 1 Oylik Bepul Kurs Vaucheri',
+            title: '77-Schoolda 1 Oylik Bepul Kurs Vaucheri',
             category: 'Ta\'lim',
             cost: 1000,
             icon: '🎟️',
-            desc: '"Planeta" o\'quv markazining jonli yoki onlayn istalgan tildagi to\'liq oylik kursi.',
+            desc: '77-School o\'quv markazining jonli yoki onlayn istalgan tildagi to\'liq oylik kursi.',
             badge: 'Super Mukofot'
         },
         {
             id: 'g6',
-            title: 'SpeakPro Aqlli Termo-Krujka',
+            title: 'School77 Aqlli Termo-Krujka',
             category: 'Aksessuarlar',
             cost: 200,
             icon: '☕',
